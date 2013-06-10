@@ -20,6 +20,7 @@ namespace Rac0r {
     
 class TrackLoader {
     private:
+        // how many points should be generated per curve
         constexpr static const unsigned int DEFAULT_CURVE_STEPS    =   10;
     
         // curve roation
@@ -37,7 +38,7 @@ class TrackLoader {
         float getCurveSteps() const { return this->mCurveSteps; }
     
     private:
-        void computeCurve(Curve_Rotation _roation, float _degree, const sf::Vector2f & _pivot, const sf::Vector2f & _point, const sf::Vector2f & _dir, std::vector<sf::Vector2f> & _result);
+        void computeCurve(Curve_Rotation _roation, float _degree, const sf::Vector2f & _point, const sf::Vector2f & _dir, std::vector<sf::Vector2f> & _result);
         sf::Vector2f computeCurvePivot(const sf::Vector2f & _point, const sf::Vector2f & _dir);
     
     private:

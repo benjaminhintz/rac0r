@@ -44,8 +44,7 @@ std::vector<sf::Vector2f> TrackLoader::loadFromFile(const std::string & _fileNam
     }
     
     std::vector<sf::Vector2f> result;
-    sf::Vector2f lastPoint;
-    
+
     // iterate over the file and read the data
     std::string line;
     while (getline(file, line)) {
@@ -55,89 +54,38 @@ std::vector<sf::Vector2f> TrackLoader::loadFromFile(const std::string & _fileNam
         std::string type;
         in >> type;
         
+        // read in x, y, dirX, dirY
+        float x, y, dirX, dirY;
+        in >> x >> y >> dirX >> dirY; 
+
+        // convert to sf types
+        sf::Vector2f point(x, y);
+        sf::Vector2f dir(dirX, dirY);
+        
         // distinguish between track types
         if (type == "s") { // straight line
-            float x, y;
-            in >> x >> y; // read in x and y
-                        
-            lastPoint = sf::Vector2f(x, y);
-            result.push_back(lastPoint);
+        
+            result.push_back(point);
             
-            std::cout << "Info: Straight track part found. Point(" << lastPoint << ")" << std::endl;
+            std::cout << "Info: Straight track part found. Point(" << point << ")" << std::endl;
         } else if (type == "ll") { // left-left (90 deg)
-            float x, y, dirX, dirY;
-            in >> x >> y >> dirX >> dirY; // read in x and y
             
-            sf::Vector2f point(x, y);
-            sf::Vector2f dir(dirX, dirY);
-            
-            // compute inner radius
-            float dirLen = length(dir);
-            sf::Vector2f normDir = normalize(dir);
-            sf::Vector2f orthDir = orthogonal(normDir);
-            orthDir = orthDir * (dirLen * 1.5f); // abstand vom punkt zum mitelpunkt
-            
-            sf::Vector2f pivot = point + orthDir;
-             
-            this->computeCurve(TrackLoader::Curve_Rotation::COUNTER_CLOCK_WISE, 90.0f, pivot, point, dir, result);
+            this->computeCurve(TrackLoader::Curve_Rotation::COUNTER_CLOCK_WISE, 90.0f, point, dir, result);
             
             std::cout << "Info: Left-Left 90 degree track part found. Point(" << point << ")" << std::endl;
         } else if (type == "l") { // left-left (90 deg)
-            float x, y, dirX, dirY;
-            in >> x >> y >> dirX >> dirY; // read in x and y
-            
-            sf::Vector2f point(x, y);
-            sf::Vector2f dir(dirX, dirY);
-            
-            // compute inner radius
-            float dirLen = length(dir);
-            sf::Vector2f normDir = normalize(dir);
-            sf::Vector2f orthDir = orthogonal(normDir);
-            orthDir = orthDir * (dirLen * 1.5f); // abstand vom punkt zum mitelpunkt
-            
-            sf::Vector2f pivot = point + orthDir;
-            
-            //std::cout << "Info: LL track part found. Point(" << point << ")" << std::endl;
-            
-            this->computeCurve(TrackLoader::Curve_Rotation::COUNTER_CLOCK_WISE, 45.0f, pivot, point, dir, result);
+
+            this->computeCurve(TrackLoader::Curve_Rotation::COUNTER_CLOCK_WISE, 45.0f, point, dir, result);
             
             std::cout << "Info: Left-Left 45 degree track part found. Point(" << point << ")" << std::endl;
         } else if (type == "rr") { // right-right (90 deg)
-            float x, y, dirX, dirY;
-            in >> x >> y >> dirX >> dirY; // read in x and y
-            
-            sf::Vector2f point(x, y);
-            sf::Vector2f dir(dirX, dirY);
-            
-            // compute inner radius
-            float dirLen = length(dir);
-            sf::Vector2f normDir = normalize(dir);
-            sf::Vector2f orthDir = orthogonal(normDir);
-            orthDir = orthDir * (dirLen * 1.5f); // abstand vom punkt zum mitelpunkt
-            
-            sf::Vector2f pivot = point - orthDir;
-            
-            this->computeCurve(TrackLoader::Curve_Rotation::CLOCK_WISE, 90.0f, pivot, point, dir, result);
+
+            this->computeCurve(TrackLoader::Curve_Rotation::CLOCK_WISE, 90.0f, point, dir, result);
             
             std::cout << "Info: Right-Right 90 degree track part found. Point(" << point << ")" << std::endl;
         } else if (type == "r") { // right-right (45 deg)
-            float x, y, dirX, dirY;
-            in >> x >> y >> dirX >> dirY; // read in x and y
             
-            sf::Vector2f point(x, y);
-            sf::Vector2f dir(dirX, dirY);
-            
-            // compute inner radius
-            float dirLen = length(dir);
-            sf::Vector2f normDir = normalize(dir);
-            sf::Vector2f orthDir = orthogonal(normDir);
-            orthDir = orthDir * (dirLen * 1.5f); // abstand vom punkt zum mitelpunkt
-            
-            sf::Vector2f pivot = point - orthDir;
-            
-            //std::cout << "Info: LL track part found. Point(" << point << ")" << std::endl;
-            
-            this->computeCurve(TrackLoader::Curve_Rotation::CLOCK_WISE, 45.0f, pivot, point, dir, result);
+            this->computeCurve(TrackLoader::Curve_Rotation::CLOCK_WISE, 45.0f, point, dir, result);
             
             std::cout << "Info: Right-Right 45 degree track part found. Point(" << point << ")" << std::endl;
         } else if (type == "c") { // completed (start - finish are connected
@@ -152,8 +100,7 @@ std::vector<sf::Vector2f> TrackLoader::loadFromFile(const std::string & _fileNam
     return result;
 }
 
-
-void TrackLoader::computeCurve(Curve_Rotation _roation, float _degree, const sf::Vector2f & _pivot, const sf::Vector2f & _point, const sf::Vector2f & _dir, std::vector<sf::Vector2f> & _result) {
+void TrackLoader::computeCurve(Curve_Rotation _roation, float _degree, const sf::Vector2f & _point, const sf::Vector2f & _dir, std::vector<sf::Vector2f> & _result) {
     
     // sanity check
     if (this->mCurveSteps == 0) {
@@ -162,11 +109,18 @@ void TrackLoader::computeCurve(Curve_Rotation _roation, float _degree, const sf:
     
     bool cw = static_cast<bool>(_roation);
    
+    // compute pivot
+    float dirLen = length(_dir);
+    sf::Vector2f normDir = normalize(_dir);
+    sf::Vector2f orthDir = orthogonal(normDir);
+    orthDir = orthDir * (dirLen * 1.5f); // abstand vom punkt zum mitelpunkt
+    sf::Vector2f pivot = _point + (cw ? - orthDir : orthDir);
+
     // compute rotation steps
     float delta = (_degree / static_cast<float>(this->mCurveSteps));
     
     // compute radius
-    float radius = abs(length(_pivot - _point));
+    float radius = abs(length(pivot - _point));
     
     // compute rotation start angle
     sf::Vector2f av(1.0f, 0.0f);
@@ -193,7 +147,7 @@ void TrackLoader::computeCurve(Curve_Rotation _roation, float _degree, const sf:
         //std::cout << "Rotated Point(" << i << "): " << point << std::endl;
         
         point *= radius;
-        point += _pivot;
+        point += pivot;
     
         //std::cout << "Translated Point(" << i << "): " << point << std::endl;
         
