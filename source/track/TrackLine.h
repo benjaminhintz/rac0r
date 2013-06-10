@@ -6,14 +6,17 @@
 //  Copyright (c) 2013 Jan Schulte. All rights reserved.
 //
 
-#ifndef __Rac0r__Track__
-#define __Rac0r__Track__
+#ifndef __Rac0r__TrackLine__
+#define __Rac0r__TrackLine__
 
 #include <iostream>
 #include <vector>
 #include <stdexcept>
 
 #include <SFML/Graphics.hpp>
+
+#include "Track.h"
+
 
 namespace Rac0r {
     
@@ -25,14 +28,13 @@ class TrackLine : public sf::Drawable, public sf::Transformable {
     
         TrackLine & operator = (const TrackLine & _other);
     
-        void loadFrom(const std::vector<sf::Vector2f> & _points);
-    
+        void loadFromTrack(const Track & _track);
     
         // properties
-        void setColor(const sf::Color & _color) { this->mColor = _color; this->mIsDirty = true; }
+        void setColor(const sf::Color & _value) { this->mColor = _value; this->mIsDirty = true; }
         const sf::Color & getColor() const { return this->mColor; }
     
-        void setThickness(float _thickness) { this->mThickness = _thickness; this->mIsDirty = true; }
+        void setThickness(float _value) { this->mThickness = _value; this->mIsDirty = true; }
         float getThickness() const { return this->mThickness; }
     
     protected:

@@ -27,15 +27,10 @@ TrackLine::TrackLine(const TrackLine & _other) {
 TrackLine::~TrackLine() {
 }
 
-void TrackLine::loadFrom(const std::vector<sf::Vector2f> & _points) {
-    
-    // check if we have the correct point count
-    if (_points.size() <= 1) {
-        throw new std::invalid_argument("Invalid TrackLine point count");
-    }
+void TrackLine::loadFromTrack(const Track & _track) {
     
     // copy all TrackLine points
-    this->mPoints = std::vector<sf::Vector2f>(_points.begin(), _points.end());
+    this->mPoints = _track.getPoints();
     
     // create segments    
     for (size_t i = 0; i < this->mPoints.size(); ++i) {

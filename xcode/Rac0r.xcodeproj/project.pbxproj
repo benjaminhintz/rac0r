@@ -18,6 +18,7 @@
 		3D6790941766493E0061B88D /* test2.track in Resources */ = {isa = PBXBuildFile; fileRef = 3D6790911766493E0061B88D /* test2.track */; };
 		3D6790951766493E0061B88D /* test3.track in Resources */ = {isa = PBXBuildFile; fileRef = 3D6790921766493E0061B88D /* test3.track */; };
 		3D6790961766493E0061B88D /* test4.track in Resources */ = {isa = PBXBuildFile; fileRef = 3D6790931766493E0061B88D /* test4.track */; };
+		3D67909917664E6F0061B88D /* Track.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D67909717664E6E0061B88D /* Track.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,8 @@
 		3D6790911766493E0061B88D /* test2.track */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test2.track; sourceTree = "<group>"; };
 		3D6790921766493E0061B88D /* test3.track */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test3.track; sourceTree = "<group>"; };
 		3D6790931766493E0061B88D /* test4.track */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test4.track; sourceTree = "<group>"; };
+		3D67909717664E6E0061B88D /* Track.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Track.cpp; sourceTree = "<group>"; };
+		3D67909817664E6F0061B88D /* Track.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Track.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +121,8 @@
 				3D6790681760DF820061B88D /* TrackLine.h */,
 				3D6790691760DF820061B88D /* TrackLoader.cpp */,
 				3D67906A1760DF820061B88D /* TrackLoader.h */,
+				3D67909717664E6E0061B88D /* Track.cpp */,
+				3D67909817664E6F0061B88D /* Track.h */,
 			);
 			path = track;
 			sourceTree = "<group>";
@@ -237,6 +242,7 @@
 				3D67906C1760DF820061B88D /* TrackLoader.cpp in Sources */,
 				3D6790701760DFA20061B88D /* main.cpp in Sources */,
 				3D67907A1760E0310061B88D /* ResourcePath.mm in Sources */,
+				3D67909917664E6F0061B88D /* Track.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

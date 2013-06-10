@@ -9,15 +9,10 @@
 #ifndef __Rac0r__TrackLoader__
 #define __Rac0r__TrackLoader__
 
-#include <iostream>
-#include <vector>
-#include <stdexcept>
-
-#include <SFML/Graphics.hpp>
-
+#include "Track.h"
 
 namespace Rac0r {
-    
+
 class TrackLoader {
     private:
         // how many points should be generated per curve
@@ -31,18 +26,18 @@ class TrackLoader {
         ~TrackLoader();
     
         // load the given track file
-        std::vector<sf::Vector2f> loadFromFile(const std::string & _fileName);
+        Track loadFromFile(const std::string & _fileName);
     
         // properties
-        void setCurveSteps(unsigned int _delta) { this->mCurveSteps = _delta; if (_delta == 0) { this->mCurveSteps = TrackLoader::DEFAULT_CURVE_STEPS; } }
+        void setCurveSteps(unsigned int _value) { this->mCurveSteps = _value; if (_value == 0) { this->mCurveSteps = TrackLoader::DEFAULT_CURVE_STEPS; } }
         float getCurveSteps() const { return this->mCurveSteps; }
     
     private:
-        void computeCurve(Curve_Rotation _roation, float _degree, const sf::Vector2f & _point, const sf::Vector2f & _dir, std::vector<sf::Vector2f> & _result);
-        sf::Vector2f computeCurvePivot(const sf::Vector2f & _point, const sf::Vector2f & _dir);
-    
+        void computeCurve(Curve_Rotation _roation, float _degree, const sf::Vector2f & _point, const sf::Vector2f & _dir, Track::Points & _result);
+        
     private:
-        unsigned int   mCurveSteps;
+        unsigned int        mCurveSteps;
+        
 };
 
 }

@@ -35,16 +35,19 @@ sf::Vector2<T> normalize(const sf::Vector2<T> & _vector) {
     }
 }
 
+// compute the orthonal of the given vector
 template <typename T>
     sf::Vector2<T> orthogonal(const sf::Vector2<T> & _vector) {
     return sf::Vector2<T>(_vector.y, -_vector.x);
 }
-  
+
+// computes the scalar of the two given vectors
 template <typename T>
 float scalar(const sf::Vector2<T> & _a, const sf::Vector2<T> & _b) {
     return _a.x * _b.x + _a.y * _b.y;
 }
 
+// compute the angle between the two given vectors
 template <typename T>
 float angle(const sf::Vector2<T> & _a, const sf::Vector2<T> & _b) {
     float len1 = length(_a);
@@ -53,6 +56,7 @@ float angle(const sf::Vector2<T> & _a, const sf::Vector2<T> & _b) {
     return scalar(_a, _b) / (len1 * len2);
 }
 
+// compute the slope defining by the two vectors
 template <typename T>
 float slope(const sf::Vector2<T> & _a, const sf::Vector2<T> & _b) {
     return (_b.y - _a.y) / (_b.x - _a.x);

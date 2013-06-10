@@ -8,11 +8,8 @@
 
 #include "TrackLoader.h"
 
-#include <iostream>
 #include <fstream>
 #include <sstream>
-#include <string>
-#include <stdexcept>
 #include <math.h>
 
 #include "../utils/vector2.h"
@@ -33,7 +30,7 @@ TrackLoader::~TrackLoader() {
 }
 
     
-std::vector<sf::Vector2f> TrackLoader::loadFromFile(const std::string & _fileName) {
+Track TrackLoader::loadFromFile(const std::string & _fileName) {
     
     std::cout << _fileName << std::endl;
     
@@ -43,7 +40,7 @@ std::vector<sf::Vector2f> TrackLoader::loadFromFile(const std::string & _fileNam
         throw new std::runtime_error("Invalid file.");
     }
     
-    std::vector<sf::Vector2f> result;
+    Track::Points points;
 
     // iterate over the file and read the data
     std::string line;
@@ -65,27 +62,27 @@ std::vector<sf::Vector2f> TrackLoader::loadFromFile(const std::string & _fileNam
         // distinguish between track types
         if (type == "s") { // straight line
         
-            result.push_back(point);
+            points.push_back(point);
             
             std::cout << "Info: Straight track part found. Point(" << point << ")" << std::endl;
         } else if (type == "ll") { // left-left (90 deg)
             
-            this->computeCurve(TrackLoader::Curve_Rotation::COUNTER_CLOCK_WISE, 90.0f, point, dir, result);
+            this->computeCurve(TrackLoader::Curve_Rotation::COUNTER_CLOCK_WISE, 90.0f, point, dir, points);
             
             std::cout << "Info: Left-Left 90 degree track part found. Point(" << point << ")" << std::endl;
         } else if (type == "l") { // left-left (90 deg)
 
-            this->computeCurve(TrackLoader::Curve_Rotation::COUNTER_CLOCK_WISE, 45.0f, point, dir, result);
+            this->computeCurve(TrackLoader::Curve_Rotation::COUNTER_CLOCK_WISE, 45.0f, point, dir, points);
             
             std::cout << "Info: Left-Left 45 degree track part found. Point(" << point << ")" << std::endl;
         } else if (type == "rr") { // right-right (90 deg)
 
-            this->computeCurve(TrackLoader::Curve_Rotation::CLOCK_WISE, 90.0f, point, dir, result);
+            this->computeCurve(TrackLoader::Curve_Rotation::CLOCK_WISE, 90.0f, point, dir, points);
             
             std::cout << "Info: Right-Right 90 degree track part found. Point(" << point << ")" << std::endl;
         } else if (type == "r") { // right-right (45 deg)
             
-            this->computeCurve(TrackLoader::Curve_Rotation::CLOCK_WISE, 45.0f, point, dir, result);
+            this->computeCurve(TrackLoader::Curve_Rotation::CLOCK_WISE, 45.0f, point, dir, points);
             
             std::cout << "Info: Right-Right 45 degree track part found. Point(" << point << ")" << std::endl;
         } else if (type == "c") { // completed (start - finish are connected
@@ -97,10 +94,10 @@ std::vector<sf::Vector2f> TrackLoader::loadFromFile(const std::string & _fileNam
         
     }
     
-    return result;
+    return Track(points, "TODO", "TODO");
 }
 
-void TrackLoader::computeCurve(Curve_Rotation _roation, float _degree, const sf::Vector2f & _point, const sf::Vector2f & _dir, std::vector<sf::Vector2f> & _result) {
+void TrackLoader::computeCurve(Curve_Rotation _roation, float _degree, const sf::Vector2f & _point, const sf::Vector2f & _dir, Track::Points & _points) {
     
     // sanity check
     if (this->mCurveSteps == 0) {
@@ -151,11 +148,10 @@ void TrackLoader::computeCurve(Curve_Rotation _roation, float _degree, const sf:
     
         //std::cout << "Translated Point(" << i << "): " << point << std::endl;
         
-        _result.push_back(point);
+        _points.push_back(point);
     }
  
 }
-
 
 
 }
