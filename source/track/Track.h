@@ -30,6 +30,9 @@ class Track {
         void setPoints(const Points & _value);
         const Points & getPoints() const { return this->mPoints; }
     
+        void setCenter(const sf::Vector2f & _value);
+        const sf::Vector2f & getCenter() const { return this->mCenter; }
+    
         void setName(const std::string & _value) { this->mName = _value; }
         const std::string & getName() const { return this->mName; }
     
@@ -40,8 +43,9 @@ class Track {
         void computeBounds();
     
     private:
-        Points             mPoints;
+        Points              mPoints;
         sf::Vector2f        mBounds[2]; // top-left, bottom-right
+        sf::Vector2f        mCenter;
         std::string         mName;
         std::string         mAuthor;
     

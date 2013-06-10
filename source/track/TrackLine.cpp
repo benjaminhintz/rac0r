@@ -23,8 +23,9 @@ TrackLine::TrackLine() :
 TrackLine::TrackLine(const TrackLine & _other) {
     this->operator=(_other);
 }
-    
-TrackLine::~TrackLine() {
+
+TrackLine::TrackLine(const Track & _track) : TrackLine() {
+    this->loadFromTrack(_track);
 }
 
 void TrackLine::loadFromTrack(const Track & _track) {
@@ -60,7 +61,7 @@ void TrackLine::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         this->updateVB();
     }
     
-    states.transform *= getTransform();
+    //states.transform *= getTransform();
     
     target.draw(this->mVertices, states);
 }

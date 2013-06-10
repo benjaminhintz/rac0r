@@ -34,6 +34,14 @@ void Track::setPoints(const Points & _value) {
     this->computeBounds();
 }
 
+void Track::setCenter(const sf::Vector2f & _value) {
+    sf::Vector2f offset = _value - this->mCenter;
+    for (auto & point : this->mPoints) {
+        point += offset;
+    }
+}
+
+
 void Track::computeBounds() {
 
     this->mBounds[0] = sf::Vector2f(FLT_MAX, FLT_MAX); // top-left
@@ -46,6 +54,9 @@ void Track::computeBounds() {
         this->mBounds[1].y = fmax(point.y, this->mBounds[1].y);
     }
  
+    this->mCenter = (this->mBounds[0] + this->mBounds[1]) / 2.0f;
+    
+    std::cout << "Track Center: Center(" << this->mCenter << ")" << std::endl;
     std::cout << "Track Bounds: Top-Left(" << this->mBounds[0] << ") - Bottom-Right(" << this->mBounds[1] << ")" << std::endl;
 }
 

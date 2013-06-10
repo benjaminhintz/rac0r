@@ -20,12 +20,12 @@
 
 namespace Rac0r {
     
-class TrackLine : public sf::Drawable, public sf::Transformable {
+class TrackLine : public sf::Drawable { //, public sf::Transformable {
     public:
         TrackLine();
         TrackLine(const TrackLine & _other);
-        ~TrackLine();
-    
+        TrackLine(const Track & _track);
+     
         TrackLine & operator = (const TrackLine & _other);
     
         void loadFromTrack(const Track & _track);

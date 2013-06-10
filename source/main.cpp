@@ -25,7 +25,8 @@ int main(int, char const**) {
     settings.antialiasingLevel = 8;
     
     // Create the main window
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Rac0r", sf::Style::Default, settings);
+    sf::VideoMode videoMode(1024, 768);
+    sf::RenderWindow window(videoMode, "Rac0r", sf::Style::Default, settings);
 
     // Set the Icon
     sf::Image icon;
@@ -38,13 +39,14 @@ int main(int, char const**) {
     Rac0r::TrackLoader trackLoader;
     Rac0r::Track track = trackLoader.loadFromFile(resourcePath() + "test4.track");
     
-    Rac0r::TrackLine testTrack;
-    testTrack.setThickness(4.0f);
-    testTrack.setColor(sf::Color::Red);
-    testTrack.loadFromTrack(track);
-    testTrack.setPosition(50.0f, 50.0f);
-    //testTrack.setScale(2.0f, 2.0f);
+    // center track
+    track.setCenter(sf::Vector2f(videoMode.width / 2, videoMode.height / 2));
     
+    // setup track renderer
+    Rac0r::TrackLine trackLine(track);
+    trackLine.setThickness(4.0f);
+    trackLine.setColor(sf::Color::Red);
+ 
     // Start the game loop
     while (window.isOpen()) {
         
@@ -67,7 +69,7 @@ int main(int, char const**) {
 
                
         // TODO: Render Scene
-        window.draw(testTrack);
+        window.draw(trackLine);
         
         
         // Update the window
