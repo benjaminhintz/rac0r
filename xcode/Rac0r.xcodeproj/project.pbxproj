@@ -15,6 +15,9 @@
 		3D6790761760DFE20061B88D /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D6790741760DFE20061B88D /* icon.png */; };
 		3D6790771760DFE20061B88D /* sansation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D6790751760DFE20061B88D /* sansation.ttf */; };
 		3D67907A1760E0310061B88D /* ResourcePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3D6790791760E0310061B88D /* ResourcePath.mm */; };
+		3D6790941766493E0061B88D /* test2.track in Resources */ = {isa = PBXBuildFile; fileRef = 3D6790911766493E0061B88D /* test2.track */; };
+		3D6790951766493E0061B88D /* test3.track in Resources */ = {isa = PBXBuildFile; fileRef = 3D6790921766493E0061B88D /* test3.track */; };
+		3D6790961766493E0061B88D /* test4.track in Resources */ = {isa = PBXBuildFile; fileRef = 3D6790931766493E0061B88D /* test4.track */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +35,9 @@
 		3D6790751760DFE20061B88D /* sansation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sansation.ttf; sourceTree = "<group>"; };
 		3D6790781760E0310061B88D /* ResourcePath.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ResourcePath.hpp; path = Rac0r/classes/ResourcePath.hpp; sourceTree = SOURCE_ROOT; };
 		3D6790791760E0310061B88D /* ResourcePath.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ResourcePath.mm; path = Rac0r/classes/ResourcePath.mm; sourceTree = SOURCE_ROOT; };
+		3D6790911766493E0061B88D /* test2.track */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test2.track; sourceTree = "<group>"; };
+		3D6790921766493E0061B88D /* test3.track */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test3.track; sourceTree = "<group>"; };
+		3D6790931766493E0061B88D /* test4.track */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test4.track; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +141,9 @@
 		3D67905B175CF28D0061B88D /* tracks */ = {
 			isa = PBXGroup;
 			children = (
+				3D6790911766493E0061B88D /* test2.track */,
+				3D6790921766493E0061B88D /* test3.track */,
+				3D6790931766493E0061B88D /* test4.track */,
 				3D6790721760DFDA0061B88D /* test.track */,
 			);
 			path = tracks;
@@ -195,6 +204,9 @@
 				3D6790731760DFDA0061B88D /* test.track in Resources */,
 				3D6790761760DFE20061B88D /* icon.png in Resources */,
 				3D6790771760DFE20061B88D /* sansation.ttf in Resources */,
+				3D6790941766493E0061B88D /* test2.track in Resources */,
+				3D6790951766493E0061B88D /* test3.track in Resources */,
+				3D6790961766493E0061B88D /* test4.track in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

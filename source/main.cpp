@@ -36,19 +36,10 @@ int main(int, char const**) {
 
     // TEST: Load Test Track
     Rac0r::TrackLoader trackLoader;
-    std::vector<sf::Vector2f> trackPoints = trackLoader.loadFromFile(resourcePath() + "test.track");
-
-    // NOTE: Create Test Track
-    /*
-    std::vector<sf::Vector2f> trackPoints;
-    trackPoints.push_back(sf::Vector2f(10.0f, 10.0f));
-    trackPoints.push_back(sf::Vector2f(300.0f, 10.0f));
-    trackPoints.push_back(sf::Vector2f(500.0f, 300.0f));
-    trackPoints.push_back(sf::Vector2f(400.0f, 500.0f));
-    */
+    std::vector<sf::Vector2f> trackPoints = trackLoader.loadFromFile(resourcePath() + "test4.track");
     
     Rac0r::TrackLine testTrack;
-    testTrack.setThickness(2.0f);
+    testTrack.setThickness(4.0f);
     testTrack.setColor(sf::Color::Red);
     testTrack.loadFrom(trackPoints);
     testTrack.setPosition(50.0f, 50.0f);

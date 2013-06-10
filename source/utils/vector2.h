@@ -53,6 +53,10 @@ float angle(const sf::Vector2<T> & _a, const sf::Vector2<T> & _b) {
     return scalar(_a, _b) / (len1 * len2);
 }
 
+template <typename T>
+float slope(const sf::Vector2<T> & _a, const sf::Vector2<T> & _b) {
+    return (_b.y - _a.y) / (_b.x - _a.x);
+}
 
 
 
