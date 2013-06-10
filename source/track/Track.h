@@ -30,6 +30,10 @@ class Track {
         void setPoints(const Points & _value);
         const Points & getPoints() const { return this->mPoints; }
     
+        void setScale(float _value, bool _respectCurveDirection = true);
+        float getScale() const { return this->mScale; }
+        void scaleToFitBounds(const sf::Vector2f _value, bool _respectCurveDirection = true, float _adjustValue = 0.0f);
+    
         void setCenter(const sf::Vector2f & _value);
         const sf::Vector2f & getCenter() const { return this->mCenter; }
     
@@ -46,6 +50,7 @@ class Track {
         Points              mPoints;
         sf::Vector2f        mBounds[2]; // top-left, bottom-right
         sf::Vector2f        mCenter;
+        float               mScale;
         std::string         mName;
         std::string         mAuthor;
     

@@ -21,6 +21,8 @@ Track::Track() :
 
 Track::Track(const Points & _points, const std::string & _name, const std::string & _author) :
     mPoints(_points),
+    mCenter(0.0f, 0.0f),
+    mScale(1.0f),
     mName(_name),
     mAuthor(_author)
 {
@@ -30,15 +32,79 @@ Track::Track(const Points & _points, const std::string & _name, const std::strin
 void Track::setPoints(const Points & _value) {
     
     this->mPoints = _value;
-    
+    this->mScale = 1.0f;
+
     this->computeBounds();
 }
 
+void Track::setScale(float _value, bool _respectCurveDirection) {
+    
+    if (_value == 0.0f) {
+        return;
+    }
+    
+    if (!_respectCurveDirection) {
+        for (auto & point : this->mPoints) {
+            sf::Vector2f newPoint = point;
+            // move to origin
+            newPoint -= this->mCenter;
+            // scale
+            newPoint *= _value;
+            // move back
+            newPoint += this->mCenter;
+            // store
+            point = newPoint;
+        }
+    } else {
+    
+        for (unsigned int i = 0; i < this->mPoints.size(); ++i) {
+            sf::Vector2f curPoint = this->mPoints[i];
+            sf::Vector2f nextPoint;
+            if (i+1 == this->mPoints.size()) {
+                nextPoint = this->mPoints[0];
+            } else {
+                nextPoint = this->mPoints[i+1];
+            }
+            
+            // compute point othogonal
+            sf::Vector2f dir = orthogonal(normalize(curPoint- nextPoint)) * _value;
+            // move to origin
+            curPoint -= this->mCenter;
+            // scale
+            curPoint += dir;
+            // move back
+            curPoint += this->mCenter;
+            // store
+            this->mPoints[i] = curPoint;
+        }
+    }
+    
+    this->mScale = _value;
+    this->computeBounds();
+    
+    std::cout << "Track Scale: Scale(" << this->mScale << ")" << std::endl;
+}
+
+void Track::scaleToFitBounds(const sf::Vector2f _value, bool _respectCurveDirection, float _adjustValue) {
+    
+    float width = this->mBounds[1].x - this->mBounds[0].x;
+    float height = this->mBounds[1].y - this->mBounds[0].y;
+    float scale = fmin(_value.x / width, _value.y / height) + _adjustValue;
+    
+    this->setScale(scale, _respectCurveDirection);
+}
+
 void Track::setCenter(const sf::Vector2f & _value) {
+
     sf::Vector2f offset = _value - this->mCenter;
+
     for (auto & point : this->mPoints) {
         point += offset;
     }
+    
+    this->mCenter = _value;
+    
+    std::cout << "Track Center: Center(" << this->mCenter << ")" << std::endl;
 }
 
 

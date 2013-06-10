@@ -63,7 +63,10 @@ float slope(const sf::Vector2<T> & _a, const sf::Vector2<T> & _b) {
 }
 
 
-
+template <typename T>
+sf::Vector2<T> operator * (sf::Vector2<T> & _a, sf::Vector2<T> & _b) {
+    return sf::Vector2<T>(_a.x * _b.x, _a.y * _b.y);
+}
 
 // overload steam output for the vector class
 template <typename T>

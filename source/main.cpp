@@ -35,18 +35,36 @@ int main(int, char const**) {
     }
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
-    // TEST: Load Test Track
+    // store tracks & track lines
+    std::vector<Rac0r::Track> tracks;
+    std::vector<Rac0r::TrackLine> trackLines;
+    
+    // Load Main Track
     Rac0r::TrackLoader trackLoader;
-    Rac0r::Track track = trackLoader.loadFromFile(resourcePath() + "test4.track");
+    Rac0r::Track mainTrack = trackLoader.loadFromFile(resourcePath() + "test4.track");
     
-    // center track
-    track.setCenter(sf::Vector2f(videoMode.width / 2, videoMode.height / 2));
+    mainTrack.setCenter(sf::Vector2f(videoMode.width / 2, videoMode.height / 2));
+    mainTrack.scaleToFitBounds(sf::Vector2f(videoMode.width, videoMode.height), false, -0.2f);
     
-    // setup track renderer
-    Rac0r::TrackLine trackLine(track);
-    trackLine.setThickness(4.0f);
-    trackLine.setColor(sf::Color::Red);
- 
+    tracks.push_back(mainTrack);
+    
+    // create sub tracks & their lines
+    for (unsigned int i = 0; i < 4; ++i) {
+        Rac0r::Track subTrack = mainTrack;
+        subTrack.scaleToFitBounds(sf::Vector2f(videoMode.width, videoMode.height), true, (20.0f * static_cast<float>(i+1)));
+        tracks.push_back(subTrack);
+    }
+    
+    // create track line renderer
+    unsigned int color = 0;
+    sf::Color colors[4] = { sf::Color::Red, sf::Color::Green, sf::Color::Blue, sf::Color::Yellow };
+    for (auto & track : tracks) {
+        Rac0r::TrackLine trackLine(track);
+        trackLine.setThickness(4.0f);
+        trackLine.setColor(colors[color++]);
+        trackLines.push_back(trackLine);
+    }
+    
     // Start the game loop
     while (window.isOpen()) {
         
@@ -67,10 +85,10 @@ int main(int, char const**) {
         // Clear screen
         window.clear();
 
-               
         // TODO: Render Scene
-        window.draw(trackLine);
-        
+        for (auto & trackLine : trackLines) {
+            window.draw(trackLine);
+        }
         
         // Update the window
         window.display();
