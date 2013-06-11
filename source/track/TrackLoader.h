@@ -16,7 +16,7 @@ namespace Rac0r {
 class TrackLoader {
     private:
         // how many points should be generated per curve
-        constexpr static const unsigned int DEFAULT_CURVE_STEPS    =   10;
+        constexpr static const unsigned int DEFAULT_CURVE_STEPS    =   10; // TODO: 40+ Um so ungenauer wird es an den Enden der Kurve?????
     
         // curve roation
         enum class Curve_Rotation { COUNTER_CLOCK_WISE = 0, CLOCK_WISE = 1 };

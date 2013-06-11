@@ -15,11 +15,7 @@
 #include "../utils/vector2.h"
 
 
-
 namespace Rac0r {
-    
-#define DEG_TO_RAD(x) (x) * (M_PI / 180.0f)
-#define RAD_TO_DEG(x) (x) * (180.0f / M_PI)
 
 
 TrackLoader::TrackLoader() :
@@ -64,27 +60,26 @@ Track TrackLoader::loadFromFile(const std::string & _fileName) {
         
             points.push_back(point);
             
-            std::cout << "Info: Straight track part found. Point(" << point << ")" << std::endl;
+            std::cout << "Info: Straight track part found. Start Point(" << point << ")" << std::endl;
         } else if (type == "ll") { // left-left (90 deg)
+            std::cout << "Info: Left-Left 90 degree track part found. Start Point(" << point << ")" << std::endl;
             
-            this->computeCurve(TrackLoader::Curve_Rotation::COUNTER_CLOCK_WISE, 90.0f, point, dir, points);
-            
-            std::cout << "Info: Left-Left 90 degree track part found. Point(" << point << ")" << std::endl;
+            this->computeCurve(TrackLoader::Curve_Rotation::COUNTER_CLOCK_WISE, 90.0f, point, dir, points);  
         } else if (type == "l") { // left-left (90 deg)
-
+            std::cout << "Info: Left-Left 45 degree track part found. Start Point(" << point << ")" << std::endl;
+        
             this->computeCurve(TrackLoader::Curve_Rotation::COUNTER_CLOCK_WISE, 45.0f, point, dir, points);
             
-            std::cout << "Info: Left-Left 45 degree track part found. Point(" << point << ")" << std::endl;
         } else if (type == "rr") { // right-right (90 deg)
-
+            std::cout << "Info: Right-Right 90 degree track part found. Start Point(" << point << ")" << std::endl;
+       
             this->computeCurve(TrackLoader::Curve_Rotation::CLOCK_WISE, 90.0f, point, dir, points);
             
-            std::cout << "Info: Right-Right 90 degree track part found. Point(" << point << ")" << std::endl;
         } else if (type == "r") { // right-right (45 deg)
-            
+            std::cout << "Info: Right-Right 45 degree track part found. Start Point(" << point << ")" << std::endl;
+        
             this->computeCurve(TrackLoader::Curve_Rotation::CLOCK_WISE, 45.0f, point, dir, points);
             
-            std::cout << "Info: Right-Right 45 degree track part found. Point(" << point << ")" << std::endl;
         } else if (type == "c") { // completed (start - finish are connected
             std::cout << "Info: track end found." << std::endl;
             break;
@@ -103,6 +98,11 @@ void TrackLoader::computeCurve(Curve_Rotation _roation, float _degree, const sf:
     if (this->mCurveSteps == 0) {
         this->mCurveSteps = TrackLoader::DEFAULT_CURVE_STEPS;
     }
+    
+    /* TODO: REMOVE
+    _points.push_back(_point);
+    return;
+    */
     
     bool cw = static_cast<bool>(_roation);
    
@@ -131,6 +131,9 @@ void TrackLoader::computeCurve(Curve_Rotation _roation, float _degree, const sf:
     //std::cout << "Start Dir:" << _dir << std::endl;
     //std::cout << "Start Angle:" << RAD_TO_DEG(startAngle) << std::endl;
     
+    // TODO: REMOVE
+    sf::Vector2f lastPoint;
+    
     // generate curve
     for (unsigned int i = 0; i < this->mCurveSteps; ++i) {
         float angle = RAD_TO_DEG(startAngle) + (delta * static_cast<float>(i) * (cw ? -1.0f : 1.0f));
@@ -141,6 +144,7 @@ void TrackLoader::computeCurve(Curve_Rotation _roation, float _degree, const sf:
         //std::cout << "Sin: " << s  << " - Cos: " << c << std::endl;
    
         sf::Vector2f point(rotPoint.x * c + rotPoint.y * s, -rotPoint.x * s + rotPoint.y * c);
+        
         //std::cout << "Rotated Point(" << i << "): " << point << std::endl;
         
         point *= radius;
@@ -149,8 +153,12 @@ void TrackLoader::computeCurve(Curve_Rotation _roation, float _degree, const sf:
         //std::cout << "Translated Point(" << i << "): " << point << std::endl;
         
         _points.push_back(point);
+        
+        // TODO: REMOVE
+        lastPoint = point;
     }
  
+    std::cout << "Info: Last Curve Point(" << lastPoint << ")" << std::endl;
 }
 
 

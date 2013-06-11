@@ -14,8 +14,10 @@
 
 #include "ResourcePath.hpp"
 
-#include "track/TrackLine.h"
+#include "track/TrackDrawable.h"
 #include "track/TrackLoader.h"
+
+#include "car/Car.h"
 
 
 int main(int, char const**) {
@@ -37,11 +39,12 @@ int main(int, char const**) {
 
     // store tracks & track lines
     std::vector<Rac0r::Track> tracks;
-    std::vector<Rac0r::TrackLine> trackLines;
+    std::vector<Rac0r::TrackDrawable> trackDrawables;
+    std::vector<Rac0r::Car> cars;
     
     // Load Main Track
     Rac0r::TrackLoader trackLoader;
-    Rac0r::Track mainTrack = trackLoader.loadFromFile(resourcePath() + "test4.track");
+    Rac0r::Track mainTrack = trackLoader.loadFromFile(resourcePath() + "test.track");
     
     mainTrack.setCenter(sf::Vector2f(videoMode.width / 2, videoMode.height / 2));
     mainTrack.scaleToFitBounds(sf::Vector2f(videoMode.width, videoMode.height), false, -0.2f);
@@ -49,9 +52,9 @@ int main(int, char const**) {
     tracks.push_back(mainTrack);
     
     // create sub tracks & their lines
-    for (unsigned int i = 0; i < 4; ++i) {
+    for (unsigned int i = 0; i < 2; ++i) {
         Rac0r::Track subTrack = mainTrack;
-        subTrack.scaleToFitBounds(sf::Vector2f(videoMode.width, videoMode.height), true, (20.0f * static_cast<float>(i+1)));
+        subTrack.scaleToFitBounds(sf::Vector2f(videoMode.width, videoMode.height), true, -(20.0f * static_cast<float>(i+1)));
         tracks.push_back(subTrack);
     }
     
@@ -59,11 +62,19 @@ int main(int, char const**) {
     unsigned int color = 0;
     sf::Color colors[4] = { sf::Color::Red, sf::Color::Green, sf::Color::Blue, sf::Color::Yellow };
     for (auto & track : tracks) {
-        Rac0r::TrackLine trackLine(track);
-        trackLine.setThickness(4.0f);
-        trackLine.setColor(colors[color++]);
-        trackLines.push_back(trackLine);
+        Rac0r::TrackDrawable trackDrawable(track);
+        trackDrawable.setThickness(2.0f);
+        trackDrawable.setColor(colors[color]);
+        trackDrawables.push_back(trackDrawable);
+        
+        // create cars for the track
+        Rac0r::Car car(track);
+        car.setColor(colors[color++]);
+        cars.push_back(car);
     }
+    
+    // delta time handling
+    sf::Clock timer;
     
     // Start the game loop
     while (window.isOpen()) {
@@ -80,15 +91,31 @@ int main(int, char const**) {
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
                 window.close();
             }
+            
+            /* TODO
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+                car.accelerate();
+            }
+            */
         }
 
         // Clear screen
         window.clear();
 
-        // TODO: Render Scene
-        for (auto & trackLine : trackLines) {
-            window.draw(trackLine);
+        // compute delta time
+        sf::Time elapsed = timer.restart();
+
+        // Render Tracks
+        for (auto & trackDrawable : trackDrawables) {
+            window.draw(trackDrawable);
         }
+        
+        // Render cars
+        for (auto & car : cars) {
+            car.update(elapsed);   // TODO: Delta Time noch berechnen pro Durchlauf
+            car.draw(window);
+        }
+        
         
         // Update the window
         window.display();

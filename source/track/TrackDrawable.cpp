@@ -1,12 +1,12 @@
 //
-//  TrackLine.cpp
+//  TrackDrawable.cpp
 //  Rac0r
 //
 //  Created by Jan Schulte on 02.06.13.
 //  Copyright (c) 2013 Jan Schulte. All rights reserved.
 //
 
-#include "TrackLine.h"
+#include "TrackDrawable.h"
 #include "../utils/vector2.h"
 
 #include <GLUT/glut.h>
@@ -14,23 +14,23 @@
 
 namespace Rac0r {
     
-TrackLine::TrackLine() :
+TrackDrawable::TrackDrawable() :
     mColor(sf::Color::White),
     mThickness(1.0f),
     mIsDirty(true) {
 }
 
-TrackLine::TrackLine(const TrackLine & _other) {
+TrackDrawable::TrackDrawable(const TrackDrawable & _other) {
     this->operator=(_other);
 }
 
-TrackLine::TrackLine(const Track & _track) : TrackLine() {
+TrackDrawable::TrackDrawable(const Track & _track) : TrackDrawable() {
     this->loadFromTrack(_track);
 }
 
-void TrackLine::loadFromTrack(const Track & _track) {
+void TrackDrawable::loadFromTrack(const Track & _track) {
     
-    // copy all TrackLine points
+    // copy all TrackDrawable points
     this->mPoints = _track.getPoints();
     
     // create segments    
@@ -42,7 +42,7 @@ void TrackLine::loadFromTrack(const Track & _track) {
     this->updateVB();
 }
 
-TrackLine & TrackLine::operator = (const TrackLine & _other) {
+TrackDrawable & TrackDrawable::operator = (const TrackDrawable & _other) {
 
     if (this != &_other) {
 		this->mPoints = _other.mPoints;
@@ -55,7 +55,7 @@ TrackLine & TrackLine::operator = (const TrackLine & _other) {
 	return *this;
 }
     
-void TrackLine::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+void TrackDrawable::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     
     if (this->mIsDirty) {
         this->updateVB();
@@ -67,7 +67,7 @@ void TrackLine::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 }
     
     
-void TrackLine::updateVB() const {
+void TrackDrawable::updateVB() const {
     
     //this->mVertices.clear();
     

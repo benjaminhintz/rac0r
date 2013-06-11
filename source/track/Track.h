@@ -20,7 +20,9 @@ namespace Rac0r {
     
 class Track {
     public:
-        typedef std::vector<sf::Vector2f>   Points;
+        typedef std::vector<sf::Vector2f>       Points;
+    
+        constexpr static const size_t           START_INDEX     =   0;
     
     public:
         Track();
@@ -29,6 +31,9 @@ class Track {
         // properties
         void setPoints(const Points & _value);
         const Points & getPoints() const { return this->mPoints; }
+        size_t size() const { return this->mPoints.size(); }
+        const sf::Vector2f & operator[] (size_t _index) const; // NOTE: Circular Version
+        bool findClosestPoint(const sf::Vector2f & _location, size_t & _foundIndex) const;
     
         void setScale(float _value, bool _respectCurveDirection = true);
         float getScale() const { return this->mScale; }

@@ -57,7 +57,7 @@ void Track::setScale(float _value, bool _respectCurveDirection) {
         }
     } else {
     
-        for (unsigned int i = 0; i < this->mPoints.size(); ++i) {
+        for (size_t i = 0; i < this->mPoints.size(); ++i) {
             sf::Vector2f curPoint = this->mPoints[i];
             sf::Vector2f nextPoint;
             if (i+1 == this->mPoints.size()) {
@@ -124,6 +124,49 @@ void Track::computeBounds() {
     
     std::cout << "Track Center: Center(" << this->mCenter << ")" << std::endl;
     std::cout << "Track Bounds: Top-Left(" << this->mBounds[0] << ") - Bottom-Right(" << this->mBounds[1] << ")" << std::endl;
+}
+
+bool Track::findClosestPoint(const sf::Vector2f & _location, size_t & _foundIndex) const {
+    bool result = false;
+    
+    float hitScore = FLT_MAX;
+    
+    for (size_t i = 0; i < this->mPoints.size(); ++i) {
+        sf::Vector2f curPoint = this->mPoints[i];
+        sf::Vector2f nextPoint;
+        if (i+1 == this->mPoints.size()) {
+            nextPoint = this->mPoints[0];
+        } else {
+            nextPoint = this->mPoints[i+1];
+        }
+        
+        sf::Vector2f projectedPoint = project(_location, curPoint, nextPoint);
+        
+        if (projectedPoint.x < curPoint.x || projectedPoint.x > nextPoint.x) {
+            projectedPoint = nextPoint;
+        }
+ 
+        float distance = length(_location - projectedPoint);
+        
+        if (distance < hitScore) {
+            hitScore = distance;
+            //_found = projectedPoint;
+            _foundIndex = i+1;
+            result = true;
+        }
+    }
+    
+    return result;
+}
+    
+const sf::Vector2f & Track::operator[] (size_t _index) const {
+    
+    if (_index >= this->mPoints.size()) {
+        size_t index = this->mPoints.size() - _index;
+        return this->operator[](index);
+    } else {
+        return this->mPoints[_index];
+    }
 }
 
 
