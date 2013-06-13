@@ -19,6 +19,9 @@
 
 #include "car/Car.h"
 
+#include "utils/vector2.h"
+
+
 int main(int, char const** argv) {
 
     std::string trackDir;
@@ -29,6 +32,29 @@ int main(int, char const** argv) {
     trackDir = "tracks/";
     #endif
 
+
+    
+/*
+    sf::Vector2f location(21.0f, 0.0f);
+    sf::Vector2f firstPoint(10.0f, 0.0f);
+    sf::Vector2f secondPoint(20.0f, 0.0f);
+        
+    sf::Vector2f projectedPoint = Rac0r::project(location, firstPoint, secondPoint);
+    sf::Vector2f segmentDir = Rac0r::normalize(secondPoint - firstPoint);
+    sf::Vector2f locationDir = Rac0r::normalize(projectedPoint - secondPoint);
+    
+    float dir = Rac0r::scalar(segmentDir, locationDir);
+    if (dir > 0.0f) {
+        std::cout << "Next Segment" << std::endl;
+    } else if (dir < 0.0f) {
+        std::cout << "Current Segment" << std::endl;
+    } else {
+        std::cout << "Next Segment" << std::endl;
+    }
+    
+    return 1;
+    */
+    
 	int numTracks = 1;
 
     // Setup Rendering Settings
@@ -53,7 +79,7 @@ int main(int, char const** argv) {
     
     // Load Main Track
     Rac0r::TrackLoader trackLoader;
-    Rac0r::Track mainTrack = trackLoader.loadFromFile(resourcePath() + trackDir + "test3.track");
+    Rac0r::Track mainTrack = trackLoader.loadFromFile(resourcePath() + trackDir + "test.track");
 
     
     mainTrack.setCenter(sf::Vector2f(videoMode.width / 2, videoMode.height / 2));

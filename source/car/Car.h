@@ -43,10 +43,8 @@ class Car {
         const sf::Color & getColor() const { return this->mCarDrawable.getFillColor(); }
     
     private:
-        void applyDirection(size_t _trackIndex);
-        //void steerTorwards(const sf::Vector2f & _target);
-        void applyForce(const sf::Vector2f & _force);
-    
+        void keepOnTrack();
+       
     private:
         const Track&            mTrack;
         
@@ -54,9 +52,8 @@ class Car {
         sf::Vector2f            mDirection;
         sf::Vector2f            mVelocitiy;
         float                   mAcceleration;
-        size_t                  mTrackIndex;
-        size_t                  mNextTrackIndex;
-        bool                    mAccelerate;
+        size_t                  mSegmentStart;
+        size_t                  mSegmentEnd;
         sf::RectangleShape      mCarDrawable;
     
         // Debug Stuff
