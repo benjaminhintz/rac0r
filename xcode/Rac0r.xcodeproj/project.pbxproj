@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		17F21D76176A31E800436390 /* MenuScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17F21D72176A31E800436390 /* MenuScreen.cpp */; };
+		17F21D77176A31E800436390 /* Screen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17F21D74176A31E800436390 /* Screen.cpp */; };
+		17F21D7A176A31FB00436390 /* Tahoma.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 17F21D79176A31FB00436390 /* Tahoma.ttf */; };
 		3D679050175BD8110061B88D /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D67904F175BD8110061B88D /* OpenGL.framework */; };
 		3D67906B1760DF820061B88D /* TrackDrawable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D6790671760DF820061B88D /* TrackDrawable.cpp */; };
 		3D67906C1760DF820061B88D /* TrackLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D6790691760DF820061B88D /* TrackLoader.cpp */; };
@@ -23,6 +26,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		17F21D72176A31E800436390 /* MenuScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuScreen.cpp; sourceTree = "<group>"; };
+		17F21D73176A31E800436390 /* MenuScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuScreen.h; sourceTree = "<group>"; };
+		17F21D74176A31E800436390 /* Screen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Screen.cpp; sourceTree = "<group>"; };
+		17F21D75176A31E800436390 /* Screen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Screen.h; sourceTree = "<group>"; };
+		17F21D79176A31FB00436390 /* Tahoma.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tahoma.ttf; sourceTree = "<group>"; };
 		3D679022175A4C4B0061B88D /* Rac0r.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rac0r.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D679026175A4C4B0061B88D /* Rac0r-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Rac0r-Info.plist"; sourceTree = "<group>"; };
 		3D67904F175BD8110061B88D /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
@@ -58,6 +66,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		17F21D71176A31E800436390 /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				17F21D72176A31E800436390 /* MenuScreen.cpp */,
+				17F21D73176A31E800436390 /* MenuScreen.h */,
+				17F21D74176A31E800436390 /* Screen.cpp */,
+				17F21D75176A31E800436390 /* Screen.h */,
+			);
+			path = ui;
+			sourceTree = "<group>";
+		};
+		17F21D78176A31FB00436390 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				17F21D79176A31FB00436390 /* Tahoma.ttf */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
 		3D679018175A4C4B0061B88D = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +126,7 @@
 			children = (
 				3D6790741760DFE20061B88D /* icon.png */,
 				3D6790751760DFE20061B88D /* sansation.ttf */,
+				17F21D78176A31FB00436390 /* fonts */,
 				3D67905B175CF28D0061B88D /* tracks */,
 			);
 			name = Resources;
@@ -111,6 +139,7 @@
 				3D6790781760E0310061B88D /* ResourcePath.hpp */,
 				3D6790791760E0310061B88D /* ResourcePath.mm */,
 				3D67906D1760DFA20061B88D /* main.cpp */,
+				17F21D71176A31E800436390 /* ui */,
 				3D679052175BE75F0061B88D /* utils */,
 				3D679048175A59D00061B88D /* track */,
 			);
@@ -226,6 +255,7 @@
 				3D6790941766493E0061B88D /* test2.track in Resources */,
 				3D6790951766493E0061B88D /* test3.track in Resources */,
 				3D6790961766493E0061B88D /* test4.track in Resources */,
+				17F21D7A176A31FB00436390 /* Tahoma.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +288,8 @@
 				3D67907A1760E0310061B88D /* ResourcePath.mm in Sources */,
 				3D67909917664E6F0061B88D /* Track.cpp in Sources */,
 				3D6790A11766892E0061B88D /* Car.cpp in Sources */,
+				17F21D76176A31E800436390 /* MenuScreen.cpp in Sources */,
+				17F21D77176A31E800436390 /* Screen.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

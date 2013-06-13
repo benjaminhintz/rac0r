@@ -16,7 +16,8 @@
 
 #include "track/TrackDrawable.h"
 #include "track/TrackLoader.h"
-
+#include "ui/Screen.h"
+#include "ui/MenuScreen.h"
 #include "car/Car.h"
 
 int main(int, char const** argv) {
@@ -118,7 +119,19 @@ int main(int, char const** argv) {
 
         // compute delta time
         sf::Time elapsed = timer.restart();
+        
+        // Vector mit abstrakten screens 
+        std::vector<Screen*> screens;
+        
+        // Erster Screen
+        MenuScreen ersterBildschirm;
+        screens.push_back(&ersterBildschirm);
+        
+        // Bildschirm zeichnen
+        window.draw(*screens.back());
 
+        //screens.push_back(ersterBildschirm);
+        
         // Render Tracks
         for (auto & trackDrawable : trackDrawables) {
             window.draw(trackDrawable);
