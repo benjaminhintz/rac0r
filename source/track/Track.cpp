@@ -148,7 +148,7 @@ bool Track::findSegment(const sf::Vector2f & _currentLocation, size_t _startInde
         float secondDir = Rac0r::scalar(segmentDir, secondlocationDir);
         
         if (firstDir < 0.0f && secondDir < 0.0f) {
-            std::cout << "Warning: Failed to find segment in time." << std::endl;
+            //std::cout << "Warning: Failed to find segment in time." << std::endl;
             return false;
         }
         
@@ -173,46 +173,6 @@ bool Track::findSegment(const sf::Vector2f & _currentLocation, size_t _startInde
     
     return false;
 }
-
-
-bool Track::findClosestPoint(size_t _startIndex, const sf::Vector2f & _location, size_t & _foundIndex) const {
-    bool result = false;
-    
-    float hitScore = FLT_MAX;
-    
-    for (size_t i = _startIndex; i < this->mPoints.size(); ++i) {
-        sf::Vector2f curPoint = this->mPoints[i];
-        sf::Vector2f nextPoint;
-        if (i+1 == this->mPoints.size()) {
-            nextPoint = this->mPoints[0];
-        } else {
-            nextPoint = this->mPoints[i+1];
-        }
-        
-        sf::Vector2f projectedPoint = project(_location, curPoint, nextPoint);
-        
-        if (projectedPoint.x < curPoint.x || projectedPoint.x > nextPoint.x) {
-            projectedPoint = nextPoint;
-        }
- 
-        float distance = length(_location - projectedPoint);
-        
-        if (distance < hitScore) {
-            hitScore = distance;
-            if (i+1 == this->mPoints.size()) {
-                _foundIndex = 0;
-            } else {
-                _foundIndex = i+1;
-            }
-            result = true;
-        } else {
-            break;
-        }
-    }
-    
-    return result;
-}
-
     
 const sf::Vector2f & Track::operator[] (size_t _index) const {
     

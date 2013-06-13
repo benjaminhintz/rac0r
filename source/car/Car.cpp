@@ -18,8 +18,9 @@ Car::Car(const Track & _track) :
     mTrack(_track),
     mLocation(_track[Track::START_INDEX]),
     mDirection(1.0f, 0.0f),
-    mVelocitiy(0.0f, 0.0f),
-    mAcceleration(0.0f),
+    //mVelocitiy(0.0f, 0.0f),
+    mVelocity(0.0f),
+    mForce(0.0f),
     mSegmentStart(Track::START_INDEX),
     mSegmentEnd(Track::START_INDEX),
     mCarDrawable(sf::Vector2f(30.0f, 10.0f))
@@ -32,17 +33,30 @@ void Car::update(const sf::Time & _time) {
     
     // compute cars offset to the track segment and adjust it
     sf::Vector2f proj = project(this->mLocation, this->mTrack[this->mSegmentStart], this->mTrack[this->mSegmentEnd]);
-    sf::Vector2f dir = proj - this->mLocation;
+    sf::Vector2f positionAdjust = proj - this->mLocation;
    
-    this->mVelocitiy = this->mDirection * (this->mAcceleration * _time.asSeconds()) + dir;
-    this->mVelocitiy = limit(this->mVelocitiy, Car::MAX_SPEED);
+    // apply drag friction
+    if (this->mVelocity > 0.0f) {
+        this->mForce -= abs(Car::FRICTION_FORCE * (this->mVelocity));
+    }
     
-    this->mLocation += this->mVelocitiy;
+    // compute acceleration A = F / M
+    float acceleration = this->mForce / Car::DEFAULT_MASS;
+    std::cout << "Acceleration: " << acceleration << std::endl;
     
-    this->decelerate();
+    // compute velocity
+    this->mVelocity += acceleration * _time.asSeconds();
+    this->mVelocity = fmax(fmin(this->mVelocity, Car::MAX_VELOCITY), 0.0f);
+    //this->mVelocitiy += this->mDirection * (acceleration * _time.asSeconds());
+    std::cout << "Velocity: " << this->mVelocity << std::endl;
+        
+    // compute new position
+    this->mLocation += this->mDirection * (this->mVelocity * _time.asSeconds());
+    //this->mLocation += this->mVelocitiy * _time.asSeconds();
+    this->mLocation += positionAdjust;
     
+    // keep car on the track
     this->keepOnTrack();
-    
 }
 
 
@@ -65,17 +79,7 @@ void Car::draw(sf::RenderTarget & _target, const sf::RenderStates & _states) {
 }
     
 void Car::accelerate() {
-    
-    this->mAcceleration += Car::ACCELERATION_STEP;
-    this->mAcceleration = fmax(this->mAcceleration, Car::MAX_SPEED);
-}
-
-void Car::decelerate() {
-
-    this->mAcceleration -= Car::DECELERATION_STEP;
-    if (this->mAcceleration  < 0.0f) {
-        this->mAcceleration = 0.0f;
-    }
+    this->mForce = Car::ACCELERATION_FORCE;
 }
 
 void Car::reset() {
@@ -83,8 +87,8 @@ void Car::reset() {
     this->mSegmentEnd = Track::START_INDEX;
     this->mLocation = this->mTrack[this->mSegmentStart];
     this->mDirection = sf::Vector2f(1.0f, 0.0f);
-    this->mVelocitiy = sf::Vector2f(0.0f, 0.0f);
-    this->mAcceleration = 0.0f;
+    this->mVelocity = 0.0f;
+    this->mForce = 0.0f;
 }
 
 void Car::keepOnTrack() {

@@ -23,19 +23,22 @@ namespace Rac0r {
     
 class Car {
     public:
-        constexpr static const float            MAX_SPEED           =   6.0f;
-        constexpr static const float            ACCELERATION_STEP   =   10.0f;
-        constexpr static const float            DECELERATION_STEP   =   1.0f;
+        constexpr static const float            MAX_VELOCITY            =   1000.0f;
+        constexpr static const float            ACCELERATION_FORCE      =   600.0f;
+        constexpr static const float            FRICTION_FORCE          =   0.05;
+        constexpr static const float            DEFAULT_MASS            =   1.0f;
    
     public:
         Car(const Track &_track);
     
+        // update & render the car
         void update(const sf::Time & _time);
         void draw(sf::RenderTarget & _target, const sf::RenderStates & _states = sf::RenderStates::Default);
     
+        // accelerate the car
         void accelerate();
-        void decelerate();
     
+        // reset car to start position
         void reset();
     
         // properties
@@ -46,14 +49,18 @@ class Car {
         void keepOnTrack();
        
     private:
+        // track handling
         const Track&            mTrack;
-        
-        sf::Vector2f            mLocation;
-        sf::Vector2f            mDirection;
-        sf::Vector2f            mVelocitiy;
-        float                   mAcceleration;
         size_t                  mSegmentStart;
         size_t                  mSegmentEnd;
+    
+        // physics handling
+        sf::Vector2f            mLocation;
+        sf::Vector2f            mDirection;
+        float                   mVelocity;
+        float                   mForce;
+  
+        // visual handling
         sf::RectangleShape      mCarDrawable;
     
         // Debug Stuff

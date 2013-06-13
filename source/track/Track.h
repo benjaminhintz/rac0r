@@ -34,8 +34,7 @@ class Track {
         size_t size() const { return this->mPoints.size(); }
         const sf::Vector2f & operator[] (size_t _index) const; // NOTE: Circular Version
     
-        bool findClosestPoint(size_t _startIndex, const sf::Vector2f & _location, size_t & _foundIndex) const;
-    
+        // find nearest segment for the given location
         bool findSegment(const sf::Vector2f & _currentLocation, size_t _startIndex, size_t & _segmentStart, size_t & _segmentEnd) const;
     
         void setScale(float _value, bool _respectCurveDirection = true);
