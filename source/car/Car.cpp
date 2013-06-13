@@ -72,6 +72,10 @@ void Car::decelerate() {
     }
 }
 
+void Car::reset() {
+
+}
+
 void Car::applyDirection(size_t _trackIndex) {
     
     this->mDirection = normalize(this->mTrack[_trackIndex] - this->mLocation); // TODO: Evlt. 

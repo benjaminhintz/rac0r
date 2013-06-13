@@ -37,6 +37,8 @@ class Car {
         void accelerate();
         void decelerate();
     
+        void reset();
+    
         // properties
         void setColor(const sf::Color & _value) { this->mCarDrawable.setFillColor(_value); }
         const sf::Color & getColor() const { return this->mCarDrawable.getFillColor(); }

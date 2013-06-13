@@ -64,12 +64,19 @@ void TrackDrawable::draw(sf::RenderTarget& target, sf::RenderStates states) cons
     //states.transform *= getTransform();
     
     target.draw(this->mVertices, states);
+    
+    for (auto & point : this->mTrackPoints) {
+        target.draw(point, states);
+    }
 }
     
     
 void TrackDrawable::updateVB() const {
     
-    //this->mVertices.clear();
+    // Debug Stuff
+    std::vector<sf::CircleShape> * trackPoints = const_cast<std::vector<sf::CircleShape>*>(&this->mTrackPoints);
+    trackPoints->clear();
+    
     
     // create vertex array
     sf::VertexArray * vb = const_cast<sf::VertexArray*>(&this->mVertices); // get rid of const...
@@ -84,7 +91,7 @@ void TrackDrawable::updateVB() const {
     sf::Vertex * lastQuad = nullptr;
     for (auto & segment : this->mSegements) {
         currentQuad = &(*vb)[i++ * 4];
-    
+        
         // get segement points
         point1 = this->mPoints[segment.mPoint1];
         point2 = this->mPoints[segment.mPoint2];
@@ -117,14 +124,6 @@ void TrackDrawable::updateVB() const {
             currentQuad[2].position = firstQuad[1].position;
         }
         
-        /*
-        std::cout << "Segment: " << i-1 << std::endl;
-        std::cout << "[0] " << currentQuad[0].position << std::endl;
-        std::cout << "[1] " << currentQuad[1].position << std::endl;
-        std::cout << "[2] " << currentQuad[2].position << std::endl;
-        std::cout << "[3] " << currentQuad[3].position << std::endl;
-        */
-        
         // set quad color
         currentQuad[0].color = this->mColor;
         currentQuad[1].color = this->mColor;
@@ -133,6 +132,14 @@ void TrackDrawable::updateVB() const {
         
         // store last quad
         lastQuad = currentQuad;
+        
+        
+        // Debug Stuff
+        sf::CircleShape debugPoint(2);
+        debugPoint.setPosition(point1);
+        debugPoint.setFillColor(sf::Color::White);
+        trackPoints->push_back(debugPoint);
+        
     }
 
     // get rid of const and set the flag

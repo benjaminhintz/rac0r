@@ -55,13 +55,17 @@ class TrackDrawable : public sf::Drawable {
                 : mPoint1(_point1), mPoint2(_point2) { }
         };
     
-        std::vector<sf::Vector2f>   mPoints;                // track points
-        std::vector<Segment>        mSegements;             // track segements
-        sf::Color                   mColor;                 // track color
-        float                       mThickness;             // track tickness (rendering only)
+        std::vector<sf::Vector2f>       mPoints;                // track points
+        std::vector<Segment>            mSegements;             // track segements
+        sf::Color                       mColor;                 // track color
+        float                           mThickness;             // track tickness (rendering only)
         
-        bool                        mIsDirty;               // vertex buffer needs to be updated
-        sf::VertexArray             mVertices;              // vertex buffer
+        bool                            mIsDirty;               // vertex buffer needs to be updated
+        sf::VertexArray                 mVertices;              // vertex buffer
+    
+        // Debug Stuff
+        std::vector<sf::CircleShape>    mTrackPoints;
+    
 };
 
 }
