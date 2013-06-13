@@ -59,9 +59,9 @@ class TrackDrawable : public sf::Drawable {
         std::vector<Segment>        mSegements;             // track segements
         sf::Color                   mColor;                 // track color
         float                       mThickness;             // track tickness (rendering only)
-        
+
+        sf::VertexArray				mVertices;              // vertex buffer
         bool                        mIsDirty;               // vertex buffer needs to be updated
-        sf::VertexArray             mVertices;              // vertex buffer
 };
 
 }

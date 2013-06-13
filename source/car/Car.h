@@ -23,8 +23,8 @@ namespace Rac0r {
     
 class Car {
     public:
-        constexpr static const float            MAX_SPEED   =   8.0f;
-        constexpr static const float            MAX_FORCE   =   10.0f;
+	static constexpr const float            MAX_SPEED   =   8.0f;
+	static constexpr const float            MAX_FORCE   =   10.0f;
    
     public:
         Car(const Track &_track);
