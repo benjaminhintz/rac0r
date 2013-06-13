@@ -72,9 +72,7 @@ void Track::setScale(float _value, bool _respectCurveDirection) {
             if (i == 0) {
                 lastDir = dir;
             }
-            
-            
-            
+ 
             lastDir = dir;
             // move to origin
             curPoint -= this->mCenter;
@@ -134,12 +132,12 @@ void Track::computeBounds() {
     std::cout << "Track Bounds: Top-Left(" << this->mBounds[0] << ") - Bottom-Right(" << this->mBounds[1] << ")" << std::endl;
 }
 
-bool Track::findClosestPoint(const sf::Vector2f & _location, size_t & _foundIndex) const {
+bool Track::findClosestPoint(size_t _startIndex, const sf::Vector2f & _location, size_t & _foundIndex) const {
     bool result = false;
     
     float hitScore = FLT_MAX;
     
-    for (size_t i = 0; i < this->mPoints.size(); ++i) {
+    for (size_t i = _startIndex; i < this->mPoints.size(); ++i) {
         sf::Vector2f curPoint = this->mPoints[i];
         sf::Vector2f nextPoint;
         if (i+1 == this->mPoints.size()) {

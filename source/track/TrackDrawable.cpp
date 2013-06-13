@@ -144,6 +144,7 @@ void TrackDrawable::updateVB() const {
         // Debug Stuff
         sf::CircleShape debugPoint(2);
         debugPoint.setPosition(point1);
+        debugPoint.setOrigin(1, 1);
         debugPoint.setFillColor(sf::Color::White);
         trackPoints->push_back(debugPoint);
         

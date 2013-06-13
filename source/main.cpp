@@ -20,12 +20,17 @@
 #include "car/Car.h"
 
 int main(int, char const** argv) {
+
+    std::string trackDir;
+    
+    #ifdef __linux
 	std::string tmp = argv[0];
 	Global::__path = tmp.substr(0, tmp.find_last_of('/'));
+    trackDir = "tracks/";
+    #endif
 
 	int numTracks = 1;
 
-	std::cout << Global::__path << std::endl;
     // Setup Rendering Settings
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
@@ -48,11 +53,11 @@ int main(int, char const** argv) {
     
     // Load Main Track
     Rac0r::TrackLoader trackLoader;
-    Rac0r::Track mainTrack = trackLoader.loadFromFile(resourcePath() + "tracks/test.track");
+    Rac0r::Track mainTrack = trackLoader.loadFromFile(resourcePath() + trackDir + "test3.track");
 
     
-    //mainTrack.setCenter(sf::Vector2f(videoMode.width / 2, videoMode.height / 2));
-    //mainTrack.scaleToFitBounds(sf::Vector2f(videoMode.width, videoMode.height), false, -0.2f);
+    mainTrack.setCenter(sf::Vector2f(videoMode.width / 2, videoMode.height / 2));
+    mainTrack.scaleToFitBounds(sf::Vector2f(videoMode.width, videoMode.height), false, -0.2f);
     
     tracks.push_back(mainTrack);
     
@@ -102,6 +107,10 @@ int main(int, char const** argv) {
                 cars[0].accelerate();
             }
             //*/
+            
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+                cars[0].reset();
+            }
         }
 
         // Clear screen

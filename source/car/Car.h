@@ -24,7 +24,6 @@ namespace Rac0r {
 class Car {
     public:
         constexpr static const float            MAX_SPEED           =   6.0f;
-        constexpr static const float            MAX_FORCE           =   20.0f;
         constexpr static const float            ACCELERATION_STEP   =   10.0f;
         constexpr static const float            DECELERATION_STEP   =   1.0f;
    
@@ -56,9 +55,14 @@ class Car {
         sf::Vector2f            mVelocitiy;
         float                   mAcceleration;
         size_t                  mTrackIndex;
+        size_t                  mNextTrackIndex;
         bool                    mAccelerate;
         sf::RectangleShape      mCarDrawable;
     
+        // Debug Stuff
+        sf::CircleShape         mLocationPoint;
+        sf::CircleShape         mNextLocationPoint;
+        sf::RectangleShape      mDirectionShape;
 };
 
 }
