@@ -22,6 +22,18 @@
 
 #include "utils/vector2.h"
 
+// TODO: Den Shit hier muss nacher in den Game State in dem man das SPiel spielt
+class GameState : public Rac0r::CarEventListener {
+    virtual void onCarDriftedOffTrack(Rac0r::Car & _car) {
+        std::cout << "Car drifted off track." << std::endl;
+    }
+    
+    virtual void onCarMovedThroughStart(Rac0r::Car & _car) {
+        std::cout << "Car moved through start." << std::endl;
+    }
+
+};
+
 
 int main(int, char const** argv) {
 
@@ -35,26 +47,6 @@ int main(int, char const** argv) {
 
 
     
-/*
-    sf::Vector2f location(21.0f, 0.0f);
-    sf::Vector2f firstPoint(10.0f, 0.0f);
-    sf::Vector2f secondPoint(20.0f, 0.0f);
-        
-    sf::Vector2f projectedPoint = Rac0r::project(location, firstPoint, secondPoint);
-    sf::Vector2f segmentDir = Rac0r::normalize(secondPoint - firstPoint);
-    sf::Vector2f locationDir = Rac0r::normalize(projectedPoint - secondPoint);
-    
-    float dir = Rac0r::scalar(segmentDir, locationDir);
-    if (dir > 0.0f) {
-        std::cout << "Next Segment" << std::endl;
-    } else if (dir < 0.0f) {
-        std::cout << "Current Segment" << std::endl;
-    } else {
-        std::cout << "Next Segment" << std::endl;
-    }
-    
-    return 1;
-    */
     
 	int numTracks = 1;
 
@@ -95,6 +87,9 @@ int main(int, char const** argv) {
         tracks.push_back(subTrack);
     }
     
+    // TEMP
+    GameState gameState;
+    
     // create track line renderer
     unsigned int color = 0;
     sf::Color colors[4] = { sf::Color::Red, sf::Color::Green, sf::Color::Blue, sf::Color::Yellow };
@@ -105,7 +100,7 @@ int main(int, char const** argv) {
         trackDrawables.push_back(trackDrawable);
         
         // create cars for the track
-        Rac0r::Car car(track);
+        Rac0r::Car car(track, &gameState);
         car.setColor(colors[color++]);
         cars.push_back(car);
     }
@@ -136,7 +131,7 @@ int main(int, char const** argv) {
             //*/
             
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-                cars[0].reset();
+                cars[0].resetToStart();
             }
         }
 

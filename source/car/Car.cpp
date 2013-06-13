@@ -14,18 +14,18 @@
 
 namespace Rac0r {
     
-Car::Car(const Track & _track) :
+Car::Car(const Track & _track, CarEventListener * _eventListener) :
     mTrack(_track),
+    mEventListener(_eventListener),
     mLocation(_track[Track::START_INDEX]),
     mDirection(1.0f, 0.0f),
-    //mVelocitiy(0.0f, 0.0f),
     mVelocity(0.0f),
     mForce(0.0f),
     mSegmentStart(Track::START_INDEX),
     mSegmentEnd(Track::START_INDEX),
-    mCarDrawable(sf::Vector2f(30.0f, 10.0f))
+    mCarDrawable(sf::Vector2f(Car::CAR_WIDTH, Car::CAR_HEIGHT))
 {
-    this->mCarDrawable.setOrigin(15.0f, 5.0f);
+    this->mCarDrawable.setOrigin(Car::CAR_WIDTH / 2.0f, Car::CAR_HEIGHT / 2.0f);
 }
 
 
@@ -42,13 +42,13 @@ void Car::update(const sf::Time & _time) {
     
     // compute acceleration A = F / M
     float acceleration = this->mForce / Car::DEFAULT_MASS;
-    std::cout << "Acceleration: " << acceleration << std::endl;
+    //std::cout << "Acceleration: " << acceleration << std::endl;
     
     // compute velocity
     this->mVelocity += acceleration * _time.asSeconds();
     this->mVelocity = fmax(fmin(this->mVelocity, Car::MAX_VELOCITY), 0.0f);
     //this->mVelocitiy += this->mDirection * (acceleration * _time.asSeconds());
-    std::cout << "Velocity: " << this->mVelocity << std::endl;
+    //std::cout << "Velocity: " << this->mVelocity << std::endl;
         
     // compute new position
     this->mLocation += this->mDirection * (this->mVelocity * _time.asSeconds());
@@ -82,7 +82,7 @@ void Car::accelerate() {
     this->mForce = Car::ACCELERATION_FORCE;
 }
 
-void Car::reset() {
+void Car::resetToStart() {
     this->mSegmentStart = Track::START_INDEX;
     this->mSegmentEnd = Track::START_INDEX;
     this->mLocation = this->mTrack[this->mSegmentStart];
@@ -113,24 +113,28 @@ void Car::keepOnTrack() {
         this->mNextLocationPoint.setFillColor(sf::Color::Blue);
         
         // Important stuff ;)
+        if (startIndex == 0 && endIndex == 1 && this->mSegmentStart == this->mTrack.size()-1 && this->mEventListener != NULL) {
+            this->mEventListener->onCarMovedThroughStart(*this);
+        }
         this->mDirection = normalize(this->mTrack[endIndex] - this->mTrack[this->mSegmentStart]);
         this->mSegmentStart = this->mSegmentEnd;
         this->mSegmentEnd = endIndex;
         
         //std::cout << "Current Segment (Start: " << this->mSegmentStart << ", End: " << this->mSegmentEnd << std::endl;
         
-        // DEBUG
-        //float len = length(this->mDirection * length(this->mVelocitiy)) * 100.0f;
-        float len = length(this->mDirection * 100.0f);
-        this->mDirectionShape = sf::RectangleShape(sf::Vector2f(len, 2));
-        this->mDirectionShape.setPosition(this->mLocation);
-        this->mDirectionShape.setOrigin(0, 1);
-        this->mDirectionShape.setRotation(RAD_TO_DEG(heading(this->mDirection)));
-        this->mDirectionShape.setFillColor(sf::Color::Green);
-        //std::cout << "Velo: " << this->mVelocitiy << " - Len: " << len << std::endl;
+        
 
     }
  
+    // Debug Stuff
+    float len = length(this->mDirection * this->mVelocity * 0.1f);
+    //float len = length(this->mDirection * 100.0f);
+    this->mDirectionShape = sf::RectangleShape(sf::Vector2f(len, 2));
+    this->mDirectionShape.setPosition(this->mLocation);
+    this->mDirectionShape.setOrigin(0, 1);
+    this->mDirectionShape.setRotation(RAD_TO_DEG(heading(this->mDirection)));
+    this->mDirectionShape.setFillColor(sf::Color::Green);
+    //std::cout << "Velo: " << this->mVelocitiy << " - Len: " << len << std::endl;
 }
     
 

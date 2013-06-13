@@ -105,7 +105,6 @@
 			isa = PBXGroup;
 			children = (
 				3D67903A175A4CD70061B88D /* classes */,
-				3D67909E176688010061B88D /* car */,
 				3D67902C175A4C4B0061B88D /* Resources */,
 				3D679025175A4C4B0061B88D /* Supporting Files */,
 				3D679051175BD8310061B88D /* Frameworks */,
@@ -142,6 +141,7 @@
 				17F21D71176A31E800436390 /* ui */,
 				3D679052175BE75F0061B88D /* utils */,
 				3D679048175A59D00061B88D /* track */,
+				3D67909E176688010061B88D /* car */,
 			);
 			name = classes;
 			path = ../../source;
@@ -194,7 +194,6 @@
 				3D6790A01766892E0061B88D /* Car.h */,
 			);
 			name = car;
-			path = ../../source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

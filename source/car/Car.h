@@ -20,16 +20,34 @@
 
 
 namespace Rac0r {
-    
+
+// forwards
+class Car;
+
+
+class CarEventListener {
+    public:
+        CarEventListener() { }
+        
+        virtual void onCarDriftedOffTrack(Rac0r::Car & _car) = 0;
+        virtual void onCarMovedThroughStart(Rac0r::Car & _car) = 0;
+};
+
+
 class Car {
     public:
+        // physics constants
         constexpr static const float            MAX_VELOCITY            =   1000.0f;
-        constexpr static const float            ACCELERATION_FORCE      =   600.0f;
+        constexpr static const float            ACCELERATION_FORCE      =   400.0f;
         constexpr static const float            FRICTION_FORCE          =   0.05;
         constexpr static const float            DEFAULT_MASS            =   1.0f;
    
+        // car shape constants
+        constexpr static const float            CAR_WIDTH               =   30.0f;
+        constexpr static const float            CAR_HEIGHT              =   10.0f;
+   
     public:
-        Car(const Track &_track);
+        Car(const Track &_track, CarEventListener * _eventListener);
     
         // update & render the car
         void update(const sf::Time & _time);
@@ -39,34 +57,42 @@ class Car {
         void accelerate();
     
         // reset car to start position
-        void reset();
+        void resetToStart();
+        // reset car to last valid position
+        void resetToLastValidPosition();
     
         // properties
         void setColor(const sf::Color & _value) { this->mCarDrawable.setFillColor(_value); }
         const sf::Color & getColor() const { return this->mCarDrawable.getFillColor(); }
     
+        void setEventListener(CarEventListener * _value) { this->mEventListener = _value; }
+        CarEventListener * getEventListener() const { return this->mEventListener; }
+    
     private:
         void keepOnTrack();
        
     private:
+        // event handling
+        CarEventListener*           mEventListener;
+    
         // track handling
-        const Track&            mTrack;
-        size_t                  mSegmentStart;
-        size_t                  mSegmentEnd;
+        const Track&                mTrack;
+        size_t                      mSegmentStart;
+        size_t                      mSegmentEnd;
     
         // physics handling
-        sf::Vector2f            mLocation;
-        sf::Vector2f            mDirection;
-        float                   mVelocity;
-        float                   mForce;
+        sf::Vector2f                mLocation;
+        sf::Vector2f                mDirection;
+        float                       mVelocity;
+        float                       mForce;
   
         // visual handling
-        sf::RectangleShape      mCarDrawable;
+        sf::RectangleShape          mCarDrawable;
     
         // Debug Stuff
-        sf::CircleShape         mLocationPoint;
-        sf::CircleShape         mNextLocationPoint;
-        sf::RectangleShape      mDirectionShape;
+        sf::CircleShape             mLocationPoint;
+        sf::CircleShape             mNextLocationPoint;
+        sf::RectangleShape          mDirectionShape;
 };
 
 }
