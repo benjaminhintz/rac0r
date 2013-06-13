@@ -49,6 +49,7 @@ int main(int, char const** argv) {
     // Load Main Track
     Rac0r::TrackLoader trackLoader;
     Rac0r::Track mainTrack = trackLoader.loadFromFile(resourcePath() + "tracks/test.track");
+
     
     //mainTrack.setCenter(sf::Vector2f(videoMode.width / 2, videoMode.height / 2));
     //mainTrack.scaleToFitBounds(sf::Vector2f(videoMode.width, videoMode.height), false, -0.2f);
@@ -96,11 +97,11 @@ int main(int, char const** argv) {
                 window.close();
             }
             
-            /* TODO
+            //* TODO
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-                car.accelerate();
+                cars[0].accelerate();
             }
-            */
+            //*/
         }
 
         // Clear screen
@@ -116,7 +117,7 @@ int main(int, char const** argv) {
         
         // Render cars
         for (auto & car : cars) {
-            car.update(elapsed);   // TODO: Delta Time noch berechnen pro Durchlauf
+            car.update(elapsed);
             car.draw(window);
         }
         

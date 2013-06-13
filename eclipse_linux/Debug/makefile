@@ -11,7 +11,6 @@ RM := rm -rf
 -include src/track/subdir.mk
 -include src/car/subdir.mk
 -include src/subdir.mk
--include resources/subdir.mk
 -include subdir.mk
 -include objects.mk
 

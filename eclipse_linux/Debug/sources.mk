@@ -27,5 +27,4 @@ src/track \
 src \
 src/car \
 . \
-resources \
 

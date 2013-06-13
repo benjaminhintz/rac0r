@@ -56,7 +56,8 @@ void Track::setScale(float _value, bool _respectCurveDirection) {
             point = newPoint;
         }
     } else {
-    
+        sf::Vector2f lastDir;
+        
         for (size_t i = 0; i < this->mPoints.size(); ++i) {
             sf::Vector2f curPoint = this->mPoints[i];
             sf::Vector2f nextPoint;
@@ -67,7 +68,14 @@ void Track::setScale(float _value, bool _respectCurveDirection) {
             }
             
             // compute point othogonal
-            sf::Vector2f dir = orthogonal(normalize(curPoint- nextPoint)) * _value;
+            sf::Vector2f dir = orthogonal(normalize(nextPoint - curPoint)) * _value;
+            if (i == 0) {
+                lastDir = dir;
+            }
+            
+            
+            
+            lastDir = dir;
             // move to origin
             curPoint -= this->mCenter;
             // scale
@@ -150,9 +158,10 @@ bool Track::findClosestPoint(const sf::Vector2f & _location, size_t & _foundInde
         
         if (distance < hitScore) {
             hitScore = distance;
-            //_found = projectedPoint;
             _foundIndex = i+1;
             result = true;
+        } else {
+            break;
         }
     }
     
