@@ -9,7 +9,13 @@
 #include "TrackDrawable.h"
 #include "../utils/vector2.h"
 
+#ifdef __linux
+#include <GL/glut.h>
+#endif
+
+#ifdef __APPLE__
 #include <GLUT/glut.h>
+#endif
 
 
 namespace Rac0r {
@@ -54,15 +60,16 @@ TrackDrawable & TrackDrawable::operator = (const TrackDrawable & _other) {
     
 	return *this;
 }
+
     
 void TrackDrawable::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    
+
     if (this->mIsDirty) {
         this->updateVB();
     }
-    
+
     //states.transform *= getTransform();
-    
+
     target.draw(this->mVertices, states);
     
     for (auto & point : this->mTrackPoints) {
@@ -87,8 +94,8 @@ void TrackDrawable::updateVB() const {
     float halfThickness = this->mThickness * 0.5f;
     sf::Vector2f point1, point2;
     size_t i = 0;
-    sf::Vertex * currentQuad = nullptr;
-    sf::Vertex * lastQuad = nullptr;
+    sf::Vertex * currentQuad = NULL;
+    sf::Vertex * lastQuad = NULL;
     for (auto & segment : this->mSegements) {
         currentQuad = &(*vb)[i++ * 4];
         
@@ -105,7 +112,7 @@ void TrackDrawable::updateVB() const {
         
         // compute quad edges    
         // build connection to last quad
-        if (lastQuad != nullptr) {
+        if (lastQuad != NULL) {
             currentQuad[0].position = lastQuad[3].position;
             currentQuad[1].position = lastQuad[2].position;
         } else {

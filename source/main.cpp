@@ -11,17 +11,21 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
-
 #include "ResourcePath.hpp"
+
 
 #include "track/TrackDrawable.h"
 #include "track/TrackLoader.h"
 
 #include "car/Car.h"
 
+int main(int, char const** argv) {
+	std::string tmp = argv[0];
+	Global::__path = tmp.substr(0, tmp.find_last_of('/'));
 
-int main(int, char const**) {
-    
+	int numTracks = 1;
+
+	std::cout << Global::__path << std::endl;
     // Setup Rendering Settings
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
@@ -44,15 +48,16 @@ int main(int, char const**) {
     
     // Load Main Track
     Rac0r::TrackLoader trackLoader;
-    Rac0r::Track mainTrack = trackLoader.loadFromFile(resourcePath() + "test3.track");
+    Rac0r::Track mainTrack = trackLoader.loadFromFile(resourcePath() + "tracks/test.track");
+
     
-    mainTrack.setCenter(sf::Vector2f(videoMode.width / 2, videoMode.height / 2));
-    mainTrack.scaleToFitBounds(sf::Vector2f(videoMode.width, videoMode.height), false, -0.2f);
+    //mainTrack.setCenter(sf::Vector2f(videoMode.width / 2, videoMode.height / 2));
+    //mainTrack.scaleToFitBounds(sf::Vector2f(videoMode.width, videoMode.height), false, -0.2f);
     
     tracks.push_back(mainTrack);
     
     // create sub tracks & their lines
-    for (unsigned int i = 0; i < 0; ++i) {
+    for (unsigned int i = 0; i < numTracks-1; ++i) {
         Rac0r::Track subTrack = mainTrack;
         subTrack.scaleToFitBounds(sf::Vector2f(videoMode.width, videoMode.height), true, -(20.0f * static_cast<float>(i+1)));
         tracks.push_back(subTrack);
