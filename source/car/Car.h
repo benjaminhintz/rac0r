@@ -23,8 +23,10 @@ namespace Rac0r {
     
 class Car {
     public:
-        constexpr static const float            MAX_SPEED   =   8.0f;
-        constexpr static const float            MAX_FORCE   =   10.0f;
+        constexpr static const float            MAX_SPEED           =   6.0f;
+        constexpr static const float            MAX_FORCE           =   20.0f;
+        constexpr static const float            ACCELERATION_STEP   =   10.0f;
+        constexpr static const float            DECELERATION_STEP   =   1.0f;
    
     public:
         Car(const Track &_track);
@@ -33,24 +35,26 @@ class Car {
         void draw(sf::RenderTarget & _target, const sf::RenderStates & _states = sf::RenderStates::Default);
     
         void accelerate();
+        void decelerate();
     
         // properties
         void setColor(const sf::Color & _value) { this->mCarDrawable.setFillColor(_value); }
         const sf::Color & getColor() const { return this->mCarDrawable.getFillColor(); }
     
     private:
-        void steerTorwards(const sf::Vector2f & _target);
+        void applyDirection(size_t _trackIndex);
+        //void steerTorwards(const sf::Vector2f & _target);
         void applyForce(const sf::Vector2f & _force);
     
     private:
         const Track&            mTrack;
         
         sf::Vector2f            mLocation;
+        sf::Vector2f            mDirection;
         sf::Vector2f            mVelocitiy;
-        sf::Vector2f            mAcceleration;
-        float                   mForce;
+        float                   mAcceleration;
         size_t                  mTrackIndex;
-    
+        bool                    mAccelerate;
         sf::RectangleShape      mCarDrawable;
     
 };

@@ -66,6 +66,16 @@ float slope(const sf::Vector2<T> & _a, const sf::Vector2<T> & _b) {
     return (_b.y - _a.y) / (_b.x - _a.x);
 }
 
+// min
+template <typename T>
+sf::Vector2<T> min(const sf::Vector2<T> & _a, T _b) {
+    return sf::Vector2f(fmin(_a.x, _b), fmin(_a.y, _b));
+}
+
+template <typename T>
+sf::Vector2<T> max(const sf::Vector2<T> & _a, T _b) {
+    return sf::Vector2f(fmax(_a.x, _b), fmin(_a.y, _b));
+}
 
 template <typename T>
 sf::Vector2<T> operator * (const sf::Vector2<T> & _a, const sf::Vector2<T> & _b) {
