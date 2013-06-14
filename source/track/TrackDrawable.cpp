@@ -72,9 +72,11 @@ void TrackDrawable::draw(sf::RenderTarget& target, sf::RenderStates states) cons
 
     target.draw(this->mVertices, states);
     
+    /*
     for (auto & point : this->mTrackPoints) {
         target.draw(point, states);
     }
+    */
 }
     
     

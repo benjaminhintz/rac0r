@@ -26,10 +26,15 @@
 class GameState : public Rac0r::CarEventListener {
     virtual void onCarDriftedOffTrack(Rac0r::Car & _car) {
         std::cout << "Car drifted off track." << std::endl;
+        //_car.resetToLastValidPosition();
     }
     
     virtual void onCarMovedThroughStart(Rac0r::Car & _car) {
         std::cout << "Car moved through start." << std::endl;
+    }
+    
+    virtual void onCarStartedFromStart(Rac0r::Car & _car) {
+        std::cout << "Car started from start." << std::endl;
     }
 
 };
@@ -72,7 +77,7 @@ int main(int, char const** argv) {
     
     // Load Main Track
     Rac0r::TrackLoader trackLoader;
-    Rac0r::Track mainTrack = trackLoader.loadFromFile(resourcePath() + trackDir + "test.track");
+    Rac0r::Track mainTrack = trackLoader.loadFromFile(resourcePath() + trackDir + "test4.track");
 
     
     mainTrack.setCenter(sf::Vector2f(videoMode.width / 2, videoMode.height / 2));
@@ -131,7 +136,7 @@ int main(int, char const** argv) {
             //*/
             
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-                cars[0].resetToStart();
+                cars[0].resetToLastValidPosition();
             }
         }
 
