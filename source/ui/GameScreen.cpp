@@ -84,8 +84,7 @@ void GameScreen::layout(sf::Time elapsed) {
 void GameScreen::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     // Render Tracks
     for (auto & trackDrawable : trackDrawables) {
-        target.draw(trackDrawable);
-//        trackDrawable.draw(target, states);
+        trackDrawable.draw(target, states);
     }
     
     // Render cars
