@@ -37,7 +37,7 @@ class TrackDrawable : public sf::Drawable {
         void setThickness(float _value) { this->mThickness = _value; this->mIsDirty = true; }
         float getThickness() const { return this->mThickness; }
     
-    protected:
+    public:
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
         
     private:
