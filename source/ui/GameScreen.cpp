@@ -68,6 +68,14 @@ GameScreen::GameScreen(sf::VideoMode& videoMode) : Screen(videoMode) {
 }
 
 void GameScreen::layout(sf::Time elapsed) {
+//    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+//        cars[0].accelerate();
+//    }
+//    
+//    if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+//        cars[0].resetToLastValidPosition();
+//    }
+    
     for (auto & car : cars) {
         car.update(elapsed);
     }

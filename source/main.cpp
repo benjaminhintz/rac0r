@@ -54,40 +54,32 @@ int main(int, char const** argv) {
     
     // Start the game loop
     while (window.isOpen()) {
+
+        auto currentScreen = screens.back();
+        // compute delta time
+        sf::Time elapsed = timer.restart();
+
+        
         
         // Process events
         sf::Event event;
         while (window.pollEvent(event)) {
-//            // Close window : exit
-//            if (event.type == sf::Event::Closed) {
-//                window.close();
-//            }
-//
-//            // Espace pressed : exit
-//            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-//                window.close();
-//            }
-//            
-//            //* TODO
-//            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-//                cars[0].accelerate();
-//            }
-//            //*/
-//            
-//            if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-//                cars[0].resetToLastValidPosition();
-//            }
+            // Close window : exit
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
+
+            // Espace pressed : exit
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+                window.close();
+            }
+            
+            currentScreen->layout(elapsed);
         }
 
         // Clear screen
         window.clear();
 
-        // compute delta time
-        sf::Time elapsed = timer.restart();
-        
-        // Bildschirm zeichnen
-        auto currentScreen = screens.back();
-        currentScreen->layout(elapsed);
         window.draw(*currentScreen);
         
         // Update the window
