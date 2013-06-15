@@ -35,7 +35,7 @@ class CarEventListener {
 };
 
 
-class Car {
+class Car : public sf::Drawable {
     public:
         // physics constants
         constexpr static const float            MAX_VELOCITY            =   1000.0f;
@@ -59,7 +59,7 @@ class Car {
     
         // update & render the car
         void update(const sf::Time & _time);
-        void draw(sf::RenderTarget & _target, const sf::RenderStates & _states = sf::RenderStates::Default);
+        virtual void draw(sf::RenderTarget& _target, sf::RenderStates _states) const;
     
         // accelerate the car
         void accelerate();
@@ -75,6 +75,9 @@ class Car {
     
         void setEventListener(CarEventListener * _value) { this->mEventListener = _value; }
         CarEventListener * getEventListener() const { return this->mEventListener; }
+    
+//        // destructor
+//        virtual ~Car();
     
     private:
         void keepOnTrack();

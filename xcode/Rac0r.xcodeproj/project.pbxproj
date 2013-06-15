@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		17D5AA79176CB20800FFF6F4 /* GameScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17D5AA77176CB20800FFF6F4 /* GameScreen.cpp */; };
 		17F21D76176A31E800436390 /* MenuScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17F21D72176A31E800436390 /* MenuScreen.cpp */; };
 		17F21D77176A31E800436390 /* Screen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17F21D74176A31E800436390 /* Screen.cpp */; };
 		17F21D7A176A31FB00436390 /* Tahoma.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 17F21D79176A31FB00436390 /* Tahoma.ttf */; };
@@ -26,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		17D5AA77176CB20800FFF6F4 /* GameScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScreen.cpp; sourceTree = "<group>"; };
+		17D5AA78176CB20800FFF6F4 /* GameScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameScreen.h; sourceTree = "<group>"; };
 		17F21D72176A31E800436390 /* MenuScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuScreen.cpp; sourceTree = "<group>"; };
 		17F21D73176A31E800436390 /* MenuScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuScreen.h; sourceTree = "<group>"; };
 		17F21D74176A31E800436390 /* Screen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Screen.cpp; sourceTree = "<group>"; };
@@ -73,6 +76,8 @@
 				17F21D73176A31E800436390 /* MenuScreen.h */,
 				17F21D74176A31E800436390 /* Screen.cpp */,
 				17F21D75176A31E800436390 /* Screen.h */,
+				17D5AA77176CB20800FFF6F4 /* GameScreen.cpp */,
+				17D5AA78176CB20800FFF6F4 /* GameScreen.h */,
 			);
 			path = ui;
 			sourceTree = "<group>";
@@ -289,6 +294,7 @@
 				3D6790A11766892E0061B88D /* Car.cpp in Sources */,
 				17F21D76176A31E800436390 /* MenuScreen.cpp in Sources */,
 				17F21D77176A31E800436390 /* Screen.cpp in Sources */,
+				17D5AA79176CB20800FFF6F4 /* GameScreen.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,13 +13,24 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 
+typedef std::shared_ptr<sf::Drawable> drawable_ptr;
+
 class Screen : public sf::Drawable {
-    
 public:
+    Screen(sf::VideoMode& videoMode) : videoMode(videoMode) {}
     
-    //Screen();
+    void addElement(drawable_ptr element) {
+        uiElemente.push_back(element);
+    }
+    
+    virtual void layout(sf::Time elapsed) {};
+    virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const = 0;
     virtual ~Screen() = default;
-    
+
+private:
+    sf::VideoMode videoMode;
+    std::vector<drawable_ptr> uiElemente;
+
 };
 
 

@@ -14,14 +14,11 @@
 
 class MenuScreen : public Screen {
 public:
-    
-    MenuScreen();
-    
+    MenuScreen(sf::VideoMode& videoMode);
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
     virtual ~MenuScreen() = default;
     
 private:
-    
     sf::Text text;
     sf::Font font;
 };

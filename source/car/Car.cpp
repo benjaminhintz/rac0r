@@ -67,15 +67,6 @@ void Car::update(const sf::Time & _time) {
     
     // update ghosts
     this->updateGhosts();
-}
-
-
-void Car::draw(sf::RenderTarget & _target, const sf::RenderStates & _states) {
-    
-    // draw ghosts
-    for (auto & ghost : this->mCarGhostDrawables) {
-        _target.draw(ghost.ghost, _states);
-    }
     
     // compute rotation
     float angle = heading(this->mCurrentDirection);
@@ -83,13 +74,23 @@ void Car::draw(sf::RenderTarget & _target, const sf::RenderStates & _states) {
     this->mCarDrawable.setRotation(RAD_TO_DEG(angle));
     this->mCarDrawable.setPosition(this->mCurrentLocation);
     
+    // debug stuff
+    this->mLocationPoint.setPosition(this->mCurrentLocation);
+    this->mDirectionShape.setPosition(this->mCurrentLocation);
+}
+
+
+void Car::draw(sf::RenderTarget& _target, sf::RenderStates _states) const {
+    // draw ghosts
+    for (auto & ghost : this->mCarGhostDrawables) {
+        _target.draw(ghost.ghost, _states);
+    }
+    
     _target.draw(this->mCarDrawable, _states);
     
     // Debug Stuff
-    this->mLocationPoint.setPosition(this->mCurrentLocation);
     _target.draw(this->mLocationPoint, _states);
     _target.draw(this->mNextLocationPoint, _states);
-    this->mDirectionShape.setPosition(this->mCurrentLocation);
     _target.draw(this->mDirectionShape, _states);
 }
     

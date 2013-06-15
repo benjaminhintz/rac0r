@@ -9,7 +9,7 @@
 #include "MenuScreen.h"
 #include "ResourcePath.hpp"
 
-MenuScreen::MenuScreen() {
+MenuScreen::MenuScreen(sf::VideoMode& videoMode) : Screen(videoMode) {
     if (!font.loadFromFile(resourcePath() + "Tahoma.ttf")) {
         // Fehler beim Laden
     }
