@@ -74,9 +74,9 @@ int main(int, char const** argv) {
                 window.close();
             }
             
-            currentScreen->layout(elapsed);
         }
-
+        currentScreen->layout(elapsed);
+        
         // Clear screen
         window.clear();
 

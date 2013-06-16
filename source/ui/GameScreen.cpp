@@ -2,31 +2,13 @@
 //  GameScreen.cpp
 //  Rac0r
 //
-//  Created by Florian Kaluschke on 15.06.13.
+//  Created by Jannes Meyer on 15.06.13.
 //  Copyright (c) 2013 Jan Schulte. All rights reserved.
 //
 
 #include "GameScreen.h"
 
 #include "ResourcePath.hpp"
-
-
-// TODO: Den Shit hier muss nacher in den Game State in dem man das SPiel spielt
-class GameState : public Rac0r::CarEventListener {
-    virtual void onCarDriftedOffTrack(Rac0r::Car & _car) {
-        std::cout << "Car drifted off track." << std::endl;
-        //_car.resetToLastValidPosition();
-    }
-    
-    virtual void onCarMovedThroughStart(Rac0r::Car & _car) {
-        std::cout << "Car moved through start." << std::endl;
-    }
-    
-    virtual void onCarStartedFromStart(Rac0r::Car & _car) {
-        std::cout << "Car started from start." << std::endl;
-    }
-    
-};
 
 GameScreen::GameScreen(sf::VideoMode& videoMode) : Screen(videoMode) {
     int numTracks = 1;
@@ -48,9 +30,6 @@ GameScreen::GameScreen(sf::VideoMode& videoMode) : Screen(videoMode) {
         tracks.push_back(subTrack);
     }
     
-    // TEMP
-    GameState gameState;
-    
     // create track line renderer
     unsigned int color = 0;
     sf::Color colors[4] = { sf::Color::Red, sf::Color::Green, sf::Color::Blue, sf::Color::Yellow };
@@ -61,20 +40,20 @@ GameScreen::GameScreen(sf::VideoMode& videoMode) : Screen(videoMode) {
         trackDrawables.push_back(trackDrawable);
         
         // create cars for the track
-        Rac0r::Car car(track, &gameState);
+        Rac0r::Car car(track, this);
         car.setColor(colors[color++]);
         cars.push_back(car);
     }
 }
 
 void GameScreen::layout(sf::Time elapsed) {
-//    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-//        cars[0].accelerate();
-//    }
-//    
-//    if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-//        cars[0].resetToLastValidPosition();
-//    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+        cars[0].accelerate();
+    }
+    
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+        cars[0].resetToLastValidPosition();
+    }
     
     for (auto & car : cars) {
         car.update(elapsed);

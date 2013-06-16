@@ -9,7 +9,6 @@
 #ifndef __Rac0r__MenuScreen__
 #define __Rac0r__MenuScreen__
 
-#include <iostream>
 #include "Screen.h"
 
 class MenuScreen : public Screen {

@@ -9,7 +9,6 @@
 #ifndef __Rac0r__Screen__
 #define __Rac0r__Screen__
 
-#include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 

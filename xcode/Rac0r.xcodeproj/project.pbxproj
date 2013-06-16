@@ -72,10 +72,10 @@
 		17F21D71176A31E800436390 /* ui */ = {
 			isa = PBXGroup;
 			children = (
-				17F21D72176A31E800436390 /* MenuScreen.cpp */,
-				17F21D73176A31E800436390 /* MenuScreen.h */,
 				17F21D74176A31E800436390 /* Screen.cpp */,
 				17F21D75176A31E800436390 /* Screen.h */,
+				17F21D72176A31E800436390 /* MenuScreen.cpp */,
+				17F21D73176A31E800436390 /* MenuScreen.h */,
 				17D5AA77176CB20800FFF6F4 /* GameScreen.cpp */,
 				17D5AA78176CB20800FFF6F4 /* GameScreen.h */,
 			);
