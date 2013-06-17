@@ -1,0 +1,195 @@
+* {
+	-webkit-user-select: none;
+	-moz-user-select: none;	
+	-ms-user-select: none;	
+	-o-user-select: none;
+	user-select: none;
+}
+
+textarea:focus, input:focus{
+    outline: 0;
+}
+
+body {
+	background-color: #090909;
+	font-family: Roboto;
+	color: #a0a0a0;
+	cursor: default;
+}
+
+h1 {
+	font-family: 'Roboto Condensed';
+
+}
+
+#editor {
+	width: 810px;
+	position: relative;
+	overflow: hidden;
+	padding: 0px;
+	margin: auto;
+}
+
+#editor ul#toolbar {
+	width: 160px;
+	list-style: none;
+	position: absolute;
+	left: -150px;
+	height: 480px;
+	margin: 0px;
+	padding: 0px;
+	background-color: #181818;
+	-webkit-transition: left .15s ease-in;
+}
+
+#editor ul#toolbar:hover {
+	left: 0px;
+}
+
+#editor ul#toolbar li {
+	margin: 0px;
+	background-color: #181818;
+	color: #999;
+	overflow: hidden;
+}
+
+a {
+	color: inherit !important;
+	text-decoration: none;
+	display: block;
+	padding: 10px 20px;
+}
+
+
+#editor ul#toolbar li:hover {
+	background-color: #5F7EED;
+	color: #fff;
+}
+
+#editor ul#toolbar li:target {
+	background-color: #5F7EED;
+	color: #fff;
+}
+
+#editor ul#toolbar li#preview #numberOfTracks {
+	height: 0px;
+	-webkit-transition: height .15s ease-in;
+	background-color: #282828 !important;
+	overflow: hidden;
+}
+
+#editor ul#toolbar li#preview:target #numberOfTracks {
+	height: 40px;
+}
+
+#editor ul#toolbar li#preview #numberOfTracks input{
+	color: #fff;
+	border: 1px solid #484848;
+	float: left;
+	background-color: #383838;
+	padding: 5px;
+	margin: 5px;
+	width: 137px;
+	display: block;
+	overflow: hidden;
+	text-align: center;
+
+
+	-webkit-user-select: text;
+	-moz-user-select: text;	
+	-ms-user-select: text;	
+	-o-user-select: text;
+	user-select: text;
+}
+
+#editor ul#toolbar li.seperator {
+	background-color: #181818;
+	padding: 0px;
+	border-bottom: 1px solid #282828;
+}
+
+#editor canvas {
+	margin-left: 10px;
+	width: 800px;
+	height: 480px;
+}
+
+#editor #savebox {
+	font-size: .7em;
+	opacity: 0;
+	position: absolute;
+	height: 480px;
+	width: 500px;
+	background-color: rgba(0,0,0,.7);
+	right: -500px;
+	-webkit-transition: right .2s ease-in, opacity .2s ease-in;
+
+	-webkit-user-select: text;
+	-moz-user-select: text;	
+	-ms-user-select: text;	
+	-o-user-select: text;
+	user-select: text;
+	overflow: scroll-vertical;
+}
+
+#editor #savebox.visible {
+	right: 0px;
+	opacity: 1;
+}
+
+#editor #loadbox {
+	font-size: .7em;
+	opacity: 0;
+	position: absolute;
+	height: 480px;
+	width: 240px;
+	background-color: #181818;
+	right: -240px;
+	-webkit-transition: right .2s ease-in, opacity .2s ease-in;
+
+	overflow: scroll-vertical;
+}
+
+#editor #loadbox textarea {
+	font-family: inherit;
+	font-size: 1em;
+	color: #fff;
+	width:500px;
+	height: 480px;
+	margin: 0px;
+	padding: 0px;
+	border: none;
+	background-color: rgba(0,0,0,0);
+	color: #inherit;
+	-webkit-user-select: text;
+	-moz-user-select: text;	
+	-ms-user-select: text;	
+	-o-user-select: text;
+	user-select: text;
+}
+
+#editor #loadbox.visible {
+	right: 0px;
+	opacity: 1;
+}
+
+#editor #loadbox ul {
+	margin: 0px;
+	height: 480px;
+	padding: 0px;
+	list-style: none;
+	overflow: auto;
+}
+
+#editor #loadbox ul li {
+	padding: 20px;
+	-webkit-transition: background-color .2s ease-in;
+}
+
+#editor #loadbox ul li:hover {
+	background-color: #5F7EED;
+}
+
+#editor #loadbox ul li img {
+	width: 200px;
+}
