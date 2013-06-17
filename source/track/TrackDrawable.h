@@ -64,7 +64,7 @@ class TrackDrawable : public sf::Drawable {
         
         bool                            mIsDirty;               // vertex buffer needs to be updated
         sf::VertexArray                 mVertices;              // vertex buffer
-    
+ 
         // Debug Stuff
         std::vector<sf::CircleShape>    mTrackPoints;
         std::vector<sf::CircleShape>    mTrackDirPoints;

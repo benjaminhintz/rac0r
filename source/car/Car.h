@@ -56,7 +56,7 @@ class Car : public sf::Drawable {
    
     public:
         Car(const Track &_track, CarEventListener * _eventListener);
-    
+        
         // update & render the car
         void update(const sf::Time & _time);
         virtual void draw(sf::RenderTarget& _target, sf::RenderStates _states) const;
