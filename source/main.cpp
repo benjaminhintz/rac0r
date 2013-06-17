@@ -18,7 +18,7 @@
 #include "ui/GameScreen.h"
 
 #include "utils/vector2.h"
-
+#include "track/TrackFileManager.h"
 
 int main(int, char const** argv) {
     

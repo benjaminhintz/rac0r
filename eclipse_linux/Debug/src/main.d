@@ -79,7 +79,8 @@ src/main.d: ../src/main.cpp \
  ../src/ui/../view/View.h ../src/ui/GameScreen.h \
  ../src/ui/../track/TrackDrawable.h ../src/ui/../track/Track.h \
  ../src/ui/../track/TrackLoader.h ../src/ui/../car/Car.h \
- ../src/ui/../car/../track/Track.h ../src/utils/vector2.h
+ ../src/ui/../car/../track/Track.h ../src/utils/vector2.h \
+ ../src/track/TrackFileManager.h ../src/track/TrackFile.h
 
 /home/david/code/cpp/libs/SFML-2.0/include/SFML/Audio.hpp:
 
@@ -256,3 +257,7 @@ src/main.d: ../src/main.cpp \
 ../src/ui/../car/../track/Track.h:
 
 ../src/utils/vector2.h:
+
+../src/track/TrackFileManager.h:
+
+../src/track/TrackFile.h:

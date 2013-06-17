@@ -86,14 +86,28 @@ void GameScreen::restart() {
 }
 
 void GameScreen::layout(sf::Time elapsed) {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        cars[0].accelerate();
-        cars[1].accelerate();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
+    	if(cars.size() >= 1) cars[0].accelerate();
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
+    	if(cars.size() >= 2) cars[1].accelerate();
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) {
+    	if(cars.size() >= 3) cars[2].accelerate();
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
+    	if(cars.size() >= 4) cars[3].accelerate();
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
+    	if(cars.size() >= 5) cars[4].accelerate();
     }
     
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
         cars[0].resetToLastValidPosition();
         cars[1].resetToLastValidPosition();
+        cars[2].resetToLastValidPosition();
+        cars[3].resetToLastValidPosition();
+        cars[4].resetToLastValidPosition();
     }
     
     for (auto & car : cars) {
