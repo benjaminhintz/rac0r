@@ -52,6 +52,7 @@ TrackDrawable & TrackDrawable::operator = (const TrackDrawable & _other) {
 
     if (this != &_other) {
 		this->mPoints = _other.mPoints;
+        this->mDirections = _other.mDirections;
 		this->mSegements = _other.mSegements;
 		this->mColor = _other.mColor;
         this->mThickness = _other.mThickness;
@@ -72,11 +73,17 @@ void TrackDrawable::draw(sf::RenderTarget& target, sf::RenderStates states) cons
 
     target.draw(this->mVertices, states);
     
-    
+    // DEBUG
+    /*
     for (auto & point : this->mTrackPoints) {
         target.draw(point, states);
     }
-    
+    */
+    /*
+    for (auto & point : this->mTrackDirPoints) {
+        target.draw(point, states);
+    }
+    */
 }
     
     
@@ -86,6 +93,8 @@ void TrackDrawable::updateVB() const {
     std::vector<sf::CircleShape> * trackPoints = const_cast<std::vector<sf::CircleShape>*>(&this->mTrackPoints);
     trackPoints->clear();
     
+    std::vector<sf::CircleShape> * trackDirPoints = const_cast<std::vector<sf::CircleShape>*>(&this->mTrackDirPoints);
+    trackDirPoints->clear();
     
     // create vertex array
     sf::VertexArray * vb = const_cast<sf::VertexArray*>(&this->mVertices); // get rid of const...
@@ -142,7 +151,6 @@ void TrackDrawable::updateVB() const {
         // store last quad
         lastQuad = currentQuad;
         
-        
         // Debug Stuff
         sf::CircleShape debugPoint(2);
         debugPoint.setPosition(point1);
@@ -150,6 +158,13 @@ void TrackDrawable::updateVB() const {
         debugPoint.setFillColor(sf::Color::White);
         trackPoints->push_back(debugPoint);
         
+        // compute point othogonal
+        sf::Vector2f orthDir = orthogonal(normalize(point1 - point2)) * 8.0f;
+        sf::CircleShape debugDirPoint(2);
+        debugDirPoint.setPosition(point1 + orthDir);
+        debugDirPoint.setOrigin(1, 1);
+        debugDirPoint.setFillColor(sf::Color::Green);
+        trackDirPoints->push_back(debugDirPoint);
     }
 
     // get rid of const and set the flag

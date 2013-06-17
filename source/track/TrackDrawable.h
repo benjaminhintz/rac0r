@@ -55,7 +55,9 @@ class TrackDrawable : public sf::Drawable {
                 : mPoint1(_point1), mPoint2(_point2) { }
         };
     
-        std::vector<sf::Vector2f>       mPoints;                // track points
+        Track::Points                   mPoints;                // track points
+        Track::Points                   mDirections;            // track directions
+    
         std::vector<Segment>            mSegements;             // track segements
         sf::Color                       mColor;                 // track color
         float                           mThickness;             // track tickness (rendering only)
@@ -65,6 +67,8 @@ class TrackDrawable : public sf::Drawable {
     
         // Debug Stuff
         std::vector<sf::CircleShape>    mTrackPoints;
+        std::vector<sf::CircleShape>    mTrackDirPoints;
+        std::vector<sf::CircleShape>    mTrackPivotPoints;
     
 };
 

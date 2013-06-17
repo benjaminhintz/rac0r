@@ -19,22 +19,21 @@
 class GameScreen : public Screen, public Rac0r::CarEventListener {
 public:
     GameScreen(const Rect& frame);
-    virtual void layout(sf::Time elapsed);
-    virtual void onCarDriftedOffTrack(Rac0r::Car & _car) {
-        std::cout << "Car drifted off track." << std::endl;
-        //_car.resetToLastValidPosition();
-    }
-    virtual void onCarMovedThroughStart(Rac0r::Car & _car) {
-        std::cout << "Car moved through start." << std::endl;
-    }
-    virtual void onCarStartedFromStart(Rac0r::Car & _car) {
-        std::cout << "Car started from start." << std::endl;
-    }
-    virtual void handleEvent(sf::Event event);
     virtual ~GameScreen() = default;
-
+    
+    virtual void handleEvent(sf::Event event);
+    virtual void layout(sf::Time elapsed);
+    
+    virtual void onCarDriftedOffTrack(Rac0r::Car & _car);
+    virtual void onCarMovedThroughStart(Rac0r::Car & _car);
+    virtual void onCarStartedFromStart(Rac0r::Car & _car);
+    
+    
 protected:
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
+    
+private:
+    void createTracks(size_t _playerCount, const std::string & _trackFile);
     
 private:
 
