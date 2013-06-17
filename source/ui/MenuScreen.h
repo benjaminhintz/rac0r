@@ -10,16 +10,12 @@
 #define __Rac0r__MenuScreen__
 
 #include "Screen.h"
+#include "../view/ButtonView.h"
 
 class MenuScreen : public Screen {
 public:
-    MenuScreen(sf::VideoMode& videoMode);
-    virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
+    MenuScreen(const Rect& frame);
     virtual ~MenuScreen() = default;
-    
-private:
-    sf::Text text;
-    sf::Font font;
 };
 
 #endif /* defined(__Rac0r__MenuScreen__) */

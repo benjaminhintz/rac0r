@@ -7,22 +7,28 @@
 //
 
 #include "MenuScreen.h"
+
 #include "ResourcePath.hpp"
 
-MenuScreen::MenuScreen(sf::VideoMode& videoMode) : Screen(videoMode) {
-    if (!font.loadFromFile(resourcePath() + "Tahoma.ttf")) {
-        // Fehler beim Laden
+using namespace std;
+
+MenuScreen::MenuScreen(const Rect& frame) : Screen(frame) {
+    vector<string> menuItems;
+    menuItems.push_back("Play");
+    menuItems.push_back("Choose track");
+    menuItems.push_back("Exit");
+    
+    int i = 0;
+    for (string menuItem : menuItems) {
+        auto button = std::make_shared<ButtonView>();
+        
+        button->setText(menuItem);
+        button->setPosition(50, 150 + 75 * i++);
+        button->setSize(200, 50);
+        button->setRotation(-15);
+        
+        addChild(button);
     }
     
-    text.setFont(font);
-    text.setPosition(100, 100);
-    text.setString("Hello world");
-    text.setCharacterSize(24); // in pixels, not points!
-    text.setColor(sf::Color::Red);
-    text.setStyle(sf::Text::Bold);
-}
-
-void MenuScreen::draw(sf::RenderTarget &target, sf::RenderStates states) const {
-    // Draw text
-    target.draw(text);
+    setHighlight(0);
 }

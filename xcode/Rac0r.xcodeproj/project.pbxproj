@@ -24,6 +24,8 @@
 		3D6790961766493E0061B88D /* test4.track in Resources */ = {isa = PBXBuildFile; fileRef = 3D6790931766493E0061B88D /* test4.track */; };
 		3D67909917664E6F0061B88D /* Track.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D67909717664E6E0061B88D /* Track.cpp */; };
 		3D6790A11766892E0061B88D /* Car.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D67909F1766892E0061B88D /* Car.cpp */; };
+		DF780F3E176E244B00D4E41A /* ButtonView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF780F3C176E244B00D4E41A /* ButtonView.cpp */; };
+		DF780F41176E541500D4E41A /* View.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF780F3F176E541500D4E41A /* View.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +57,10 @@
 		3D67909817664E6F0061B88D /* Track.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Track.h; sourceTree = "<group>"; };
 		3D67909F1766892E0061B88D /* Car.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Car.cpp; path = car/Car.cpp; sourceTree = "<group>"; };
 		3D6790A01766892E0061B88D /* Car.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Car.h; path = car/Car.h; sourceTree = "<group>"; };
+		DF780F3C176E244B00D4E41A /* ButtonView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ButtonView.cpp; path = view/ButtonView.cpp; sourceTree = "<group>"; };
+		DF780F3D176E244B00D4E41A /* ButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ButtonView.h; path = view/ButtonView.h; sourceTree = "<group>"; };
+		DF780F3F176E541500D4E41A /* View.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = View.cpp; path = view/View.cpp; sourceTree = "<group>"; };
+		DF780F40176E541500D4E41A /* View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = View.h; path = view/View.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +149,7 @@
 				3D6790781760E0310061B88D /* ResourcePath.hpp */,
 				3D6790791760E0310061B88D /* ResourcePath.mm */,
 				3D67906D1760DFA20061B88D /* main.cpp */,
+				DF780F3A176E220B00D4E41A /* view */,
 				17F21D71176A31E800436390 /* ui */,
 				3D679052175BE75F0061B88D /* utils */,
 				3D679048175A59D00061B88D /* track */,
@@ -199,6 +206,17 @@
 				3D6790A01766892E0061B88D /* Car.h */,
 			);
 			name = car;
+			sourceTree = "<group>";
+		};
+		DF780F3A176E220B00D4E41A /* view */ = {
+			isa = PBXGroup;
+			children = (
+				DF780F3F176E541500D4E41A /* View.cpp */,
+				DF780F40176E541500D4E41A /* View.h */,
+				DF780F3C176E244B00D4E41A /* ButtonView.cpp */,
+				DF780F3D176E244B00D4E41A /* ButtonView.h */,
+			);
+			name = view;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -295,6 +313,8 @@
 				17F21D76176A31E800436390 /* MenuScreen.cpp in Sources */,
 				17F21D77176A31E800436390 /* Screen.cpp in Sources */,
 				17D5AA79176CB20800FFF6F4 /* GameScreen.cpp in Sources */,
+				DF780F3E176E244B00D4E41A /* ButtonView.cpp in Sources */,
+				DF780F41176E541500D4E41A /* View.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

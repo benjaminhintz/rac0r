@@ -11,25 +11,23 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include "../view/View.h"
 
-typedef std::shared_ptr<sf::Drawable> drawable_ptr;
-
-class Screen : public sf::Drawable {
+class Screen : public View {
 public:
-    Screen(sf::VideoMode& videoMode) : videoMode(videoMode) {}
-    
-    void addElement(drawable_ptr element) {
-        uiElemente.push_back(element);
-    }
-    
-    virtual void layout(sf::Time elapsed) {};
-    virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const = 0;
+    Screen(const Rect& frame);
     virtual ~Screen() = default;
+    
+    virtual void handleEvent(sf::Event event);
+    virtual void layout(sf::Time elapsed) {}
 
+protected:
+    void setHighlight(int index);
+    void setHighlightedToState(ViewState state);
+    
 private:
-    sf::VideoMode videoMode;
-    std::vector<drawable_ptr> uiElemente;
-
+    bool focus = false;
+    size_t highlightedItem = -1;
 };
 
 

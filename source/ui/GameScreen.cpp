@@ -10,23 +10,22 @@
 
 #include "ResourcePath.hpp"
 
-GameScreen::GameScreen(sf::VideoMode& videoMode) : Screen(videoMode) {
+GameScreen::GameScreen(const Rect& frame) : Screen(frame) {
     int numTracks = 1;
     
     // Load Main Track
     Rac0r::TrackLoader trackLoader;
     Rac0r::Track mainTrack = trackLoader.loadFromFile(resourcePath() + trackDir + "test4.track");
     
-    
-    mainTrack.setCenter(sf::Vector2f(videoMode.width / 2, videoMode.height / 2));
-    mainTrack.scaleToFitBounds(sf::Vector2f(videoMode.width, videoMode.height), false, -0.2f);
+    mainTrack.setCenter(sf::Vector2f(frame.width / 2, frame.height / 2));
+    mainTrack.scaleToFitBounds(sf::Vector2f(frame.width, frame.height), false, -0.2f);
     
     tracks.push_back(mainTrack);
     
     // create sub tracks & their lines
     for (unsigned int i = 0; i < numTracks-1; ++i) {
         Rac0r::Track subTrack = mainTrack;
-        subTrack.scaleToFitBounds(sf::Vector2f(videoMode.width, videoMode.height), true, -(20.0f * static_cast<float>(i+1)));
+        subTrack.scaleToFitBounds(sf::Vector2f(frame.width, frame.height), true, -(20.0f * static_cast<float>(i+1)));
         tracks.push_back(subTrack);
     }
     

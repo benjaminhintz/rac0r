@@ -42,44 +42,45 @@ int main(int, char const** argv) {
         return EXIT_FAILURE;
     }
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-
+    
+    // List of currently active screens
+    // TODO: in ScreenManager packen, der Animationen kann
+    std::vector<std::shared_ptr<Screen>> screens;
+    Rect screenFrame(0, 0, videoMode.width, videoMode.height);
+    screens.emplace_back(new MenuScreen(screenFrame));
+//    screens.emplace_back(new GameScreen(screenFrame));
+    // TODO: ScreenManager fragen
+    auto currentScreen = screens.back();
+    
     // delta time handling
     sf::Clock timer;
     
-    // Vector mit abstrakten screens
-    std::vector<std::shared_ptr<Screen>> screens;
-    // Erster Screen
-    screens.emplace_back(new MenuScreen(videoMode));
-    screens.emplace_back(new GameScreen(videoMode));
-    
     // Start the game loop
     while (window.isOpen()) {
-
-        auto currentScreen = screens.back();
+        
         // compute delta time
         sf::Time elapsed = timer.restart();
 
-        
-        
         // Process events
         sf::Event event;
         while (window.pollEvent(event)) {
-            // Close window : exit
             if (event.type == sf::Event::Closed) {
+                // Close window : exit
                 window.close();
-            }
-
-            // Espace pressed : exit
-            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+            } else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+                // Escape pressed : exit
                 window.close();
+            } else {
+                currentScreen->handleEvent(event);
             }
-            
         }
+        // Update the screen's contents and tell it how much time passed since the last frame
         currentScreen->layout(elapsed);
         
         // Clear screen
         window.clear();
 
+        // Draw
         window.draw(*currentScreen);
         
         // Update the window
