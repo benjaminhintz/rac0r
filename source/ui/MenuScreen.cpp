@@ -7,7 +7,7 @@
 //
 
 #include <iostream>
-
+#include <sstream>
 #include "MenuScreen.h"
 
 #include "ResourcePath.hpp"
@@ -15,6 +15,7 @@
 using namespace std;
 
 MenuScreen::MenuScreen(const Rect& frame) : Screen(frame) {
+    
     vector<string> menuItems;
     menuItems.push_back("play");
     menuItems.push_back("choose track");
@@ -34,6 +35,19 @@ MenuScreen::MenuScreen(const Rect& frame) : Screen(frame) {
     }
     
     setHighlight(0);
+
+    auto trackNumber = std::make_shared<ButtonView>();
+    string trackCount;
+    ostringstream convert;
+    convert << MenuScreen::trackCount;
+    trackCount = convert.str();
+    
+    trackNumber->setText(trackCount);
+    trackNumber->setPosition(350, 175 );
+    trackNumber->setSize(200, 50);
+    
+    addChild(trackNumber);
+    
 }
 
 void MenuScreen::setHighlight(int index) {
@@ -73,32 +87,39 @@ void MenuScreen::handleEvent(sf::Event event) {
     }
     if (up && event.key.code == sf::Keyboard::Return) {
         setHighlightedToState(ViewState::highlighted);
+    }
+    if (up)  {
         callFunction(highlightedItem, event);
     }
-    if (up && event.key.code == sf::Keyboard::Left) {
-        callFunction(highlightedItem, event);
-    }
-    if (up && event.key.code == sf::Keyboard::Right) {
-        callFunction(highlightedItem, event);
-    }
-}
 
+}
 void MenuScreen::callFunction(int index, sf::Event event) {
     switch (index) {
         case 0:
             break;
         case 1:
-            break;
-        case 2:
             if(event.key.code == sf::Keyboard::Left) {
+                if (MenuScreen::trackCount > 1) {
+                    MenuScreen::trackCount -= 1;
+                }
                 cout << "links" << endl;
             } else if(event.key.code == sf::Keyboard::Right) {
                 cout << "rechts" << endl;
+                if (MenuScreen::trackCount < 5){
+                    MenuScreen::trackCount += 1;
+                }
+                
             }
+
+            break;
+        case 2:
+
             break;
         case 3:
-            exit();
-            break;
+            if(event.key.code == sf::Keyboard::Return) {
+                exit();
+                break;
+            }
         default:
             break;
     }
