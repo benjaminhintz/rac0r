@@ -6,16 +6,19 @@
 CPP_SRCS += \
 ../src/track/Track.cpp \
 ../src/track/TrackDrawable.cpp \
+../src/track/TrackFileManager.cpp \
 ../src/track/TrackLoader.cpp 
 
 OBJS += \
 ./src/track/Track.o \
 ./src/track/TrackDrawable.o \
+./src/track/TrackFileManager.o \
 ./src/track/TrackLoader.o 
 
 CPP_DEPS += \
 ./src/track/Track.d \
 ./src/track/TrackDrawable.d \
+./src/track/TrackFileManager.d \
 ./src/track/TrackLoader.d 
 
 
