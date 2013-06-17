@@ -26,7 +26,7 @@ protected:
     void setHighlightedToState(ViewState state);
     
 private:
-    bool focus = false;
+    bool highlighted = false;
     size_t highlightedItem = -1;
 };
 
