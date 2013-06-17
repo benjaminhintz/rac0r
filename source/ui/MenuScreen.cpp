@@ -15,11 +15,21 @@
 using namespace std;
 
 MenuScreen::MenuScreen(const Rect& frame) : Screen(frame) {
-    
-    
+    init();
 }
 
-
+void MenuScreen::init() {
+//    logo;
+//    track;
+//    player;
+    start.setString("test");
+    start.setColor(sf::Color::White);
+    start.setPosition(100, 100);
+    
+    logo.setPosition(200,200);
+    logo.setSize(sf::Vector2f(200,200));
+    logo.setFillColor(sf::Color::White);
+}
 
 
 void MenuScreen::handleEvent(sf::Event event) {
@@ -60,7 +70,11 @@ void MenuScreen::handleEvent(sf::Event event) {
     }
 }
 
-
-void MenuScreen::exit() {
-    Screen::exit = true;
+void MenuScreen::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    target.draw(logo, states);
+//    target.draw(track, states);
+//    target.draw(player, states);
+    target.draw(start, states);
 }
+
+

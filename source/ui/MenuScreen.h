@@ -29,10 +29,12 @@ private:
     size_t highlightedItem = -1;
     void callFunction(int index, sf::Event event);
     void exit();
-    
+    void init();
     //std::shared_ptr<ButtonView()> trackNumber;
-    
-    
+    sf::Text start;
+    sf::RectangleShape logo;
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
 };
 
 #endif /* defined(__Rac0r__MenuScreen__) */

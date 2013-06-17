@@ -25,7 +25,6 @@
 		3D67909917664E6F0061B88D /* Track.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D67909717664E6E0061B88D /* Track.cpp */; };
 		3D6790A11766892E0061B88D /* Car.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D67909F1766892E0061B88D /* Car.cpp */; };
 		3DA79A35176F56C500317DE9 /* test5.track in Resources */ = {isa = PBXBuildFile; fileRef = 3DA79A34176F56C500317DE9 /* test5.track */; };
-		DF780F3E176E244B00D4E41A /* ButtonView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF780F3C176E244B00D4E41A /* ButtonView.cpp */; };
 		DF780F41176E541500D4E41A /* View.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF780F3F176E541500D4E41A /* View.cpp */; };
 /* End PBXBuildFile section */
 
@@ -59,8 +58,6 @@
 		3D67909F1766892E0061B88D /* Car.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Car.cpp; path = car/Car.cpp; sourceTree = "<group>"; };
 		3D6790A01766892E0061B88D /* Car.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Car.h; path = car/Car.h; sourceTree = "<group>"; };
 		3DA79A34176F56C500317DE9 /* test5.track */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test5.track; sourceTree = "<group>"; };
-		DF780F3C176E244B00D4E41A /* ButtonView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ButtonView.cpp; path = view/ButtonView.cpp; sourceTree = "<group>"; };
-		DF780F3D176E244B00D4E41A /* ButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ButtonView.h; path = view/ButtonView.h; sourceTree = "<group>"; };
 		DF780F3F176E541500D4E41A /* View.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = View.cpp; path = view/View.cpp; sourceTree = "<group>"; };
 		DF780F40176E541500D4E41A /* View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = View.h; path = view/View.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -216,8 +213,6 @@
 			children = (
 				DF780F3F176E541500D4E41A /* View.cpp */,
 				DF780F40176E541500D4E41A /* View.h */,
-				DF780F3C176E244B00D4E41A /* ButtonView.cpp */,
-				DF780F3D176E244B00D4E41A /* ButtonView.h */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -317,7 +312,6 @@
 				17F21D76176A31E800436390 /* MenuScreen.cpp in Sources */,
 				17F21D77176A31E800436390 /* Screen.cpp in Sources */,
 				17D5AA79176CB20800FFF6F4 /* GameScreen.cpp in Sources */,
-				DF780F3E176E244B00D4E41A /* ButtonView.cpp in Sources */,
 				DF780F41176E541500D4E41A /* View.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
