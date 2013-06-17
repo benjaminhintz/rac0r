@@ -11,11 +11,11 @@
 #include "ResourcePath.hpp"
 
 GameScreen::GameScreen(const Rect& frame) : Screen(frame) {
-    int numTracks = 1;
+    int numTracks = 4;
     
     // Load Main Track
     Rac0r::TrackLoader trackLoader;
-    Rac0r::Track mainTrack = trackLoader.loadFromFile(resourcePath() + trackDir + "test4.track");
+    Rac0r::Track mainTrack = trackLoader.loadFromFile(resourcePath() + trackDir + "test3.track");
     
     mainTrack.setCenter(sf::Vector2f(frame.width / 2, frame.height / 2));
     mainTrack.scaleToFitBounds(sf::Vector2f(frame.width, frame.height), false, -0.2f);
@@ -48,10 +48,12 @@ GameScreen::GameScreen(const Rect& frame) : Screen(frame) {
 void GameScreen::layout(sf::Time elapsed) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         cars[0].accelerate();
+        cars[1].accelerate();
     }
     
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
         cars[0].resetToLastValidPosition();
+        cars[1].resetToLastValidPosition();
     }
     
     for (auto & car : cars) {

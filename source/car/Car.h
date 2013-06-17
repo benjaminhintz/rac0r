@@ -76,9 +76,6 @@ class Car : public sf::Drawable {
         void setEventListener(CarEventListener * _value) { this->mEventListener = _value; }
         CarEventListener * getEventListener() const { return this->mEventListener; }
     
-//        // destructor
-//        virtual ~Car();
-    
     private:
         void keepOnTrack();
         void updateGhosts();

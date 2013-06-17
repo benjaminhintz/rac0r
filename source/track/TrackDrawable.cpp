@@ -22,7 +22,7 @@ namespace Rac0r {
     
 TrackDrawable::TrackDrawable() :
     mColor(sf::Color::White),
-    mThickness(1.0f),
+    mThickness(3.0f),
     mIsDirty(true) {
 }
 
@@ -72,11 +72,11 @@ void TrackDrawable::draw(sf::RenderTarget& target, sf::RenderStates states) cons
 
     target.draw(this->mVertices, states);
     
-    /*
+    
     for (auto & point : this->mTrackPoints) {
         target.draw(point, states);
     }
-    */
+    
 }
     
     

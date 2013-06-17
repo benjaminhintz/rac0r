@@ -32,7 +32,6 @@ Car::Car(const Track & _track, CarEventListener * _eventListener) :
     this->mCarDrawable.setOrigin(Car::CAR_WIDTH / 2.0f, Car::CAR_HEIGHT / 2.0f);
 }
 
-
 void Car::update(const sf::Time & _time) {
     
     // keep location as last valid
@@ -78,7 +77,6 @@ void Car::update(const sf::Time & _time) {
     this->mLocationPoint.setPosition(this->mCurrentLocation);
     this->mDirectionShape.setPosition(this->mCurrentLocation);
 }
-
 
 void Car::draw(sf::RenderTarget& _target, sf::RenderStates _states) const {
     // draw ghosts

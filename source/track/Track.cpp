@@ -57,22 +57,19 @@ void Track::setScale(float _value, bool _respectCurveDirection) {
         }
     } else {
         sf::Vector2f lastDir;
-        
+        sf::Vector2f firstPoint = (*this)[0];
+
         for (size_t i = 0; i < this->mPoints.size(); ++i) {
-            sf::Vector2f curPoint = this->mPoints[i];
-            sf::Vector2f nextPoint;
+            sf::Vector2f curPoint = (*this)[i];
+            sf::Vector2f nextPoint = (*this)[i+1];
+            
             if (i+1 == this->mPoints.size()) {
-                nextPoint = this->mPoints[0];
-            } else {
-                nextPoint = this->mPoints[i+1];
+                nextPoint = firstPoint;
             }
             
             // compute point othogonal
             sf::Vector2f dir = orthogonal(normalize(nextPoint - curPoint)) * _value;
-            if (i == 0) {
-                lastDir = dir;
-            }
-  
+            
             lastDir = dir;
             // move to origin
             curPoint -= this->mCenter;

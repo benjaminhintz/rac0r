@@ -99,11 +99,6 @@ void TrackLoader::computeCurve(Curve_Rotation _roation, float _degree, const sf:
         this->mCurveSteps = TrackLoader::DEFAULT_CURVE_STEPS;
     }
     
-    /* TODO: REMOVE
-    _points.push_back(_point);
-    return;
-    */
-    
     bool cw = static_cast<bool>(_roation);
    
     // compute pivot
@@ -117,7 +112,8 @@ void TrackLoader::computeCurve(Curve_Rotation _roation, float _degree, const sf:
     float delta = (_degree / static_cast<float>(this->mCurveSteps));
     
     // compute radius
-    float radius = abs(length(pivot - _point));
+    float radius = 30.0f; //abs(length(pivot - _point));
+    std::cout << "Radius:" << radius << std::endl;
     
     // compute rotation start angle
     sf::Vector2f av(1.0f, 0.0f);
