@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>rac0r Editor</title>
+<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700|Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<script type="text/javascript" src="js/mootools.js"></script>
+<script type="text/javascript" src="js/editor_tracks.js"></script>
+<script type="text/javascript" src="js/track.js"></script>
+<script type="text/javascript" src="js/vector.js"></script>
+<script type="text/javascript">
+var editor = null;
+var init = function() {
+	editor = new Editor($('canvas'));
+	editor.repaint();
+};
+</script>
+</head>
+<body onLoad="init()">
+<div id="editor">
+	<h1>rac0r Editor</h1>
+	<ul id="toolbar">
+		<li id="load"><a href="#load">Load</a></li>
+		<li id="save"><a href="#save">Save</a></li>
+		<li class="seperator"></li>
+		<li id="reset"><a href="#reset">Reset</a></li>
+	</ul>
+	<div id="savebox"></div>
+	<div id="loadbox">
+		<ul id="trackList"></ul>
+	</div>
+	<canvas id="canvas"></canvas>
+</div>
+</body>
+</html>

@@ -25,7 +25,7 @@ int main(int, char const** argv) {
     #ifdef __linux
 	std::string tmp = argv[0];
 	Global::__path = tmp.substr(0, tmp.find_last_of('/'));
-    trackDir = "tracks/";
+//    trackDir = "tracks/";
     #endif
 
     // Setup Rendering Settings

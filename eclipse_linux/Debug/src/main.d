@@ -74,8 +74,12 @@ src/main.d: ../src/main.cpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/Sprite.hpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/Text.hpp \
  /home/david/repos/rac0r/eclipse_linux/ResourcePath.hpp \
- ../src/track/TrackDrawable.h ../src/track/Track.h \
- ../src/track/TrackLoader.h ../src/car/Car.h ../src/car/../track/Track.h
+ ../src/ui/Screen.h ../src/ui/../view/View.h ../src/ui/MenuScreen.h \
+ ../src/ui/Screen.h ../src/ui/../view/ButtonView.h \
+ ../src/ui/../view/View.h ../src/ui/GameScreen.h \
+ ../src/ui/../track/TrackDrawable.h ../src/ui/../track/Track.h \
+ ../src/ui/../track/TrackLoader.h ../src/ui/../car/Car.h \
+ ../src/ui/../car/../track/Track.h ../src/utils/vector2.h
 
 /home/david/code/cpp/libs/SFML-2.0/include/SFML/Audio.hpp:
 
@@ -227,12 +231,28 @@ src/main.d: ../src/main.cpp \
 
 /home/david/repos/rac0r/eclipse_linux/ResourcePath.hpp:
 
-../src/track/TrackDrawable.h:
+../src/ui/Screen.h:
 
-../src/track/Track.h:
+../src/ui/../view/View.h:
 
-../src/track/TrackLoader.h:
+../src/ui/MenuScreen.h:
 
-../src/car/Car.h:
+../src/ui/Screen.h:
 
-../src/car/../track/Track.h:
+../src/ui/../view/ButtonView.h:
+
+../src/ui/../view/View.h:
+
+../src/ui/GameScreen.h:
+
+../src/ui/../track/TrackDrawable.h:
+
+../src/ui/../track/Track.h:
+
+../src/ui/../track/TrackLoader.h:
+
+../src/ui/../car/Car.h:
+
+../src/ui/../car/../track/Track.h:
+
+../src/utils/vector2.h:

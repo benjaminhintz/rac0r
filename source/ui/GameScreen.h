@@ -36,7 +36,13 @@ protected:
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
     
 private:
-    std::string trackDir;
+
+	#ifdef __linux
+	std::string trackDir = "v/";
+	#endif
+	#ifdef __APPLE__
+	std::string trackDir = "";
+	#endif
     // store tracks & track lines
     std::vector<Rac0r::Track> tracks;
     std::vector<Rac0r::TrackDrawable> trackDrawables;
