@@ -18,7 +18,7 @@
 
 class GameScreen : public Screen, public Rac0r::CarEventListener {
 public:
-    GameScreen(const Rect& frame);
+    GameScreen(const Rect& frame, int playerCount, std::string trackPath);
     virtual ~GameScreen() = default;
     
     virtual void handleEvent(sf::Event event);

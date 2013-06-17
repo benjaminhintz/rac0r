@@ -32,9 +32,11 @@ private:
     void callFunction(int index, sf::Event event);
     void exit();
     void init();
+    int trackNumber = 0;
     //std::shared_ptr<ButtonView()> trackNumber;
     sf::Text start;
     sf::Text player;
+    sf::Text description;
     sf::RectangleShape logo;
     sf::RectangleShape track;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

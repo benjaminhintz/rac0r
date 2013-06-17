@@ -76,13 +76,11 @@ int main(int, char const** argv) {
         
         if(currentScreen->finished) {
             currentScreen->finished = false;
-            Screen *kacke = new GameScreen(screenFrame);
-            kacke->playerCount = currentScreen->playerCount;
-            kacke->trackNumber = currentScreen->trackNumber;
+            Screen *game = new GameScreen(screenFrame,currentScreen->playerCount, currentScreen->trackPath);
             screens.pop_back();
-            screens.emplace_back(kacke);
+            screens.emplace_back(game);
             currentScreen = screens.back();
-            std::cout<<currentScreen->trackNumber<<std::endl;
+            std::cout << currentScreen->trackPath << std::endl;
         }
         
         if(currentScreen->exit) {

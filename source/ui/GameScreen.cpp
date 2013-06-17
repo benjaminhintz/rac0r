@@ -10,15 +10,16 @@
 
 #include "ResourcePath.hpp"
 
-GameScreen::GameScreen(const Rect& frame) : Screen(frame) {
-    createTracks(5, "test5.track");
+GameScreen::GameScreen(const Rect& frame, int playerCount, std::string trackPath) : Screen(frame) {
+    createTracks(playerCount, trackPath);
 }
 
 void GameScreen::createTracks(size_t _playerCount, const std::string & _trackFile) {
 
     // Load & Setup Main Track
     Rac0r::TrackLoader trackLoader;
-    Rac0r::Track mainTrack = trackLoader.loadFromFile(resourcePath() + trackDir + _trackFile);
+    std::cout<< _trackFile<<std::endl;
+    Rac0r::Track mainTrack = trackLoader.loadFromFile(_trackFile);
     
     float scaleOffset = 0.2;
     
