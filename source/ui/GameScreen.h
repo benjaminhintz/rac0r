@@ -26,7 +26,7 @@ public:
     constexpr static const float            START_LINE_WIDTH                =   2.0f;
     
     // Game Logic constants
-    constexpr static const int              MAX_LAPS                        =   3;
+    constexpr static const int              MAX_LAPS                        =   1;
     
 public:
     GameScreen(const Rect& frame);
@@ -66,7 +66,7 @@ private:
             }
         
             void accelerate() {
-                if (mLapCount <= MAX_LAPS) {
+                if (mLapCount < MAX_LAPS) {
                     mCar->accelerate();
                 }
             }
