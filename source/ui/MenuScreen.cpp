@@ -9,122 +9,99 @@
 #include <iostream>
 #include <sstream>
 #include "MenuScreen.h"
-
 #include "ResourcePath.hpp"
 
 using namespace std;
 
 MenuScreen::MenuScreen(const Rect& frame) : Screen(frame) {
+    Rac0r::TrackFileManager fileManager;
+    tracks = fileManager.getTrackList();
+    std::cout << tracks.size() << " tracks loaded" << endl;
     
-    vector<string> menuItems;
-    menuItems.push_back("play");
-    menuItems.push_back("choose track");
-    menuItems.push_back("choose player");
-    menuItems.push_back("exit");
-    
-    int i = 0;
-    for (string menuItem : menuItems) {
-        auto button = std::make_shared<ButtonView>();
-        
-        button->setText(menuItem);
-        button->setPosition(50, 150 + 75 * i++);
-        button->setSize(200, 50);
-        button->setRotation(-15);
-        
-        addChild(button);
-    }
-    
-    setHighlight(0);
+    init();
+}
 
-    auto trackNumber = std::make_shared<ButtonView>();
-    string trackCount;
-    ostringstream convert;
-    convert << MenuScreen::trackCount;
-    trackCount = convert.str();
+void MenuScreen::init() {
+
     
-    trackNumber->setText(trackCount);
-    trackNumber->setPosition(350, 175 );
-    trackNumber->setSize(200, 50);
+    static sf::Font font;
+    font.loadFromFile(resourcePath() +  "Tahoma.ttf");
     
-    addChild(trackNumber);
+    
+    track.setPosition(frame.width/2 - 100, 100);
+    track.setFillColor(sf::Color::White);
+    track.setSize(sf::Vector2f(200,100));
+    
+    start.setString("test");
+    start.setColor(sf::Color::White);
+    start.setPosition(10, 10);
+    start.setFont(font);
+    
+    player.setString("x player");
+    player.setColor(sf::Color::White);
+    player.setPosition(10, 50);
+    player.setFont(font);
+    
+    logo.setPosition(200,200);
+    logo.setSize(sf::Vector2f(200,200));
+    logo.setFillColor(sf::Color::White);
+
+    
+    sf::Texture texture;
+    texture.loadFromFile( resourcePath() + "logo.png");
+    if (!texture.loadFromFile( resourcePath() + "logo.png"))
+    {
+        // error...
+    }
+
     
 }
 
-void MenuScreen::setHighlight(int index) {
-    if (index >=0 && index < childViews.size()) {
-        // Remove the old highlight
-        if (highlighted) {
-            childViews[highlightedItem]->setState(ViewState::normal);
-        }
-        // Apply the new highlight
-        highlighted = true;
-        highlightedItem = index;
-        childViews[highlightedItem]->setState(ViewState::highlighted);
-    }
-}
-
-void MenuScreen::setHighlightedToState(ViewState state) {
-    if (highlighted) {
-        childViews[highlightedItem]->setState(state);
-    }
-}
 
 void MenuScreen::handleEvent(sf::Event event) {
     bool down = (event.type == sf::Event::KeyPressed);
     bool up = (event.type == sf::Event::KeyReleased);
-    
     if (down && event.key.code == sf::Keyboard::Down) {
-        if (!highlighted) {
-            setHighlight(0);
-        } else {
-            setHighlight(highlightedItem + 1);
-        }
-    } else if (down && event.key.code == sf::Keyboard::Up) {
-        setHighlight(highlightedItem - 1);
     }
-    if (down && event.key.code == sf::Keyboard::Return) {
-        setHighlightedToState(ViewState::activated);
+    else if (up && event.key.code == sf::Keyboard::Up)
+    {
+        if (Screen::playerCount < 5){
+            Screen::playerCount++;
+        }
+        cout << "ein Spieler mehr " << Screen::playerCount << endl;
+    }
+    else if (up && event.key.code == sf::Keyboard::Down)
+    {
+        if (Screen::playerCount > 1){
+            Screen::playerCount--;
+        }
+        cout << "ein Spieler weniger " << Screen::playerCount << endl;
+    }
+    else if (up && event.key.code == sf::Keyboard::Right)
+    {
+        if (Screen::trackNumber < 5){
+            player.setString(tracks.at(trackNumber).getTrackFile());
+            Screen::trackNumber++;
+        }
+        cout << "Ein Track weiter " << Screen::trackNumber << endl;
+    }
+    else if (up && event.key.code == sf::Keyboard::Left)
+    {
+        if (Screen::trackNumber > 1){
+            Screen::trackNumber--;
+        }
+        cout << "Ein Track zurück " << Screen::trackNumber << endl;
     }
     if (up && event.key.code == sf::Keyboard::Return) {
-        setHighlightedToState(ViewState::highlighted);
-    }
-    if (up)  {
-        callFunction(highlightedItem, event);
-    }
-
-}
-void MenuScreen::callFunction(int index, sf::Event event) {
-    switch (index) {
-        case 0:
-            break;
-        case 1:
-            if(event.key.code == sf::Keyboard::Left) {
-                if (MenuScreen::trackCount > 1) {
-                    MenuScreen::trackCount -= 1;
-                }
-                cout << "links" << endl;
-            } else if(event.key.code == sf::Keyboard::Right) {
-                cout << "rechts" << endl;
-                if (MenuScreen::trackCount < 5){
-                    MenuScreen::trackCount += 1;
-                }
-                
-            }
-
-            break;
-        case 2:
-
-            break;
-        case 3:
-            if(event.key.code == sf::Keyboard::Return) {
-                exit();
-                break;
-            }
-        default:
-            break;
+        Screen::finished = true;
     }
 }
 
-void MenuScreen::exit() {
-    Screen::exit = true;
+void MenuScreen::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    target.draw(logo, states);
+    target.draw(track, states);
+    target.draw(player, states);
+    target.draw(start, states);
 }
+
+

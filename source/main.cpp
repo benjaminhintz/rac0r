@@ -46,8 +46,8 @@ int main(int, char const** argv) {
     // TODO: in ScreenManager packen, der Animationen kann
     std::vector<std::shared_ptr<Screen>> screens;
     Rect screenFrame(0, 0, videoMode.width, videoMode.height);
-    //screens.emplace_back(new MenuScreen(screenFrame));
-    screens.emplace_back(new GameScreen(screenFrame));
+    screens.emplace_back(new MenuScreen(screenFrame));
+    //screens.emplace_back(new GameScreen(screenFrame));
     // TODO: ScreenManager fragen
     auto currentScreen = screens.back();
     
@@ -72,6 +72,17 @@ int main(int, char const** argv) {
             } else {
                 currentScreen->handleEvent(event);
             }
+        }
+        
+        if(currentScreen->finished) {
+            currentScreen->finished = false;
+            Screen *kacke = new GameScreen(screenFrame);
+            kacke->playerCount = currentScreen->playerCount;
+            kacke->trackNumber = currentScreen->trackNumber;
+            screens.pop_back();
+            screens.emplace_back(kacke);
+            currentScreen = screens.back();
+            std::cout<<currentScreen->trackNumber<<std::endl;
         }
         
         if(currentScreen->exit) {
