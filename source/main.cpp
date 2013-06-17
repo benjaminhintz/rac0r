@@ -74,6 +74,11 @@ int main(int, char const** argv) {
                 currentScreen->handleEvent(event);
             }
         }
+        
+        if(currentScreen->exit) {
+            window.close();
+        }
+        
         // Update the screen's contents and tell it how much time passed since the last frame
         currentScreen->layout(elapsed);
         

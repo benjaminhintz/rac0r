@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Jan Schulte. All rights reserved.
 //
 
+#include <iostream>
+
 #include "MenuScreen.h"
 
 #include "ResourcePath.hpp"
@@ -14,9 +16,10 @@ using namespace std;
 
 MenuScreen::MenuScreen(const Rect& frame) : Screen(frame) {
     vector<string> menuItems;
-    menuItems.push_back("Play");
-    menuItems.push_back("Choose track");
-    menuItems.push_back("Exit");
+    menuItems.push_back("play");
+    menuItems.push_back("choose track");
+    menuItems.push_back("choose player");
+    menuItems.push_back("exit");
     
     int i = 0;
     for (string menuItem : menuItems) {
@@ -70,5 +73,37 @@ void MenuScreen::handleEvent(sf::Event event) {
     }
     if (up && event.key.code == sf::Keyboard::Return) {
         setHighlightedToState(ViewState::highlighted);
+        callFunction(highlightedItem, event);
     }
+    if (up && event.key.code == sf::Keyboard::Left) {
+        callFunction(highlightedItem, event);
+    }
+    if (up && event.key.code == sf::Keyboard::Right) {
+        callFunction(highlightedItem, event);
+    }
+}
+
+void MenuScreen::callFunction(int index, sf::Event event) {
+    switch (index) {
+        case 0:
+            break;
+        case 1:
+            break;
+        case 2:
+            if(event.key.code == sf::Keyboard::Left) {
+                cout << "links" << endl;
+            } else if(event.key.code == sf::Keyboard::Right) {
+                cout << "rechts" << endl;
+            }
+            break;
+        case 3:
+            exit();
+            break;
+        default:
+            break;
+    }
+}
+
+void MenuScreen::exit() {
+    Screen::exit = true;
 }

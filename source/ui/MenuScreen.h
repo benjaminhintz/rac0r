@@ -25,7 +25,9 @@ protected:
 private:
     bool highlighted = false;
     size_t highlightedItem = -1;
-    
+    void callFunction(int index, sf::Event event);
+    void exit();
+    int playerCount = 1;
 };
 
 #endif /* defined(__Rac0r__MenuScreen__) */
