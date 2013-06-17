@@ -11,6 +11,8 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <memory>
+
 
 // Typedefs
 class View;

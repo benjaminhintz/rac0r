@@ -27,9 +27,17 @@ ButtonView::ButtonView(const Rect& frame) :
 const sf::Font& ButtonView::getDefaultFont() {
     static sf::Font defaultFont;
     static bool isLoaded = false;
+
+    // TODO: put this in the header file as a static variable
+	#ifdef __linux
+	std::string fontDir = "fonts/";
+	#endif
+	#ifdef __APPLE__
+	std::string fontDir = "";
+	#endif
     
     if (!isLoaded) {
-        if (!defaultFont.loadFromFile(resourcePath() + "Tahoma.ttf")) {
+        if (!defaultFont.loadFromFile(resourcePath() + fontDir +  "Tahoma.ttf")) {
             // Error while loading the font
             std::cerr << "Couldn't load Tahoma.ttf" << std::endl;
             // TODO: crash

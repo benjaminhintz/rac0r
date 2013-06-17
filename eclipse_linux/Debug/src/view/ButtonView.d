@@ -1,5 +1,7 @@
-src/main.d: ../src/main.cpp \
- /home/david/code/cpp/libs/SFML-2.0/include/SFML/Audio.hpp \
+src/view/ButtonView.d: ../src/view/ButtonView.cpp \
+ ../src/view/ButtonView.h \
+ /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics.hpp \
+ /home/david/code/cpp/libs/SFML-2.0/include/SFML/Window.hpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/System.hpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Config.hpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/System/Clock.hpp \
@@ -23,17 +25,6 @@ src/main.d: ../src/main.cpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/System/Vector2.inl \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/System/Vector3.hpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/System/Vector3.inl \
- /home/david/code/cpp/libs/SFML-2.0/include/SFML/Audio/Listener.hpp \
- /home/david/code/cpp/libs/SFML-2.0/include/SFML/Audio/Export.hpp \
- /home/david/code/cpp/libs/SFML-2.0/include/SFML/Audio/Music.hpp \
- /home/david/code/cpp/libs/SFML-2.0/include/SFML/Audio/SoundStream.hpp \
- /home/david/code/cpp/libs/SFML-2.0/include/SFML/Audio/SoundSource.hpp \
- /home/david/code/cpp/libs/SFML-2.0/include/SFML/Audio/Sound.hpp \
- /home/david/code/cpp/libs/SFML-2.0/include/SFML/Audio/SoundBuffer.hpp \
- /home/david/code/cpp/libs/SFML-2.0/include/SFML/Audio/SoundBufferRecorder.hpp \
- /home/david/code/cpp/libs/SFML-2.0/include/SFML/Audio/SoundRecorder.hpp \
- /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics.hpp \
- /home/david/code/cpp/libs/SFML-2.0/include/SFML/Window.hpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Window/Context.hpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Window/Export.hpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Window/GlResource.hpp \
@@ -74,14 +65,13 @@ src/main.d: ../src/main.cpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/Sprite.hpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/Text.hpp \
  /home/david/repos/rac0r/eclipse_linux/ResourcePath.hpp \
- ../src/ui/Screen.h ../src/ui/../view/View.h ../src/ui/MenuScreen.h \
- ../src/ui/Screen.h ../src/ui/../view/ButtonView.h \
- ../src/ui/../view/View.h ../src/ui/GameScreen.h \
- ../src/ui/../track/TrackDrawable.h ../src/ui/../track/Track.h \
- ../src/ui/../track/TrackLoader.h ../src/ui/../car/Car.h \
- ../src/ui/../car/../track/Track.h ../src/utils/vector2.h
+ ../src/view/View.h
 
-/home/david/code/cpp/libs/SFML-2.0/include/SFML/Audio.hpp:
+../src/view/ButtonView.h:
+
+/home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics.hpp:
+
+/home/david/code/cpp/libs/SFML-2.0/include/SFML/Window.hpp:
 
 /home/david/code/cpp/libs/SFML-2.0/include/SFML/System.hpp:
 
@@ -128,28 +118,6 @@ src/main.d: ../src/main.cpp \
 /home/david/code/cpp/libs/SFML-2.0/include/SFML/System/Vector3.hpp:
 
 /home/david/code/cpp/libs/SFML-2.0/include/SFML/System/Vector3.inl:
-
-/home/david/code/cpp/libs/SFML-2.0/include/SFML/Audio/Listener.hpp:
-
-/home/david/code/cpp/libs/SFML-2.0/include/SFML/Audio/Export.hpp:
-
-/home/david/code/cpp/libs/SFML-2.0/include/SFML/Audio/Music.hpp:
-
-/home/david/code/cpp/libs/SFML-2.0/include/SFML/Audio/SoundStream.hpp:
-
-/home/david/code/cpp/libs/SFML-2.0/include/SFML/Audio/SoundSource.hpp:
-
-/home/david/code/cpp/libs/SFML-2.0/include/SFML/Audio/Sound.hpp:
-
-/home/david/code/cpp/libs/SFML-2.0/include/SFML/Audio/SoundBuffer.hpp:
-
-/home/david/code/cpp/libs/SFML-2.0/include/SFML/Audio/SoundBufferRecorder.hpp:
-
-/home/david/code/cpp/libs/SFML-2.0/include/SFML/Audio/SoundRecorder.hpp:
-
-/home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics.hpp:
-
-/home/david/code/cpp/libs/SFML-2.0/include/SFML/Window.hpp:
 
 /home/david/code/cpp/libs/SFML-2.0/include/SFML/Window/Context.hpp:
 
@@ -231,28 +199,4 @@ src/main.d: ../src/main.cpp \
 
 /home/david/repos/rac0r/eclipse_linux/ResourcePath.hpp:
 
-../src/ui/Screen.h:
-
-../src/ui/../view/View.h:
-
-../src/ui/MenuScreen.h:
-
-../src/ui/Screen.h:
-
-../src/ui/../view/ButtonView.h:
-
-../src/ui/../view/View.h:
-
-../src/ui/GameScreen.h:
-
-../src/ui/../track/TrackDrawable.h:
-
-../src/ui/../track/Track.h:
-
-../src/ui/../track/TrackLoader.h:
-
-../src/ui/../car/Car.h:
-
-../src/ui/../car/../track/Track.h:
-
-../src/utils/vector2.h:
+../src/view/View.h:
