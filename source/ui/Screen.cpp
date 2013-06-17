@@ -13,11 +13,4 @@
 Screen::Screen(const Rect& frame) : View(frame) {}
 
 
-//void Screen::setHighlight(view_ptr view) {
-//    // Find the new highlight
-//    auto i = std::find(childViews.begin(), childViews.end(), view);
-//    if (i != childViews.end()) {
-//        (*i)->setState(ViewState::highlighted);
-//    }
-//}
 

@@ -22,6 +22,10 @@ public:
     virtual void layout(sf::Time elapsed) {}
     
     bool exit = false;
+    bool finished = false;
+    int playerCount = 1;
+    int trackNumber = 1;
+    
 };
 
 

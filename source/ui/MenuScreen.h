@@ -10,7 +10,9 @@
 #define __Rac0r__MenuScreen__
 
 #include "Screen.h"
-#include "../view/ButtonView.h"
+
+
+
 
 class MenuScreen : public Screen {
 public:
@@ -27,10 +29,9 @@ private:
     size_t highlightedItem = -1;
     void callFunction(int index, sf::Event event);
     void exit();
-    int playerCount = 1;
-    int trackCount = 1;
+    
     //std::shared_ptr<ButtonView()> trackNumber;
-
+    
     
 };
 
