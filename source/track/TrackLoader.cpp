@@ -64,7 +64,7 @@ Track TrackLoader::loadFromFile(const std::string & _fileName) {
         } else if (type == "ll") { // left-left (90 deg)
             std::cout << "Info: Left-Left 90 degree track part found. Start Point(" << point << ")" << std::endl;
             
-            this->computeCurve(TrackLoader::Curve_Rotation::COUNTER_CLOCK_WISE, 90.0f, point, dir, points);  
+            this->computeCurve(TrackLoader::Curve_Rotation::COUNTER_CLOCK_WISE, 90.0f, point, dir, points);
         } else if (type == "l") { // left-left (90 deg)
             std::cout << "Info: Left-Left 45 degree track part found. Start Point(" << point << ")" << std::endl;
         
@@ -107,13 +107,12 @@ void TrackLoader::computeCurve(Curve_Rotation _roation, float _degree, const sf:
     sf::Vector2f orthDir = orthogonal(normDir);
     orthDir = orthDir * (dirLen * 1.5f); // abstand vom punkt zum mitelpunkt
     sf::Vector2f pivot = _point + (cw ? - orthDir : orthDir);
-
+ 
     // compute rotation steps
     float delta = (_degree / static_cast<float>(this->mCurveSteps));
     
     // compute radius
-    float radius = 30.0f; //abs(length(pivot - _point));
-    std::cout << "Radius:" << radius << std::endl;
+    float radius = 30.0f; //abs(length(pivot - _point)); // NOTE: Defined by David's Editor :p
     
     // compute rotation start angle
     sf::Vector2f av(1.0f, 0.0f);
@@ -126,10 +125,7 @@ void TrackLoader::computeCurve(Curve_Rotation _roation, float _degree, const sf:
     //std::cout << "Start Angle:" << startAngle << std::endl;
     //std::cout << "Start Dir:" << _dir << std::endl;
     //std::cout << "Start Angle:" << RAD_TO_DEG(startAngle) << std::endl;
-    
-    // TODO: REMOVE
-    sf::Vector2f lastPoint;
-    
+
     // generate curve
     for (unsigned int i = 0; i < this->mCurveSteps; ++i) {
         float angle = RAD_TO_DEG(startAngle) + (delta * static_cast<float>(i) * (cw ? -1.0f : 1.0f));
@@ -149,12 +145,8 @@ void TrackLoader::computeCurve(Curve_Rotation _roation, float _degree, const sf:
         //std::cout << "Translated Point(" << i << "): " << point << std::endl;
         
         _points.push_back(point);
-        
-        // TODO: REMOVE
-        lastPoint = point;
     }
  
-    std::cout << "Info: Last Curve Point(" << lastPoint << ")" << std::endl;
 }
 
 
