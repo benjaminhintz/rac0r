@@ -31,7 +31,13 @@ GameScreen::GameScreen(const Rect& frame) : Screen(frame) {
     
     // create track line renderer
     unsigned int color = 0;
-    sf::Color colors[4] = { sf::Color::Red, sf::Color::Green, sf::Color::Blue, sf::Color::Yellow };
+    sf::Color colors[5] = {
+		sf::Color(0,153,205,153),
+		sf::Color(102, 153, 0, 153),
+		sf::Color(153, 51, 204, 153),
+		sf::Color(255, 136, 0, 153),
+		sf::Color(204, 0, 0, 153)
+    };
     for (auto & track : tracks) {
         Rac0r::TrackDrawable trackDrawable(track);
         trackDrawable.setThickness(2.0f);
@@ -73,4 +79,6 @@ void GameScreen::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     }
 }
 
-
+void GameScreen::handleEvent(sf::Event event) {
+	// TODO: implement
+}

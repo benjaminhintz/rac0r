@@ -30,6 +30,7 @@ public:
     virtual void onCarStartedFromStart(Rac0r::Car & _car) {
         std::cout << "Car started from start." << std::endl;
     }
+    virtual void handleEvent(sf::Event event);
     virtual ~GameScreen() = default;
 
 protected:
@@ -38,7 +39,7 @@ protected:
 private:
 
 	#ifdef __linux
-	std::string trackDir = "v/";
+	std::string trackDir = "tracks/";
 	#endif
 	#ifdef __APPLE__
 	std::string trackDir = "";
