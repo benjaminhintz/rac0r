@@ -32,3 +32,43 @@ MenuScreen::MenuScreen(const Rect& frame) : Screen(frame) {
     
     setHighlight(0);
 }
+
+void MenuScreen::setHighlight(int index) {
+    if (index >=0 && index < childViews.size()) {
+        // Remove the old highlight
+        if (highlighted) {
+            childViews[highlightedItem]->setState(ViewState::normal);
+        }
+        // Apply the new highlight
+        highlighted = true;
+        highlightedItem = index;
+        childViews[highlightedItem]->setState(ViewState::highlighted);
+    }
+}
+
+void MenuScreen::setHighlightedToState(ViewState state) {
+    if (highlighted) {
+        childViews[highlightedItem]->setState(state);
+    }
+}
+
+void MenuScreen::handleEvent(sf::Event event) {
+    bool down = (event.type == sf::Event::KeyPressed);
+    bool up = (event.type == sf::Event::KeyReleased);
+    
+    if (down && event.key.code == sf::Keyboard::Down) {
+        if (!highlighted) {
+            setHighlight(0);
+        } else {
+            setHighlight(highlightedItem + 1);
+        }
+    } else if (down && event.key.code == sf::Keyboard::Up) {
+        setHighlight(highlightedItem - 1);
+    }
+    if (down && event.key.code == sf::Keyboard::Return) {
+        setHighlightedToState(ViewState::activated);
+    }
+    if (up && event.key.code == sf::Keyboard::Return) {
+        setHighlightedToState(ViewState::highlighted);
+    }
+}

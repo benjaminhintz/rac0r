@@ -18,16 +18,9 @@ public:
     Screen(const Rect& frame);
     virtual ~Screen() = default;
     
-    virtual void handleEvent(sf::Event event);
+    virtual void handleEvent(sf::Event event) = 0;
     virtual void layout(sf::Time elapsed) {}
 
-protected:
-    void setHighlight(int index);
-    void setHighlightedToState(ViewState state);
-    
-private:
-    bool highlighted = false;
-    size_t highlightedItem = -1;
 };
 
 
