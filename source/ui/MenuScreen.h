@@ -9,6 +9,8 @@
 #ifndef __Rac0r__MenuScreen__
 #define __Rac0r__MenuScreen__
 
+#include "TrackFileManager.h"
+
 #include "Screen.h"
 
 
@@ -32,9 +34,11 @@ private:
     void init();
     //std::shared_ptr<ButtonView()> trackNumber;
     sf::Text start;
+    sf::Text player;
     sf::RectangleShape logo;
+    sf::RectangleShape track;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-
+    std::vector<Rac0r::TrackFile> tracks;
 };
 
 #endif /* defined(__Rac0r__MenuScreen__) */
