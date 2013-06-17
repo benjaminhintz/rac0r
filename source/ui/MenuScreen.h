@@ -37,7 +37,6 @@ private:
     sf::Text start;
     sf::Text player;
     sf::Text description;
-    sf::RectangleShape logo;
     sf::Texture logoTexture;
     sf::Sprite logoSprite;
     sf::RectangleShape track;

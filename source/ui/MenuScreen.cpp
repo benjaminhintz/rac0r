@@ -21,8 +21,6 @@ MenuScreen::MenuScreen(const Rect& frame) : Screen(frame) {
 }
 
 void MenuScreen::init() {
-
-    
     static sf::Font font;
     font.loadFromFile(resourcePath() +  "Tahoma.ttf");
     
@@ -45,30 +43,12 @@ void MenuScreen::init() {
     player.setPosition(10, 50);
     player.setFont(font);
     
-//    logo.setPosition(200,200);
-//    logo.setSize(sf::Vector2f(200,200));
-//    logo.setFillColor(sf::Color::White);
-
-    
-//    sf::Image logoImage;
-//    if (!logoImage.loadFromFile("background.jpg")) {
-//        // Error while loading
-//        return;
-//    }
-    
-    
-    
-
     if (!logoTexture.loadFromFile( resourcePath() + "logo.png")) {
-        // error while loading file
-        cout << "Error" << endl;
+        cerr << "Error while loading image" << endl;
         return;
     }
-
     logoSprite.setTexture(logoTexture);
     logoSprite.setPosition(200, 200);
-
-    
 }
 
 
@@ -129,7 +109,6 @@ void MenuScreen::handleEvent(sf::Event event) {
 }
 
 void MenuScreen::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    target.draw(logo, states);
     target.draw(description);
     target.draw(track, states);
     target.draw(player, states);
