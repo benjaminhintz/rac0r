@@ -25,7 +25,6 @@ int main(int, char const** argv) {
     #ifdef __linux
 	std::string tmp = argv[0];
 	Global::__path = tmp.substr(0, tmp.find_last_of('/'));
-//    trackDir = "tracks/";
     #endif
 
     // Setup Rendering Settings
@@ -47,7 +46,7 @@ int main(int, char const** argv) {
     // TODO: in ScreenManager packen, der Animationen kann
     std::vector<std::shared_ptr<Screen>> screens;
     Rect screenFrame(0, 0, videoMode.width, videoMode.height);
-//    screens.emplace_back(new MenuScreen(screenFrame));
+    //screens.emplace_back(new MenuScreen(screenFrame));
     screens.emplace_back(new GameScreen(screenFrame));
     // TODO: ScreenManager fragen
     auto currentScreen = screens.back();
@@ -74,6 +73,11 @@ int main(int, char const** argv) {
                 currentScreen->handleEvent(event);
             }
         }
+        
+        if(currentScreen->exit) {
+            window.close();
+        }
+        
         // Update the screen's contents and tell it how much time passed since the last frame
         currentScreen->layout(elapsed);
         

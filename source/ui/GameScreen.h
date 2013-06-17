@@ -19,9 +19,9 @@
 class GameScreen : public Screen, public Rac0r::CarEventListener {
 public:
     GameScreen(const Rect& frame);
-
     virtual ~GameScreen() = default;
     
+    virtual void handleEvent(sf::Event event);
     virtual void layout(sf::Time elapsed);
     
     virtual void onCarDriftedOffTrack(Rac0r::Car & _car);
@@ -38,7 +38,7 @@ private:
 private:
 
 	#ifdef __linux
-	std::string trackDir = "v/";
+	std::string trackDir = "tracks/";
 	#endif
 	#ifdef __APPLE__
 	std::string trackDir = "";
