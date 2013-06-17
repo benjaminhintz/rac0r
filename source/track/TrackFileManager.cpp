@@ -14,7 +14,7 @@
 
 void Rac0r::TrackFileManager::load() {
 	DIR *trackDirectory;
-	struct dirent *dp;
+	struct dirent *dp; // ouch!
 	this->trackList.clear();
 
 	std::vector<Rac0r::TrackFile> trackList;
@@ -25,6 +25,7 @@ void Rac0r::TrackFileManager::load() {
 			std::string imageName = dp->d_name;
 			size_t pos;
 			if((pos = trackName.find(".track", 0)) != std::string::npos) {
+				imageName.replace(pos, imageName.length(), ".png");
 				this->trackList.push_back(Rac0r::TrackFile(trackPath + trackName, trackPath + imageName));
 			}
 		}
