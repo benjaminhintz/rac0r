@@ -19,6 +19,7 @@
 
 class GameScreen : public Screen, public Rac0r::CarEventListener {
 public:
+    GameScreen(const Rect& frame, int playerCount, std::string trackPath);
     constexpr static const int              START_INTERVAL                  =   1000;
     static const std::string                COUNTDOWN_STRINGS[4];
     
@@ -28,8 +29,6 @@ public:
     // Game Logic constants
     constexpr static const int              MAX_LAPS                        =   1;
     
-public:
-    GameScreen(const Rect& frame);
     virtual ~GameScreen() = default;
     
     virtual void handleEvent(sf::Event event);

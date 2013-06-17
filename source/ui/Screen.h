@@ -24,7 +24,7 @@ public:
     bool exit = false;
     bool finished = false;
     int playerCount = 1;
-    int trackNumber = 1;
+    std::string trackPath;
     
 };
 

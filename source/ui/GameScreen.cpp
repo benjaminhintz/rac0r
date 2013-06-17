@@ -10,15 +10,11 @@
 #include "ResourcePath.hpp"
 #include "../utils/vector2.h"
 
-
-
 const std::string GameScreen::COUNTDOWN_STRINGS[4] = { "Start", "1", "2", "3" };
 
-GameScreen::GameScreen(const Rect& frame) :
-    Screen(frame),
-    mGameRunning(false)
+GameScreen::GameScreen(const Rect& frame, int playerCount, std::string trackPath) : Screen(frame), mGameRunning(false)
 {
-    createTracks(5, "test4.track");
+    createTracks(playerCount, trackPath);
     restart();
 }
 
@@ -26,7 +22,8 @@ void GameScreen::createTracks(size_t _playerCount, const std::string & _trackFil
 
     // Load & Setup Main Track
     Rac0r::TrackLoader trackLoader;
-    Rac0r::Track mainTrack = trackLoader.loadFromFile(resourcePath() + trackDir + _trackFile);
+    std::cout<< _trackFile<<std::endl;
+    Rac0r::Track mainTrack = trackLoader.loadFromFile(_trackFile);
     
     float scaleOffset = 0.2;
     
