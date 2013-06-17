@@ -21,6 +21,20 @@ MenuScreen::MenuScreen(const Rect& frame) : Screen(frame) {
 }
 
 void MenuScreen::init() {
+    
+    if (!logoTexture.loadFromFile( resourcePath() + "logo.png")) {
+        cerr << "Error while loading image" << endl;
+        return;
+    }
+
+    logoSprite.setTexture(logoTexture);
+    //logoSprite.setTextureRect( sf::IntRect(0,0,670,300));
+    logoSprite.setPosition(frame.width/2-300, 10);
+    
+    track.setPosition(frame.width/2 - 320, 300);
+    //track.setFillColor(sf::Color::White);
+    //track.setSize(sf::Vector2f(640,384));
+    
     static sf::Font font;
     font.loadFromFile(resourcePath() +  "Tahoma.ttf");
     
@@ -29,9 +43,7 @@ void MenuScreen::init() {
     description.setColor(sf::Color::White);
     description.setFont(font);
     
-    track.setPosition(frame.width/2 - 100, 100);
-    track.setFillColor(sf::Color::White);
-    track.setSize(sf::Vector2f(200,100));
+
     
     start.setString("start");
     start.setColor(sf::Color::White);
@@ -42,13 +54,7 @@ void MenuScreen::init() {
     player.setColor(sf::Color::White);
     player.setPosition(10, 50);
     player.setFont(font);
-    
-    if (!logoTexture.loadFromFile( resourcePath() + "logo.png")) {
-        cerr << "Error while loading image" << endl;
-        return;
-    }
-    logoSprite.setTexture(logoTexture);
-    logoSprite.setPosition(200, 200);
+
 }
 
 
@@ -86,13 +92,18 @@ void MenuScreen::handleEvent(sf::Event event) {
     {
         if (trackNumber < tracks.size() - 1){
             //TODO textur neu setzen
-//            sf::Texture texture;
-//            texture.loadFromFile(tracks.at(trackNumber).getImageFile());
-//            track.setTexture(&texture);
+            sf::Image trackImage;
+            if (trackImage.loadFromFile(tracks.at(trackNumber).getImageFile())){
+                std::cout<< "fehler beim laden des image"<< std::endl;
+            }
+            trackTexture.loadFromImage(trackImage);
+            track.setTexture(trackTexture);
             trackNumber++;
             std::cout << tracks.at(trackNumber).getTrackFile() << std::endl;
         }
+        
         cout << "Ein Track weiter " << Screen::trackPath << endl;
+        
     }
     else if (up && event.key.code == sf::Keyboard::Left)
     {
