@@ -45,17 +45,28 @@ void MenuScreen::init() {
     player.setPosition(10, 50);
     player.setFont(font);
     
-    logo.setPosition(200,200);
-    logo.setSize(sf::Vector2f(200,200));
-    logo.setFillColor(sf::Color::White);
+//    logo.setPosition(200,200);
+//    logo.setSize(sf::Vector2f(200,200));
+//    logo.setFillColor(sf::Color::White);
 
     
-    sf::Texture texture;
-    texture.loadFromFile( resourcePath() + "logo.png");
-    if (!texture.loadFromFile( resourcePath() + "logo.png"))
-    {
-        // error...
+//    sf::Image logoImage;
+//    if (!logoImage.loadFromFile("background.jpg")) {
+//        // Error while loading
+//        return;
+//    }
+    
+    
+    
+
+    if (!logoTexture.loadFromFile( resourcePath() + "logo.png")) {
+        // error while loading file
+        cout << "Error" << endl;
+        return;
     }
+
+    logoSprite.setTexture(logoTexture);
+    logoSprite.setPosition(200, 200);
 
     
 }
@@ -123,6 +134,7 @@ void MenuScreen::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(track, states);
     target.draw(player, states);
     target.draw(start, states);
+    target.draw(logoSprite, states);
 }
 
 

@@ -38,6 +38,8 @@ private:
     sf::Text player;
     sf::Text description;
     sf::RectangleShape logo;
+    sf::Texture logoTexture;
+    sf::Sprite logoSprite;
     sf::RectangleShape track;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     std::vector<Rac0r::TrackFile> tracks;
