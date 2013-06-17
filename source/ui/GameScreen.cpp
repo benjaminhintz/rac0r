@@ -10,8 +10,12 @@
 
 #include "ResourcePath.hpp"
 
-GameScreen::GameScreen(const Rect& frame) : Screen(frame) {
+GameScreen::GameScreen(const Rect& frame) :
+    Screen(frame),
+    mGameRunning(false)
+{
     createTracks(5, "test5.track");
+    restart();
 }
 
 void GameScreen::createTracks(size_t _playerCount, const std::string & _trackFile) {
@@ -72,6 +76,13 @@ void GameScreen::createTracks(size_t _playerCount, const std::string & _trackFil
         car.setColor(colors[color++]);
         cars.push_back(car);
     }
+}
+
+void GameScreen::restart() {
+    this->mGameRunning = false;
+    
+    sf::Clock timer;
+    this->mStartTimer = timer.getElapsedTime();
 }
 
 void GameScreen::layout(sf::Time elapsed) {

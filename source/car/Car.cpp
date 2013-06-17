@@ -87,9 +87,11 @@ void Car::draw(sf::RenderTarget& _target, sf::RenderStates _states) const {
     _target.draw(this->mCarDrawable, _states);
     
     // Debug Stuff
+    /*
     _target.draw(this->mLocationPoint, _states);
     _target.draw(this->mNextLocationPoint, _states);
     _target.draw(this->mDirectionShape, _states);
+    */
 }
     
 void Car::accelerate() {
@@ -168,7 +170,6 @@ void Car::keepOnTrack() {
         this->mEventListener->onCarDriftedOffTrack(*this);
     }
     
- 
     // Debug Stuff
     //float len = length(this->mDirection * 100.0f);
     this->mDirectionShape = sf::RectangleShape(sf::Vector2f(angularSpeed, 2));
@@ -182,15 +183,7 @@ void Car::keepOnTrack() {
     } else {
         this->mDirectionShape.setFillColor(sf::Color::Green);
     }
-/*
-    float len = length(this->mCurrentDirection * this->mVelocity * 0.1f);
-    //float len = length(this->mDirection * 100.0f);
-    this->mDirectionShape = sf::RectangleShape(sf::Vector2f(len, 2));
-    this->mDirectionShape.setPosition(this->mCurrentLocation);
-    this->mDirectionShape.setOrigin(0, 1);
-    this->mDirectionShape.setRotation(RAD_TO_DEG(heading(this->mCurrentDirection)));
-    this->mDirectionShape.setFillColor(sf::Color::Green);
-*/
+
 }
     
 void Car::updateGhosts() {
@@ -211,7 +204,7 @@ void Car::updateGhosts() {
         ghost.setOrigin(Car::CAR_WIDTH / 2.0f, Car::CAR_HEIGHT / 2.0f);
         
         sf::Vector2f dir = normalize(this->mCurrentDirection);
-        ghost.setPosition(this->mCurrentLocation - (dir * (Car::MAX_GHOSTS_DISTANCE + 20.0f)));
+        ghost.setPosition(this->mCurrentLocation); // - (dir * (Car::MAX_GHOSTS_DISTANCE + 20.0f)));
         ghost.setRotation(RAD_TO_DEG(heading(dir)));
         
         ghost.setFillColor(this->mCarDrawable.getFillColor());

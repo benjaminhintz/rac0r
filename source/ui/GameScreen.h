@@ -34,6 +34,7 @@ protected:
     
 private:
     void createTracks(size_t _playerCount, const std::string & _trackFile);
+    void restart();
     
 private:
 
@@ -43,10 +44,21 @@ private:
 	#ifdef __APPLE__
 	std::string trackDir = "";
 	#endif
+    
     // store tracks & track lines
     std::vector<Rac0r::Track> tracks;
     std::vector<Rac0r::TrackDrawable> trackDrawables;
     std::vector<Rac0r::Car> cars;
+    
+    // ui elements
+    sf::Text                mStartText;
+    
+    // game logic
+    std::vector<sf::Time>   mTimes;
+    sf::Time mStartTimer;
+    bool mGameRunning;
+    
+    
 };
 
 #endif /* defined(__Rac0r__GameScreen__) */
