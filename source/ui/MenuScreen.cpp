@@ -15,11 +15,9 @@ using namespace std;
 
 MenuScreen::MenuScreen(const Rect& frame) :
     Screen(frame),
-    playerChooser("Spieler", 1, 5)
+    playerChooser("Spieler", 1, 5),
+    trackChooser()
 {
-    // Get a list of all tracks
-    Rac0r::TrackFileManager fileManager;
-    tracks = fileManager.getTrackList();
     
     // Load textures
     if (!logoTexture.loadFromFile(resourcePath() + "logo.png")) {
@@ -31,7 +29,7 @@ MenuScreen::MenuScreen(const Rect& frame) :
     addChild(logo);
     
     // Track image
-    addChild(track);
+    addChild(trackChooser);
     
     // Player chooser
     playerChooser.setSize(225, 48);
@@ -66,7 +64,6 @@ void MenuScreen::layoutChildviews() {
 //    position.x = static_cast<int>(frame.width / 2 - size.x / 2);
 //    position.y = 350;
 //    track.setPosition(position);
-    track.setPosition(frame.width / 2 - 320, 280);
     
     
     // Player chooser
@@ -75,18 +72,20 @@ void MenuScreen::layoutChildviews() {
     position.y = 675;
     playerChooser.setPosition(position);
     
+    // Track chooser
+    size = trackChooser.getSize();
+    position.x = static_cast<int>(frame.width / 2 - size.x / 2);
+    position.y = 275;
+    trackChooser.setPosition(position);
+    
     // Description text
     sf::FloatRect bounds = description.getGlobalBounds();
     position.x = static_cast<int>(frame.width / 2 - bounds.width / 2);
     position.y = 720;
     description.setPosition(position);
     
-    trackTexture = sf::Texture();
-    std::string filename = tracks.at(trackNumber).getImageFile();
-    if (!trackTexture.loadFromFile(filename)){
-        std::cout<< "fehler beim laden des image"<< std::endl;
-    }
-    track.setTexture(trackTexture);
+    
+
 }
 
 
@@ -94,43 +93,20 @@ void MenuScreen::handleEvent(sf::Event event) {
     bool pressed = (event.type == sf::Event::KeyPressed);
     
     playerChooser.handleEvent(event);
+    trackChooser.handleEvent(event);
     
-    if (pressed && event.key.code == sf::Keyboard::Right) {
-        if (trackNumber < tracks.size() - 1){
-            //TODO textur neu setzen
-            // Reset track texture
-            trackNumber++;
-            std::cout << tracks.at(trackNumber).getTrackFile() << std::endl;
-
-            trackTexture = sf::Texture();
-            std::string filename = tracks.at(trackNumber).getImageFile();
-            std::cout << filename << std::endl;
-            if (!trackTexture.loadFromFile(filename)){
-                std::cout<< "fehler beim laden des image"<< std::endl;
-            }
-            track.setTexture(trackTexture);
-            
-        }
-        cout << "Ein Track weiter " << trackPath << endl;
-    }
-    if (pressed && event.key.code == sf::Keyboard::Left) {
-        if (trackNumber > 0){
-            trackNumber--;
-            std::cout << tracks.at(trackNumber).getTrackFile() << std::endl;
-            trackTexture = sf::Texture();
-            std::string filename = tracks.at(trackNumber).getImageFile();
-            std::cout << filename << std::endl;
-            if (!trackTexture.loadFromFile(filename)){
-                std::cout<< "fehler beim laden des image"<< std::endl;
-            }
-            track.setTexture(trackTexture);
-            }
-        cout << "Ein Track zurück " << trackPath << endl;
-    }
+    
     if (pressed && event.key.code == sf::Keyboard::Return) {
-        trackPath = tracks.at(trackNumber).getTrackFile();
+        
+        trackPath = trackChooser.getTrackPath();
         finished = true;
+    
     }
+    
+//        if (pressed && event.key.code == sf::Keyboard::Return) {
+//        trackPath = tracks.at(trackNumber).getTrackFile();
+//        finished = true;
+//    }
 }
 
 int MenuScreen::getPlayerCount() {

@@ -12,6 +12,7 @@
 #include "Screen.h"
 #include "../track/TrackFileManager.h"
 #include "../view/PlayerChooserView.h"
+#include "../view/TrackChooserView.h"
 
 class MenuScreen : public Screen {
 public:
@@ -26,8 +27,6 @@ public:
     std::string trackPath;
     
 private:
-    int trackNumber = 0;
-    std::vector<Rac0r::TrackFile> tracks;
 
     // Resources
     sf::Texture logoTexture;
@@ -35,8 +34,8 @@ private:
 
     // Drawables
     sf::Sprite logo;
-    sf::Sprite track;
     PlayerChooserView playerChooser;
+    TrackChooserView trackChooser;
     sf::Text description;
 };
 

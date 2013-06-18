@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1724939C17705F5B00CED207 /* TrackChooserView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1724939A17705F5B00CED207 /* TrackChooserView.cpp */; };
 		174DF7E0176F806700FE4F40 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 174DF7DF176F806700FE4F40 /* logo.png */; };
 		174DF7E4176F8AB300FE4F40 /* TrackFileManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 174DF7E2176F8AB300FE4F40 /* TrackFileManager.cpp */; };
 		17D5AA79176CB20800FFF6F4 /* GameScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17D5AA77176CB20800FFF6F4 /* GameScreen.cpp */; };
@@ -98,6 +99,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1724939A17705F5B00CED207 /* TrackChooserView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TrackChooserView.cpp; path = view/TrackChooserView.cpp; sourceTree = "<group>"; };
+		1724939B17705F5B00CED207 /* TrackChooserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrackChooserView.h; path = view/TrackChooserView.h; sourceTree = "<group>"; };
 		174DF7DF176F806700FE4F40 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		174DF7E1176F8AB300FE4F40 /* TrackFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackFile.h; sourceTree = "<group>"; };
 		174DF7E2176F8AB300FE4F40 /* TrackFileManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TrackFileManager.cpp; sourceTree = "<group>"; };
@@ -426,6 +429,8 @@
 				DF780F40176E541500D4E41A /* View.h */,
 				DFEFE0B0176FDCCA001708C8 /* PlayerChooserView.cpp */,
 				DFEFE0B1176FDCCA001708C8 /* PlayerChooserView.h */,
+				1724939A17705F5B00CED207 /* TrackChooserView.cpp */,
+				1724939B17705F5B00CED207 /* TrackChooserView.h */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -595,6 +600,7 @@
 				DF780F41176E541500D4E41A /* View.cpp in Sources */,
 				174DF7E4176F8AB300FE4F40 /* TrackFileManager.cpp in Sources */,
 				DFEFE0B2176FDCCA001708C8 /* PlayerChooserView.cpp in Sources */,
+				1724939C17705F5B00CED207 /* TrackChooserView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
