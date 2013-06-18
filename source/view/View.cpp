@@ -16,18 +16,9 @@
 #include <iostream>
 #include "ResourcePath.hpp"
 
-View::View(const Rect& frame) :
-    frame(frame),
-    state(ViewState::normal)
-{}
-
-void View::setState(ViewState newState) {
-    state = newState;
-    applyStyle();
-}
+View::View(const Rect& frame) : frame(frame) {}
 
 void View::setSize(float x, float y) {
-    // TODO: What about the origin?
     frame = Rect(sf::Vector2f(0, 0), sf::Vector2f(x, y));
     layoutChildviews();
 }
@@ -41,7 +32,7 @@ void View::addChild(sf::Drawable& child) {
 }
 
 void View::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    // Apply transform from sf::Transformable
+    // Apply the transform from sf::Transformable
     states.transform *= getTransform();
     
     // Draw all child views
@@ -58,7 +49,6 @@ const sf::Font& View::getDefaultFont() {
     if (!isLoaded) {
         if (!defaultFont.loadFromFile(resourcePath() + getFontPath() + "Tahoma.ttf")) {
             std::cerr << "Couldn't load Tahoma.ttf" << std::endl;
-            // TODO: crash
         }
         isLoaded = true;
     }

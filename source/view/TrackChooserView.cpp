@@ -15,8 +15,7 @@
 #include "ResourcePath.hpp"
 
 
-TrackChooserView::TrackChooserView(const Rect& frame) :
-View(frame){
+TrackChooserView::TrackChooserView(const Rect& frame) : View(frame) {
     // Get a list of all tracks
     Rac0r::TrackFileManager fileManager;
     tracks = fileManager.getTrackList();
@@ -24,7 +23,6 @@ View(frame){
     // Load textures
     arrowDownTexture.loadFromFile(resourcePath() + "arrowDown.png");
     arrowUpTexture.loadFromFile(resourcePath() + "arrowUp.png");
-    std::cout << tracks.at(trackNumber).getTrackFile() << std::endl;
     
     // Initialize arrows and the track image
     arrowUp.setTexture(arrowUpTexture);
@@ -47,7 +45,6 @@ void TrackChooserView::handleEvent(sf::Event event) {
         //choose a track (next)
         if (trackNumber < tracks.size() - 1){
             trackNumber++;
-            std::cout << tracks.at(trackNumber).getTrackFile() << std::endl;
             layoutChildviews();
             arrowUp.move(6,0);
                         
@@ -59,7 +56,6 @@ void TrackChooserView::handleEvent(sf::Event event) {
         //choose a track (previous)
         if (trackNumber > 0){
             trackNumber--;
-            std::cout << tracks.at(trackNumber).getTrackFile() << std::endl;
             layoutChildviews();
             arrowDown.move(-6, 0);
         }
@@ -77,7 +73,7 @@ void TrackChooserView::layoutChildviews() {
     trackTexture = sf::Texture();
     std::string filename = tracks.at(trackNumber).getImageFile();
     if (!trackTexture.loadFromFile(filename)){
-        std::cout<< "fehler beim laden des image"<< std::endl;
+        std::cout << "fehler beim laden des image" << std::endl;
     }
     track.setTexture(trackTexture);
     
@@ -93,11 +89,9 @@ void TrackChooserView::layoutChildviews() {
     arrowDown.setPosition(position);
     
     
-    std::cout << tracks.at(trackNumber).getTrackFile() << std::endl;
     trackTexture = sf::Texture();
     
     filename = tracks.at(trackNumber).getImageFile();
-    std::cout << filename << std::endl;
     if (!trackTexture.loadFromFile(filename)){
         std::cout<< "fehler beim laden des image"<< std::endl;
     }
