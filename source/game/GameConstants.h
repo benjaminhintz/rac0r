@@ -24,7 +24,7 @@ namespace Rac0r {
 
 // Game constants
 namespace Constants {
-
+    
     constexpr static const size_t   COUNTDOWN_TIMER_INTERVAL                                    =   1000;
     constexpr static const size_t   COUNTDOWN_TIMER_STRINGS_NUM                                 =   4;
 
@@ -48,6 +48,8 @@ namespace Constants {
                                                                                                         sf::Keyboard::N,
                                                                                                         sf::Keyboard::P
                                                                                                     };
+    
+    constexpr static const size_t   PLAYER_OFF_TRACK_RESET_INTERVAL                             =   1000;
 }
 
 }

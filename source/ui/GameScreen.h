@@ -53,9 +53,11 @@ private:
     void restart();
     void start();
     
+    void showFinishScreen();
+    
 private:
     void createCountdownTimer();
-    void updateCountdownTimer(const std::string & _text);
+    void updateCountdownTimer(const std::string & _text, float _scale);
     
 private:
     // track rendering
@@ -73,8 +75,7 @@ private:
     int                                 mStartCountdown;
     bool                                mGameRunning;
     
-    sf::Clock							mGameClock;
-    sf::Time                            mGameTimer;
+    static sf::Clock                    mClock;
     
 };
 

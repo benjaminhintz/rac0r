@@ -22,7 +22,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../game/Game.h"
+#include "../game/GameConstants.h"
 #include "../track/Track.h"
 
 
@@ -91,6 +91,8 @@ class Car : public sf::Drawable {
         CarEventListener * getEventListener() const { return this->mEventListener; }
     
         float getPassedDistance() const { return this->mCurrentPassedDistance; }
+    
+        bool isOnTrack() const { return !this->mDriftedOffTrack; }
     
     private:
         void keepOnTrack();
