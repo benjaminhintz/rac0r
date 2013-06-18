@@ -66,7 +66,7 @@ void MenuScreen::layoutChildviews() {
 //    position.x = static_cast<int>(frame.width / 2 - size.x / 2);
 //    position.y = 350;
 //    track.setPosition(position);
-    track.setPosition(frame.width/2 - 320, 300);
+    track.setPosition(frame.width / 2 - 320, 300);
     
     // Player chooser
     size = playerChooser.getSize();
@@ -84,14 +84,16 @@ void MenuScreen::layoutChildviews() {
 
 void MenuScreen::handleEvent(sf::Event event) {
     bool pressed = (event.type == sf::Event::KeyPressed);
-//    bool released = (event.type == sf::Event::KeyReleased);
     
     playerChooser.handleEvent(event);
     
     if (pressed && event.key.code == sf::Keyboard::Right) {
         if (trackNumber < tracks.size() - 1){
             //TODO textur neu setzen
-            if (!trackTexture.loadFromFile(tracks.at(trackNumber).getImageFile())){
+            // Reset track texture
+            trackTexture = sf::Texture();
+            std::string filename = tracks.at(trackNumber).getImageFile();
+            if (!trackTexture.loadFromFile(filename)){
                 std::cout<< "fehler beim laden des image"<< std::endl;
             }
             track.setTexture(trackTexture);
