@@ -31,9 +31,11 @@ private:
 
     // Resources
     sf::Texture logoTexture;
+    sf::Texture trackTexture;
+
     // Drawables
     sf::Sprite logo;
-    sf::RectangleShape track;
+    sf::Sprite track;
     PlayerChooserView playerChooser;
     sf::Text description;
 };

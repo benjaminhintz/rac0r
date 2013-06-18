@@ -31,14 +31,12 @@ MenuScreen::MenuScreen(const Rect& frame) :
     addChild(logo);
     
     // Track image
-    track.setFillColor(sf::Color::White);
-    track.setSize(sf::Vector2f(200, 100));
     addChild(track);
     
     // Player chooser
     playerChooser.setSize(225, 48);
     addChild(playerChooser);
-    
+
     // Description text
     description.setString("Druecke Enter, um das Spiel zu starten");
     description.setCharacterSize(28);
@@ -64,10 +62,11 @@ void MenuScreen::layoutChildviews() {
     logo.setPosition(position);
     
     // Track
-    size = track.getSize();
-    position.x = static_cast<int>(frame.width / 2 - size.x / 2);
-    position.y = 350;
-    track.setPosition(position);
+//    size = track.getSize();
+//    position.x = static_cast<int>(frame.width / 2 - size.x / 2);
+//    position.y = 350;
+//    track.setPosition(position);
+    track.setPosition(frame.width/2 - 320, 300);
     
     // Player chooser
     size = playerChooser.getSize();
@@ -92,9 +91,10 @@ void MenuScreen::handleEvent(sf::Event event) {
     if (pressed && event.key.code == sf::Keyboard::Right) {
         if (trackNumber < tracks.size() - 1){
             //TODO textur neu setzen
-//            sf::Texture texture;
-//            texture.loadFromFile(tracks.at(trackNumber).getImageFile());
-//            track.setTexture(&texture);
+            if (!trackTexture.loadFromFile(tracks.at(trackNumber).getImageFile())){
+                std::cout<< "fehler beim laden des image"<< std::endl;
+            }
+            track.setTexture(trackTexture);
             trackNumber++;
             std::cout << tracks.at(trackNumber).getTrackFile() << std::endl;
         }
