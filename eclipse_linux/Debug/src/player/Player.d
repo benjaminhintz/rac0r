@@ -1,5 +1,5 @@
-src/ui/GameScreen.d: ../src/ui/GameScreen.cpp ../src/ui/GameScreen.h \
- ../src/ui/Screen.h \
+src/player/Player.d: ../src/player/Player.cpp ../src/player/Player.h \
+ ../src/player/../car/Car.h \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics.hpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Window.hpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/System.hpp \
@@ -64,17 +64,12 @@ src/ui/GameScreen.d: ../src/ui/GameScreen.cpp ../src/ui/GameScreen.h \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/ConvexShape.hpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/Sprite.hpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/Text.hpp \
- ../src/ui/../view/View.h ../src/ui/../track/TrackDrawable.h \
- ../src/ui/../track/Track.h ../src/ui/../track/TrackLoader.h \
- ../src/ui/../player/Player.h ../src/ui/../player/../car/Car.h \
- ../src/ui/../player/../car/../game/Game.h \
- ../src/ui/../player/../car/../track/Track.h \
- /home/david/repos/rac0r/eclipse_linux/ResourcePath.hpp \
- ../src/ui/../utils/vector2.h
+ ../src/player/../car/../game/Game.h \
+ ../src/player/../car/../track/Track.h
 
-../src/ui/GameScreen.h:
+../src/player/Player.h:
 
-../src/ui/Screen.h:
+../src/player/../car/Car.h:
 
 /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics.hpp:
 
@@ -204,22 +199,6 @@ src/ui/GameScreen.d: ../src/ui/GameScreen.cpp ../src/ui/GameScreen.h \
 
 /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/Text.hpp:
 
-../src/ui/../view/View.h:
+../src/player/../car/../game/Game.h:
 
-../src/ui/../track/TrackDrawable.h:
-
-../src/ui/../track/Track.h:
-
-../src/ui/../track/TrackLoader.h:
-
-../src/ui/../player/Player.h:
-
-../src/ui/../player/../car/Car.h:
-
-../src/ui/../player/../car/../game/Game.h:
-
-../src/ui/../player/../car/../track/Track.h:
-
-/home/david/repos/rac0r/eclipse_linux/ResourcePath.hpp:
-
-../src/ui/../utils/vector2.h:
+../src/player/../car/../track/Track.h:

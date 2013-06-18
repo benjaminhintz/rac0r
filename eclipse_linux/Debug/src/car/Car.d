@@ -1,4 +1,4 @@
-src/car/Car.d: ../src/car/Car.cpp ../src/car/Car.h \
+src/car/Car.d: ../src/car/Car.cpp ../src/car/../car/Car.h \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics.hpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Window.hpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/System.hpp \
@@ -63,9 +63,10 @@ src/car/Car.d: ../src/car/Car.cpp ../src/car/Car.h \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/ConvexShape.hpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/Sprite.hpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/Text.hpp \
- ../src/car/../track/Track.h ../src/car/../utils/vector2.h
+ ../src/car/../car/../game/Game.h ../src/car/../car/../track/Track.h \
+ ../src/car/../utils/vector2.h
 
-../src/car/Car.h:
+../src/car/../car/Car.h:
 
 /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics.hpp:
 
@@ -195,6 +196,8 @@ src/car/Car.d: ../src/car/Car.cpp ../src/car/Car.h \
 
 /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/Text.hpp:
 
-../src/car/../track/Track.h:
+../src/car/../car/../game/Game.h:
+
+../src/car/../car/../track/Track.h:
 
 ../src/car/../utils/vector2.h:

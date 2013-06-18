@@ -26,7 +26,9 @@ SUBDIRS := \
 src/view \
 src/ui \
 src/track \
+src/player \
 src \
+src/game \
 src/car \
 . \
 

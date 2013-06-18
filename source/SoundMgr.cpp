@@ -9,7 +9,7 @@
 #include <SFML/Audio.hpp>
 #include "ResourcePath.hpp"
 #include "SoundMgr.h"
-#include "Game.h"
+#include "game/Game.h"
 
 namespace Rac0r {
     

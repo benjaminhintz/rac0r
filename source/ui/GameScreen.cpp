@@ -14,6 +14,7 @@
 #include "GameScreen.h"
 #include "ResourcePath.hpp"
 #include "../utils/vector2.h"
+#include <iostream>
 
 
 GameScreen::GameScreen(const Rect& frame, int playerCount, std::string trackPath) :
@@ -156,11 +157,10 @@ void GameScreen::layout(sf::Time elapsed) {
     if (!this->mGameRunning) {
         sf::Int32 dt = current.asMilliseconds() - this->mCountdownTimer.asMilliseconds();
         if (dt > Rac0r::Constants::COUNTDOWN_TIMER_INTERVAL) {
-            if (++this->mStartCountdown > Rac0r::Constants::COUNTDOWN_TIMER_STRINGS_NUM) {
+            if (++this->mStartCountdown >= Rac0r::Constants::COUNTDOWN_TIMER_STRINGS_NUM) {
                 start();
             } else {
                 this->mCountdownTimer = clock.getElapsedTime();
-    
                 updateCountdownTimer(Rac0r::Constants::COUNTDOWN_TIMER_STRINGS[this->mStartCountdown]);
             }
         }

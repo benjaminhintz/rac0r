@@ -30,7 +30,9 @@ namespace Rac0r {
 // forwards
 class Car;
 
+#ifndef __linux
 typedef std::shared_ptr<Car>    shared_car;
+#endif
 
 
 class CarEventListener {

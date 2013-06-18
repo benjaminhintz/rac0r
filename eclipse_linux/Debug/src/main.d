@@ -77,11 +77,14 @@ src/main.d: ../src/main.cpp \
  ../src/ui/Screen.h ../src/ui/../view/View.h ../src/ui/MenuScreen.h \
  ../src/ui/Screen.h ../src/ui/../track/TrackFileManager.h \
  ../src/ui/../track/TrackFile.h ../src/ui/../view/PlayerChooserView.h \
- ../src/ui/../view/View.h ../src/ui/GameScreen.h \
+ ../src/ui/../view/View.h ../src/ui/../view/TrackChooserView.h \
+ ../src/ui/../view/../track/TrackFileManager.h ../src/ui/GameScreen.h \
  ../src/ui/../track/TrackDrawable.h ../src/ui/../track/Track.h \
- ../src/ui/../track/TrackLoader.h ../src/ui/../car/Car.h \
- ../src/ui/../car/../track/Track.h ../src/utils/vector2.h \
- ../src/track/TrackFileManager.h
+ ../src/ui/../track/TrackLoader.h ../src/ui/../player/Player.h \
+ ../src/ui/../player/../car/Car.h \
+ ../src/ui/../player/../car/../game/Game.h \
+ ../src/ui/../player/../car/../track/Track.h ../src/utils/vector2.h \
+ ../src/track/TrackFileManager.h ../src/SoundMgr.h
 
 /home/david/code/cpp/libs/SFML-2.0/include/SFML/Audio.hpp:
 
@@ -249,6 +252,10 @@ src/main.d: ../src/main.cpp \
 
 ../src/ui/../view/View.h:
 
+../src/ui/../view/TrackChooserView.h:
+
+../src/ui/../view/../track/TrackFileManager.h:
+
 ../src/ui/GameScreen.h:
 
 ../src/ui/../track/TrackDrawable.h:
@@ -257,10 +264,16 @@ src/main.d: ../src/main.cpp \
 
 ../src/ui/../track/TrackLoader.h:
 
-../src/ui/../car/Car.h:
+../src/ui/../player/Player.h:
 
-../src/ui/../car/../track/Track.h:
+../src/ui/../player/../car/Car.h:
+
+../src/ui/../player/../car/../game/Game.h:
+
+../src/ui/../player/../car/../track/Track.h:
 
 ../src/utils/vector2.h:
 
 ../src/track/TrackFileManager.h:
+
+../src/SoundMgr.h:
