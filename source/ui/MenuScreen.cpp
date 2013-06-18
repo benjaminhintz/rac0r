@@ -58,7 +58,7 @@ void MenuScreen::layoutChildviews() {
     // Logo
     size = sf::Vector2f(logoTexture.getSize());
     position.x = static_cast<int>(frame.width / 2 - size.x / 2);
-    position.y = 50;
+    position.y = 10;
     logo.setPosition(position);
     
     // Track
@@ -66,19 +66,27 @@ void MenuScreen::layoutChildviews() {
 //    position.x = static_cast<int>(frame.width / 2 - size.x / 2);
 //    position.y = 350;
 //    track.setPosition(position);
-    track.setPosition(frame.width / 2 - 320, 300);
+    track.setPosition(frame.width / 2 - 320, 280);
+    
     
     // Player chooser
     size = playerChooser.getSize();
     position.x = static_cast<int>(frame.width / 2 - size.x / 2);
-    position.y = 500;
+    position.y = 675;
     playerChooser.setPosition(position);
     
     // Description text
     sf::FloatRect bounds = description.getGlobalBounds();
     position.x = static_cast<int>(frame.width / 2 - bounds.width / 2);
-    position.y = 660;
+    position.y = 720;
     description.setPosition(position);
+    
+    trackTexture = sf::Texture();
+    std::string filename = tracks.at(trackNumber).getImageFile();
+    if (!trackTexture.loadFromFile(filename)){
+        std::cout<< "fehler beim laden des image"<< std::endl;
+    }
+    track.setTexture(trackTexture);
 }
 
 
