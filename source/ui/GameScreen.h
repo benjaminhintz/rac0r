@@ -73,6 +73,7 @@ private:
     int                                 mStartCountdown;
     bool                                mGameRunning;
     
+    sf::Clock							mGameClock;
     sf::Time                            mGameTimer;
     
 };

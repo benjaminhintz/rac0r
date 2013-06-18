@@ -27,7 +27,18 @@ class Player {
     
         void draw(sf::RenderTarget & _target, sf::RenderStates _states) const;
         void update(sf::Time _elapsed);
-   
+
+        Car* getCar() {return mCar;};
+
+        void nextLap() { mLapCount++; };
+        size_t getCurrentLap() { return mLapCount; };
+
+        void setTotalTime(size_t time) { mTotalTime = time;}
+        size_t getTotalTime() { return mTotalTime; }
+
+        void setLapTime(size_t time) { mLapTime = time;}
+        size_t getLapTime() { return mLapTime; }
+
         void accelerate();
         void reset();
         void resetToLastValidPosition();

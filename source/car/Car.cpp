@@ -168,9 +168,10 @@ void Car::keepOnTrack() {
     // check if we drift of the track
     float dirAngle = angle(this->mCurrentLocation, this->mLastDirection);
     float angularSpeed = dirAngle  * this->mVelocity;
+    
     std::cout << "Angule:" << dirAngle << std::endl;
     std::cout << "Angular Speed:" << angularSpeed << std::endl;
-    
+
     sf::Vector2f moveDir = normalize(this->mCurrentLocation * this->mCurrentDirection);
     sf::Vector2f trackDir = normalize(this->mLastDirection);
    /* ORGINAL

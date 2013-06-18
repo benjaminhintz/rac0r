@@ -14,8 +14,6 @@
 #include "GameScreen.h"
 #include "ResourcePath.hpp"
 #include "../utils/vector2.h"
-#include <iostream>
-
 
 GameScreen::GameScreen(const Rect& frame, int playerCount, std::string trackPath) :
     Screen(frame),
@@ -120,9 +118,8 @@ void GameScreen::start() {
     this->mGameRunning = true;
     this->mStartCountdown = 0;
     
-    sf::Clock timer;
-    this->mGameTimer = timer.getElapsedTime();
-
+    sf::Clock mGameClock;
+    this->mGameTimer = mGameClock.getElapsedTime();
 }
 
 void GameScreen::createCountdownTimer() {
@@ -152,7 +149,10 @@ void GameScreen::layout(sf::Time elapsed) {
     static sf::Clock clock;
     
     sf::Time current = clock.getElapsedTime();
+
     
+    this->mGameTimer = mGameClock.getElapsedTime();
+
     // show countdown
     if (!this->mGameRunning) {
         sf::Int32 dt = current.asMilliseconds() - this->mCountdownTimer.asMilliseconds();
@@ -171,9 +171,10 @@ void GameScreen::layout(sf::Time elapsed) {
     // update player
     for (auto player : this->mPlayers) {
         player->update(elapsed);
-        
-        //player.mLapTime = (current - this->mGameTimer).asMilliseconds();
-        //std::cout << "Lap Time:"  << player.mLapTime << std::endl;
+
+        // lap time setzen
+        player->setLapTime(mGameTimer.asMilliseconds() - player->getTotalTime());
+        std::cout << "Lap Time: " << player->getLapTime() << std::endl;
     }
     
     // TODO: REMOVE
@@ -183,6 +184,7 @@ void GameScreen::layout(sf::Time elapsed) {
         }
     }
     
+
 }
 
 void GameScreen::draw(sf::RenderTarget &target, sf::RenderStates states) const {
@@ -213,15 +215,17 @@ void GameScreen::onCarDriftedOffTrack(Rac0r::Car & _car) {
 
 void GameScreen::onCarMovedThroughStart(Rac0r::Car & _car) {
 
-/*
+    this->mGameTimer = mGameClock.getElapsedTime();
+
     for (auto & player : this->mPlayers) {
-        if (player.mCar == &_car) {
-            player.mLapCount++;
-            player.mLapTime = 0;
-            player.mTotalTime = this->mGameTimer.asMilliseconds();
+
+        if (player->getCar() == &_car) {
+        	player->nextLap();
+        	player->setTotalTime(this->mGameTimer.asMilliseconds());
         }
+
     }
-    */
+
     std::cout << "Car moved through start." << std::endl;
 }
 

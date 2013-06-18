@@ -84,7 +84,7 @@ src/main.d: ../src/main.cpp \
  ../src/ui/../player/../car/Car.h \
  ../src/ui/../player/../car/../game/Game.h \
  ../src/ui/../player/../car/../track/Track.h ../src/utils/vector2.h \
- ../src/track/TrackFileManager.h ../src/SoundMgr.h
+ ../src/track/TrackFileManager.h ../src/SoundMgr.h ../src/game/Game.h
 
 /home/david/code/cpp/libs/SFML-2.0/include/SFML/Audio.hpp:
 
@@ -277,3 +277,5 @@ src/main.d: ../src/main.cpp \
 ../src/track/TrackFileManager.h:
 
 ../src/SoundMgr.h:
+
+../src/game/Game.h:
