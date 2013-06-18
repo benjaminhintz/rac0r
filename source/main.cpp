@@ -55,6 +55,15 @@ int main(int, char const** argv) {
     // delta time handling
     sf::Clock timer;
     
+    sf::Music menuBGM;
+    
+    if (!menuBGM.openFromFile(resourcePath() + "menu.ogg"))
+    {
+        // Error...
+    }
+    
+    menuBGM.play();
+    
     // Start the game loop
     while (window.isOpen()) {
         // Compute delta time
@@ -94,6 +103,8 @@ int main(int, char const** argv) {
         // Update the window
         window.display();
     }
+    
+    menuBGM.stop();
     
     return EXIT_SUCCESS;
 }
