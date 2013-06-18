@@ -23,24 +23,25 @@ class TrackChooserView:public View{
 public:
     TrackChooserView(const Rect& frame = Rect(0,0,0,0));
     virtual ~TrackChooserView() = default;
-    
+
+    // This value is read in the main loop
     std::string getTrackPath();
+    void setTrack(int newTrack);
     virtual void handleEvent(sf::Event event);
     
 protected:
     virtual void layoutChildviews();
     
 private:
-    int trackNumber = 0;
+    int trackNumber = -1;
     std::vector<Rac0r::TrackFile> tracks;
-    int minValue;
-    int maxValue;
+    
+    sf::Texture trackTexture;
     sf::Sprite track;
     sf::Texture arrowDownTexture;
     sf::Texture arrowUpTexture;
-    sf::Sprite arrowUp;
-    sf::Sprite arrowDown;
-    sf::Texture trackTexture;
+    sf::Sprite arrowRight;
+    sf::Sprite arrowLeft;
 };
 
 

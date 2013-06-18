@@ -25,77 +25,82 @@ TrackChooserView::TrackChooserView(const Rect& frame) : View(frame) {
     arrowUpTexture.loadFromFile(resourcePath() + "arrowUp.png");
     
     // Initialize arrows and the track image
-    arrowUp.setTexture(arrowUpTexture);
-    arrowDown.setTexture(arrowDownTexture);
-    addChild(arrowUp);
-    addChild(arrowDown);
-    arrowUp.rotate(90);
-    arrowDown.rotate(90);
-    addChild(track);
-    layoutChildviews();
+    arrowRight.setTexture(arrowUpTexture);
+    arrowRight.rotate(90);
+    addChild(arrowRight);
     
+    arrowLeft.setTexture(arrowDownTexture);
+    arrowLeft.rotate(90);
+    addChild(arrowLeft);
+
+    addChild(track);
+    
+    // Select the first track
+    if (tracks.size() > 0) {
+        setTrack(0);
+    }
+    // Calculate the initial layout. However, it will be recalculated whenever View's setSize() is called.
+    layoutChildviews();
 }
 
+void TrackChooserView::setTrack(int newTrackNumber) {
+    if (newTrackNumber >= 0 && newTrackNumber < tracks.size()) {
+        trackNumber = newTrackNumber;
+        
+        // Update the track preview
+        trackTexture = sf::Texture();
+        std::string filename = tracks.at(trackNumber).getImageFile();
+        if (!trackTexture.loadFromFile(filename)){
+            std::cout << "Error while loading the track's preview image" << std::endl;
+        }
+        track.setTexture(trackTexture);
+    }
+}
+
+// Handle input events
 void TrackChooserView::handleEvent(sf::Event event) {
-    //event handling
     bool pressed = (event.type == sf::Event::KeyPressed);
     bool released = (event.type == sf::Event::KeyReleased);
 
+    // Select the next track
     if (pressed && event.key.code == sf::Keyboard::Right) {
-        //choose a track (next)
-        if (trackNumber < tracks.size() - 1){
-            trackNumber++;
-            layoutChildviews();
-            arrowUp.move(6,0);
-                        
-        }
-    }else if (released && event.key.code == sf::Keyboard::Right){
+        setTrack(trackNumber + 1);
+        // Move the arrow
+        layoutChildviews();
+        arrowRight.move(6,0);
+    } else if (released && event.key.code == sf::Keyboard::Right) {
+        // Reset the arrow
         layoutChildviews();
     }
+    
+    // Select the previous track
     if (pressed && event.key.code == sf::Keyboard::Left) {
-        //choose a track (previous)
-        if (trackNumber > 0){
-            trackNumber--;
-            layoutChildviews();
-            arrowDown.move(-6, 0);
-        }
+        setTrack(trackNumber - 1);
+        // Move the arrow
+        layoutChildviews();
+        arrowLeft.move(-6, 0);
     } else if (released && event.key.code == sf::Keyboard::Left) {
+        // Reset the arrow
         layoutChildviews();
     }
 }
 
-// This is called whenever the size is set
+// This is called whenever the View's size is set
 void TrackChooserView::layoutChildviews() {
     sf::Vector2f position;
     sf::Vector2f size;
     
     track.setPosition(frame.width / 2 - 320, 0);
-    trackTexture = sf::Texture();
-    std::string filename = tracks.at(trackNumber).getImageFile();
-    if (!trackTexture.loadFromFile(filename)){
-        std::cout << "fehler beim laden des image" << std::endl;
-    }
-    track.setTexture(trackTexture);
-    
     
     // Arrows
     size = sf::Vector2f(arrowUpTexture.getSize());
     position.x = frame.width - size.x + 430;
     position.y = 150;
-    arrowUp.setPosition(position);
+    arrowRight.setPosition(position);
     
     size = sf::Vector2f(arrowDownTexture.getSize());
     position.x -= 740;
-    arrowDown.setPosition(position);
-    
-    
-    trackTexture = sf::Texture();
-    
-    filename = tracks.at(trackNumber).getImageFile();
-    if (!trackTexture.loadFromFile(filename)){
-        std::cout<< "fehler beim laden des image"<< std::endl;
-    }
-    track.setTexture(trackTexture);
+    arrowLeft.setPosition(position);
 }
 
 std::string TrackChooserView::getTrackPath() {
