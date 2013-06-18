@@ -87,11 +87,10 @@ void Car::draw(sf::RenderTarget& _target, sf::RenderStates _states) const {
     _target.draw(this->mCarDrawable, _states);
     
     // Debug Stuff
-    /*
+    
     _target.draw(this->mLocationPoint, _states);
     _target.draw(this->mNextLocationPoint, _states);
     _target.draw(this->mDirectionShape, _states);
-    */
 }
     
 void Car::accelerate() {
@@ -162,13 +161,20 @@ void Car::keepOnTrack() {
     }
     
     // check if we drift of the track
+    float dirAngle = angle(this->mCurrentLocation, this->mLastDirection);
+    float angularSpeed = dirAngle  * this->mVelocity;
+    std::cout << "Angule:" << dirAngle << std::endl;
+    std::cout << "Angular Speed:" << angularSpeed << std::endl;
+    
     sf::Vector2f moveDir = normalize(this->mCurrentLocation * this->mCurrentDirection);
     sf::Vector2f trackDir = normalize(this->mLastDirection);
+   /* ORGINAL
     float angularSpeed = length(moveDir - trackDir) * this->mVelocity;
     if (!this->mDriftedOffTrack && angularSpeed >= Car::MAX_ANGULAR_VELOCITY && this->mEventListener != NULL) {
-        this->mDriftedOffTrack = true;
+        //this->mDriftedOffTrack = true;
         this->mEventListener->onCarDriftedOffTrack(*this);
     }
+    */
     
     // Debug Stuff
     //float len = length(this->mDirection * 100.0f);

@@ -59,13 +59,6 @@ void MenuScreen::layoutChildviews() {
     position.y = 10;
     logo.setPosition(position);
     
-    // Track
-//    size = track.getSize();
-//    position.x = static_cast<int>(frame.width / 2 - size.x / 2);
-//    position.y = 350;
-//    track.setPosition(position);
-    
-    
     // Player chooser
     size = playerChooser.getSize();
     position.x = static_cast<int>(frame.width / 2 - size.x / 2);
@@ -102,11 +95,7 @@ void MenuScreen::handleEvent(sf::Event event) {
         finished = true;
     
     }
-    
-//        if (pressed && event.key.code == sf::Keyboard::Return) {
-//        trackPath = tracks.at(trackNumber).getTrackFile();
-//        finished = true;
-//    }
+
 }
 
 int MenuScreen::getPlayerCount() {
