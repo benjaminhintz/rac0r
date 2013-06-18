@@ -49,6 +49,10 @@ protected:
     // Some resource helper functions that all views can use
     static const sf::Font& getDefaultFont();
 
+    // Get Font Path related to system we running on
+    static const std::string & getFontPath();
+    
+    
 protected:
     // Represents the top left corner and the size of the view
     Rect frame;

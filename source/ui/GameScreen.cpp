@@ -97,30 +97,8 @@ void GameScreen::createTracks(size_t _playerCount, const std::string & _trackFil
     this->mStartLine.setFillColor(sf::Color::White);
     
     // setup countdown text
-    static sf::Font defaultFont;
-    // TODO: put this in the header file as a static variable
-	#ifdef __linux
-	std::string fontDir = "fonts/";
-	#endif
-	#ifdef __APPLE__
-	std::string fontDir = "";
-	#endif
-    defaultFont.loadFromFile(resourcePath() + fontDir +  "Tahoma.ttf");
-
-    this->mCountdownTimerText.setString(COUNTDOWN_STRINGS[3]);
-    this->mCountdownTimerText.setPosition(frame.width / 2, frame.height / 2);
-    this->mCountdownTimerText.setFont(defaultFont);
-    this->mCountdownTimerText.setColor(sf::Color::White);
-    this->mCountdownTimerText.setStyle(sf::Text::Bold);
-    
-    unsigned int textSize = static_cast<unsigned int>(0.4 * frame.width);
-    this->mCountdownTimerText.setCharacterSize(textSize);
-
-    sf::FloatRect bounds = this->mCountdownTimerText.getLocalBounds();
-    sf::Vector2f position;
-    position.x = static_cast<int>((frame.width / 2) - (bounds.width / 2));
-    position.y = static_cast<int>((frame.height / 2) - 1.2 * (textSize / 2.0f));
-    this->mCountdownTimerText.setPosition(position);
+    createCountdownTimer();
+    updateCountdownTimer(GameScreen::COUNTDOWN_STRINGS[3]);
 }
 
 void GameScreen::restart() {
@@ -146,6 +124,29 @@ void GameScreen::start() {
 
 }
 
+void GameScreen::createCountdownTimer() {
+    mCountdownTimerFont.loadFromFile(resourcePath() + getFontPath() +  "Tahoma.ttf");
+
+    this->mCountdownTimerText.setString(COUNTDOWN_STRINGS[3]);
+    this->mCountdownTimerText.setPosition(frame.width / 2, frame.height / 2);
+    this->mCountdownTimerText.setFont(mCountdownTimerFont);
+    this->mCountdownTimerText.setColor(sf::Color::White);
+    this->mCountdownTimerText.setStyle(sf::Text::Bold);
+}
+
+void GameScreen::updateCountdownTimer(const std::string & _text) {
+    this->mCountdownTimerText.setString(_text);
+    
+    unsigned int textSize = static_cast<unsigned int>(GameScreen::COUNTDOWN_FONT_SIZE * frame.width);
+    this->mCountdownTimerText.setCharacterSize(textSize);
+
+    sf::FloatRect bounds = this->mCountdownTimerText.getLocalBounds();
+    sf::Vector2f position;
+    position.x = static_cast<int>((frame.width / 2) - 1.1 * (bounds.width / 2));
+    position.y = static_cast<int>((frame.height / 2) - 1.6 * (textSize / 2.0f));
+    this->mCountdownTimerText.setPosition(position);
+}
+
 void GameScreen::layout(sf::Time elapsed) {
     static sf::Clock clock;
     
@@ -160,16 +161,7 @@ void GameScreen::layout(sf::Time elapsed) {
             } else {
                 this->mCountdownTimer = clock.getElapsedTime();
     
-                this->mCountdownTimerText.setString(COUNTDOWN_STRINGS[this->mStartCountdown]);
-                
-                unsigned int textSize = static_cast<unsigned int>(0.4 * frame.width);
-                this->mCountdownTimerText.setCharacterSize(textSize);
-                
-                sf::FloatRect bounds = this->mCountdownTimerText.getLocalBounds();
-                sf::Vector2f position;
-                position.x = static_cast<int>((frame.width / 2) - (bounds.width / 2));
-                position.y = static_cast<int>((frame.width / 2) - 1.2 * (textSize / 2.0f));
-                this->mCountdownTimerText.setPosition(position);
+                updateCountdownTimer(COUNTDOWN_STRINGS[this->mStartCountdown]);
             }
         }
         
@@ -179,7 +171,7 @@ void GameScreen::layout(sf::Time elapsed) {
     // update player
     for (auto & player : this->mPlayers) {
         player.mLapTime = (current - this->mGameTimer).asMilliseconds();
-        std::cout << "Lap Time:"  << player.mLapTime << std::endl;
+        //std::cout << "Lap Time:"  << player.mLapTime << std::endl;
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {

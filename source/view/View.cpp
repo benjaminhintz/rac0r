@@ -50,15 +50,8 @@ const sf::Font& View::getDefaultFont() {
     static sf::Font defaultFont;
     static bool isLoaded = false;
     
-	#ifdef __linux
-	std::string fontDir = "fonts/";
-	#endif
-	#ifdef __APPLE__
-	std::string fontDir = "";
-	#endif
-
     if (!isLoaded) {
-        if (!defaultFont.loadFromFile(resourcePath() + fontDir + "Tahoma.ttf")) {
+        if (!defaultFont.loadFromFile(resourcePath() + getFontPath() + "Tahoma.ttf")) {
             std::cerr << "Couldn't load Tahoma.ttf" << std::endl;
             // TODO: crash
         }
@@ -67,3 +60,18 @@ const sf::Font& View::getDefaultFont() {
     
     return defaultFont;
 }
+
+const std::string & View::getFontPath() {
+
+    #ifdef __linux
+	static std::string fontDir = "fonts/";
+	#elif __APPLE__
+	static std::string fontDir = "";
+    #else
+    static std::string fontDir = "";
+	#endif
+
+    return fontDir;
+}
+
+

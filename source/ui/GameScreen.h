@@ -23,11 +23,15 @@ public:
     constexpr static const int              START_INTERVAL                  =   1000;
     static const std::string                COUNTDOWN_STRINGS[4];
     
-     // start line shape constants
+    // start line shape constants
     constexpr static const float            START_LINE_WIDTH                =   2.0f;
     
     // Game Logic constants
     constexpr static const int              MAX_LAPS                        =   1;
+    
+    // Countdown Timer constants
+    constexpr static const float            COUNTDOWN_FONT_SIZE             =   0.2f;
+    
     
     virtual ~GameScreen() = default;
     
@@ -46,6 +50,10 @@ private:
     void createTracks(size_t _playerCount, const std::string & _trackFile);
     void restart();
     void start();
+    
+private:
+    void createCountdownTimer();
+    void updateCountdownTimer(const std::string & _text);
     
 private:
     
@@ -71,13 +79,6 @@ private:
             }
     };
     
-	#ifdef __linux
-	std::string trackDir = "tracks/";
-	#endif
-	#ifdef __APPLE__
-	std::string trackDir = "";
-	#endif
-    
     // store tracks & track lines
     std::vector<Rac0r::Track>           tracks;
     std::vector<Rac0r::TrackDrawable>   trackDrawables;
@@ -86,6 +87,7 @@ private:
     
     // ui elements
     sf::Text                            mCountdownTimerText;
+    sf::Font                            mCountdownTimerFont;
     
     // game logic
     std::vector<Player>                 mPlayers;
