@@ -2,8 +2,13 @@
 //  main.cpp
 //  Rac0r
 //
-//  Created by Jan Schulte on 02.06.13.
-//  Copyright (c) 2013 Jan Schulte. All rights reserved.
+//  Created and copyright by
+//  Benjamin Hintz
+//  Florian Kaluschke
+//  David Leska
+//  Lars Peterke
+//  Jan Schulte
+//  on Jun 2013. All rights reserved.
 //
  
 
@@ -16,7 +21,6 @@
 #include "ui/Screen.h"
 #include "ui/MenuScreen.h"
 #include "ui/GameScreen.h"
-#include "SoundMgr.h"
 
 #include "utils/vector2.h"
 #include "track/TrackFileManager.h"
@@ -56,11 +60,16 @@ int main(int, char const** argv) {
     // delta time handling
     sf::Clock timer;
     
-
-    Rac0r::SoundMgr sMgr;
-    sMgr.play(0);
+    //background music
+    sf::Music menuBGM;
     
-
+    if (!menuBGM.openFromFile(resourcePath() + "menu.ogg"))
+    {
+        // Error...
+    }
+    
+    //play music
+    menuBGM.play();
     
     // Start the game loop
     while (window.isOpen()) {
@@ -73,11 +82,21 @@ int main(int, char const** argv) {
             if (event.type == sf::Event::Closed) {
                 // Close window : exit
                 window.close();
-            } else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-                // Escape pressed : exit
+            } else {
+                //pass the event to the current screen
+                currentScreen->handleEvent(event);
+            }
+        }
+        
+        if(currentScreen->quit) {
+            //check if there are more than one screen
+            //if not pop back the currentscreen
+            //if yes close the window
+            if (screens.size()==1) {
                 window.close();
             } else {
-                currentScreen->handleEvent(event);
+                screens.pop_back();
+                currentScreen=screens.back();
             }
         }
         
@@ -102,7 +121,9 @@ int main(int, char const** argv) {
         window.display();
     }
     
-    sMgr.stop(0);
+    //stop music
+    menuBGM.stop();
     
+    //return the success state
     return EXIT_SUCCESS;
 }

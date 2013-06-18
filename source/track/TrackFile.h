@@ -1,9 +1,15 @@
-/*
- * TrackFile.h
- *
- *  Created on: 17.06.2013
- *      Author: david
- */
+//
+//  TrackFile.h
+//  Rac0r
+//
+//  Created and copyright by
+//  Benjamin Hintz
+//  Florian Kaluschke
+//  David Leska
+//  Lars Peterke
+//  Jan Schulte
+//  on Jun 2013. All rights reserved.
+//
 
 #ifndef TRACKFILE_H_
 #define TRACKFILE_H_
