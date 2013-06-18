@@ -75,12 +75,13 @@ src/main.d: ../src/main.cpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/Text.hpp \
  /home/david/repos/rac0r/eclipse_linux/ResourcePath.hpp \
  ../src/ui/Screen.h ../src/ui/../view/View.h ../src/ui/MenuScreen.h \
- ../src/ui/Screen.h ../src/ui/../view/ButtonView.h \
+ ../src/ui/Screen.h ../src/ui/../track/TrackFileManager.h \
+ ../src/ui/../track/TrackFile.h ../src/ui/../view/PlayerChooserView.h \
  ../src/ui/../view/View.h ../src/ui/GameScreen.h \
  ../src/ui/../track/TrackDrawable.h ../src/ui/../track/Track.h \
  ../src/ui/../track/TrackLoader.h ../src/ui/../car/Car.h \
  ../src/ui/../car/../track/Track.h ../src/utils/vector2.h \
- ../src/track/TrackFileManager.h ../src/track/TrackFile.h
+ ../src/track/TrackFileManager.h
 
 /home/david/code/cpp/libs/SFML-2.0/include/SFML/Audio.hpp:
 
@@ -240,7 +241,11 @@ src/main.d: ../src/main.cpp \
 
 ../src/ui/Screen.h:
 
-../src/ui/../view/ButtonView.h:
+../src/ui/../track/TrackFileManager.h:
+
+../src/ui/../track/TrackFile.h:
+
+../src/ui/../view/PlayerChooserView.h:
 
 ../src/ui/../view/View.h:
 
@@ -259,5 +264,3 @@ src/main.d: ../src/main.cpp \
 ../src/utils/vector2.h:
 
 ../src/track/TrackFileManager.h:
-
-../src/track/TrackFile.h:

@@ -1,5 +1,5 @@
-src/ui/MenuScreen.d: ../src/ui/MenuScreen.cpp ../src/ui/MenuScreen.h \
- ../src/ui/Screen.h \
+src/view/PlayerChooserView.d: ../src/view/PlayerChooserView.cpp \
+ ../src/view/PlayerChooserView.h ../src/view/View.h \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics.hpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Window.hpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/System.hpp \
@@ -64,14 +64,11 @@ src/ui/MenuScreen.d: ../src/ui/MenuScreen.cpp ../src/ui/MenuScreen.h \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/ConvexShape.hpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/Sprite.hpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/Text.hpp \
- ../src/ui/../view/View.h ../src/ui/../track/TrackFileManager.h \
- ../src/ui/../track/TrackFile.h ../src/ui/../view/PlayerChooserView.h \
- ../src/ui/../view/View.h \
  /home/david/repos/rac0r/eclipse_linux/ResourcePath.hpp
 
-../src/ui/MenuScreen.h:
+../src/view/PlayerChooserView.h:
 
-../src/ui/Screen.h:
+../src/view/View.h:
 
 /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics.hpp:
 
@@ -200,15 +197,5 @@ src/ui/MenuScreen.d: ../src/ui/MenuScreen.cpp ../src/ui/MenuScreen.h \
 /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/Sprite.hpp:
 
 /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/Text.hpp:
-
-../src/ui/../view/View.h:
-
-../src/ui/../track/TrackFileManager.h:
-
-../src/ui/../track/TrackFile.h:
-
-../src/ui/../view/PlayerChooserView.h:
-
-../src/ui/../view/View.h:
 
 /home/david/repos/rac0r/eclipse_linux/ResourcePath.hpp:

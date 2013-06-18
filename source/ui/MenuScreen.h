@@ -10,8 +10,8 @@
 #define __Rac0r__MenuScreen__
 
 #include "Screen.h"
-#include "TrackFileManager.h"
-#include "PlayerChooserView.h"
+#include "../track/TrackFileManager.h"
+#include "../view/PlayerChooserView.h"
 
 class MenuScreen : public Screen {
 public:

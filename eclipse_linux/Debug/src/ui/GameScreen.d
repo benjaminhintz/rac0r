@@ -67,7 +67,8 @@ src/ui/GameScreen.d: ../src/ui/GameScreen.cpp ../src/ui/GameScreen.h \
  ../src/ui/../view/View.h ../src/ui/../track/TrackDrawable.h \
  ../src/ui/../track/Track.h ../src/ui/../track/TrackLoader.h \
  ../src/ui/../car/Car.h ../src/ui/../car/../track/Track.h \
- /home/david/repos/rac0r/eclipse_linux/ResourcePath.hpp
+ /home/david/repos/rac0r/eclipse_linux/ResourcePath.hpp \
+ ../src/ui/../utils/vector2.h
 
 ../src/ui/GameScreen.h:
 
@@ -214,3 +215,5 @@ src/ui/GameScreen.d: ../src/ui/GameScreen.cpp ../src/ui/GameScreen.h \
 ../src/ui/../car/../track/Track.h:
 
 /home/david/repos/rac0r/eclipse_linux/ResourcePath.hpp:
+
+../src/ui/../utils/vector2.h:

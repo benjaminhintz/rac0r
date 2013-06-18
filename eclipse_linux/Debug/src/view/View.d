@@ -62,7 +62,8 @@ src/view/View.d: ../src/view/View.cpp ../src/view/View.h \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/RectangleShape.hpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/ConvexShape.hpp \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/Sprite.hpp \
- /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/Text.hpp
+ /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/Text.hpp \
+ /home/david/repos/rac0r/eclipse_linux/ResourcePath.hpp
 
 ../src/view/View.h:
 
@@ -193,3 +194,5 @@ src/view/View.d: ../src/view/View.cpp ../src/view/View.h \
 /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/Sprite.hpp:
 
 /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/Text.hpp:
+
+/home/david/repos/rac0r/eclipse_linux/ResourcePath.hpp:

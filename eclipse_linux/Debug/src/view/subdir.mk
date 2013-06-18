@@ -4,15 +4,15 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../src/view/ButtonView.cpp \
+../src/view/PlayerChooserView.cpp \
 ../src/view/View.cpp 
 
 OBJS += \
-./src/view/ButtonView.o \
+./src/view/PlayerChooserView.o \
 ./src/view/View.o 
 
 CPP_DEPS += \
-./src/view/ButtonView.d \
+./src/view/PlayerChooserView.d \
 ./src/view/View.d 
 
 
