@@ -1,9 +1,15 @@
 //
-//  Car.cpp
+//  Car.h
 //  Rac0r
 //
-//  Created by Jan Schulte on 11.06.13.
-//  Copyright (c) 2013 Jan Schulte. All rights reserved.
+//  Created and copyright by
+//  Jan Schulte
+//  David Leska
+//  Benjamin Hintz
+//  Florian Kaluschke
+//  Lars Peterke
+//  Jannes Meyer
+//  on Jun 2013. All rights reserved.
 //
 
 #include "Car.h"

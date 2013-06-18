@@ -3,11 +3,12 @@
 //  Rac0r
 //
 //  Created and copyright by
+//  Jan Schulte
+//  David Leska
 //  Benjamin Hintz
 //  Florian Kaluschke
-//  David Leska
 //  Lars Peterke
-//  Jan Schulte
+//  Jannes Meyer
 //  on Jun 2013. All rights reserved.
 //
 
