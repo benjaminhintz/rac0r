@@ -82,7 +82,8 @@
 		17FE595B177055B7005F14BB /* 1371119878.track in Resources */ = {isa = PBXBuildFile; fileRef = 17FE5917177055B7005F14BB /* 1371119878.track */; };
 		17FE595C177055B7005F14BB /* 1371119935.png in Resources */ = {isa = PBXBuildFile; fileRef = 17FE5918177055B7005F14BB /* 1371119935.png */; };
 		17FE595D177055B7005F14BB /* 1371119935.track in Resources */ = {isa = PBXBuildFile; fileRef = 17FE5919177055B7005F14BB /* 1371119935.track */; };
-		1A981A77177074E000318B6A /* menu.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1A981A76177074E000318B6A /* menu.ogg */; };
+		1A981A7B1770794700318B6A /* SoundMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A981A7A1770794700318B6A /* SoundMgr.cpp */; };
+		1A981A7D17707FF900318B6A /* menu.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1A981A7C17707FF900318B6A /* menu.ogg */; };
 		3D679050175BD8110061B88D /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D67904F175BD8110061B88D /* OpenGL.framework */; };
 		3D67906B1760DF820061B88D /* TrackDrawable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D6790671760DF820061B88D /* TrackDrawable.cpp */; };
 		3D67906C1760DF820061B88D /* TrackLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D6790691760DF820061B88D /* TrackLoader.cpp */; };
@@ -183,7 +184,9 @@
 		17FE5917177055B7005F14BB /* 1371119878.track */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1371119878.track; sourceTree = "<group>"; };
 		17FE5918177055B7005F14BB /* 1371119935.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1371119935.png; sourceTree = "<group>"; };
 		17FE5919177055B7005F14BB /* 1371119935.track */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1371119935.track; sourceTree = "<group>"; };
-		1A981A76177074E000318B6A /* menu.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = menu.ogg; sourceTree = "<group>"; };
+		1A981A791770777300318B6A /* SoundMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundMgr.h; sourceTree = "<group>"; };
+		1A981A7A1770794700318B6A /* SoundMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundMgr.cpp; sourceTree = "<group>"; };
+		1A981A7C17707FF900318B6A /* menu.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = menu.ogg; sourceTree = "<group>"; };
 		3D679022175A4C4B0061B88D /* Rac0r.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rac0r.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D679026175A4C4B0061B88D /* Rac0r-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Rac0r-Info.plist"; sourceTree = "<group>"; };
 		3D67904F175BD8110061B88D /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
@@ -247,6 +250,15 @@
 			path = fonts;
 			sourceTree = "<group>";
 		};
+		1A981A781770775D00318B6A /* sound */ = {
+			isa = PBXGroup;
+			children = (
+				1A981A791770777300318B6A /* SoundMgr.h */,
+				1A981A7A1770794700318B6A /* SoundMgr.cpp */,
+			);
+			name = sound;
+			sourceTree = "<group>";
+		};
 		3D679018175A4C4B0061B88D = {
 			isa = PBXGroup;
 			children = (
@@ -285,7 +297,7 @@
 		3D67902C175A4C4B0061B88D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				1A981A76177074E000318B6A /* menu.ogg */,
+				1A981A7C17707FF900318B6A /* menu.ogg */,
 				DFEFE0B9176FEEAC001708C8 /* arrowUp.png */,
 				DFEFE0B5176FED83001708C8 /* arrowDown.png */,
 				DFEFE0B6176FED83001708C8 /* arrowRight.png */,
@@ -302,6 +314,7 @@
 		3D67903A175A4CD70061B88D /* classes */ = {
 			isa = PBXGroup;
 			children = (
+				1A981A781770775D00318B6A /* sound */,
 				3D6790781760E0310061B88D /* ResourcePath.hpp */,
 				3D6790791760E0310061B88D /* ResourcePath.mm */,
 				3D67906D1760DFA20061B88D /* main.cpp */,
@@ -591,7 +604,7 @@
 				17FE595B177055B7005F14BB /* 1371119878.track in Resources */,
 				17FE595C177055B7005F14BB /* 1371119935.png in Resources */,
 				17FE595D177055B7005F14BB /* 1371119935.track in Resources */,
-				1A981A77177074E000318B6A /* menu.ogg in Resources */,
+				1A981A7D17707FF900318B6A /* menu.ogg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -633,6 +646,7 @@
 				1724939C17705F5B00CED207 /* TrackChooserView.cpp in Sources */,
 				3DA79A391770583F00317DE9 /* Player.cpp in Sources */,
 				3DA79A3D17705B9D00317DE9 /* Game.cpp in Sources */,
+				1A981A7B1770794700318B6A /* SoundMgr.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,6 +16,7 @@
 #include "ui/Screen.h"
 #include "ui/MenuScreen.h"
 #include "ui/GameScreen.h"
+#include "SoundMgr.h"
 
 #include "utils/vector2.h"
 #include "track/TrackFileManager.h"
@@ -55,14 +56,11 @@ int main(int, char const** argv) {
     // delta time handling
     sf::Clock timer;
     
-    sf::Music menuBGM;
+
+    Rac0r::SoundMgr sMgr;
+    sMgr.play(0);
     
-    if (!menuBGM.openFromFile(resourcePath() + "menu.ogg"))
-    {
-        // Error...
-    }
-    
-    menuBGM.play();
+
     
     // Start the game loop
     while (window.isOpen()) {
@@ -104,7 +102,7 @@ int main(int, char const** argv) {
         window.display();
     }
     
-    menuBGM.stop();
+    sMgr.stop(0);
     
     return EXIT_SUCCESS;
 }
