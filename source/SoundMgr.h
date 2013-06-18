@@ -16,8 +16,9 @@ namespace Rac0r {
     class SoundMgr {
     public:
         SoundMgr();
-        void play(size_t track) { bgm.at(track)->play(); }
-        void stop(size_t track) { bgm.at(track)->stop(); }
+        ~SoundMgr() { for(auto obj : bgm) delete obj; }
+        void play(size_t track) { stop(); if(track < bgm.size()) bgm.at(track)->play(); }
+        void stop() { for(sf::Music* obj : bgm) obj->stop(); }
     private:
         std::vector<sf::Music*> bgm;
     };

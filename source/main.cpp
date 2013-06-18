@@ -93,11 +93,13 @@ int main(int, char const** argv) {
             } else {
                 screens.pop_back();
                 currentScreen=screens.back();
+                sMgr.play(0);
             }
         }
         
         // The screen indicates that it is done with what it does
         if(menuScreen->finished) {
+            sMgr.play(1);
             auto gameScreen = std::make_shared<GameScreen>(screenFrame, menuScreen->getPlayerCount(), menuScreen->trackPath);
             screens.push_back(gameScreen);
             currentScreen = screens.back();
@@ -118,7 +120,7 @@ int main(int, char const** argv) {
     }
     
     //stop music
-    sMgr.stop(0);
+    sMgr.stop();
     
     //return the success state
     return EXIT_SUCCESS;
