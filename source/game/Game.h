@@ -2,8 +2,13 @@
 //  Game.h
 //  Rac0r
 //
-//  Created by Jan Schulte on 18.06.13.
-//  Copyright (c) 2013 Jan Schulte. All rights reserved.
+//  Created and copyright by
+//  Benjamin Hintz
+//  Florian Kaluschke
+//  David Leska
+//  Lars Peterke
+//  Jan Schulte
+//  on Jun 2013. All rights reserved.
 //
 
 #ifndef __Rac0r__Game__
@@ -24,9 +29,11 @@ namespace Constants {
     constexpr static const size_t   COUNTDOWN_TIMER_STRINGS_NUM                                 =   4;
 
     static const std::string        COUNTDOWN_TIMER_STRINGS[COUNTDOWN_TIMER_STRINGS_NUM]        =   { "3", "2", "1", "Start" };
-
+    
     constexpr static const size_t   GAME_MAX_LAPS                                               =   3;
     constexpr static const size_t   GAME_MAX_PLAYERS                                            =   5;
+
+    constexpr static const bool		PLAY_SOUND													=	false;
 
     static const sf::Color          GAME_TRACK_COLOR[GAME_MAX_PLAYERS]                          =   { sf::Color(0,153,205,153),
                                                                                                         sf::Color(102, 153, 0, 153),

@@ -2,8 +2,13 @@
 //  MenuScreen.cpp
 //  Rac0r
 //
-//  Created by Jannes on Jun/13/13.
-//  Copyright (c) 2013 Jan Schulte. All rights reserved.
+//  Created and copyright by
+//  Benjamin Hintz
+//  Florian Kaluschke
+//  David Leska
+//  Lars Peterke
+//  Jan Schulte
+//  on Jun 2013. All rights reserved.
 //
 
 #include <iostream>
@@ -94,6 +99,9 @@ void MenuScreen::handleEvent(sf::Event event) {
         trackPath = trackChooser.getTrackPath();
         finished = true;
     
+    } else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+        // Escape pressed : exit
+        quit = true;
     }
 
 }

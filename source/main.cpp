@@ -2,8 +2,13 @@
 //  main.cpp
 //  Rac0r
 //
-//  Created by Jan Schulte on 02.06.13.
-//  Copyright (c) 2013 Jan Schulte. All rights reserved.
+//  Created and copyright by
+//  Benjamin Hintz
+//  Florian Kaluschke
+//  David Leska
+//  Lars Peterke
+//  Jan Schulte
+//  on Jun 2013. All rights reserved.
 //
  
 
@@ -19,6 +24,7 @@
 
 #include "utils/vector2.h"
 #include "track/TrackFileManager.h"
+#include "SoundMgr.h"
 
 int main(int, char const** argv) {
     
@@ -55,14 +61,11 @@ int main(int, char const** argv) {
     // delta time handling
     sf::Clock timer;
     
-    sf::Music menuBGM;
+    //background music
+    Rac0r::SoundMgr sMgr;
     
-    if (!menuBGM.openFromFile(resourcePath() + "menu.ogg"))
-    {
-        // Error...
-    }
-    
-    menuBGM.play();
+    //play music
+    sMgr.play(0);
     
     // Start the game loop
     while (window.isOpen()) {
@@ -75,16 +78,28 @@ int main(int, char const** argv) {
             if (event.type == sf::Event::Closed) {
                 // Close window : exit
                 window.close();
-            } else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-                // Escape pressed : exit
+            } else {
+                //pass the event to the current screen
+                currentScreen->handleEvent(event);
+            }
+        }
+        
+        if(currentScreen->quit) {
+            //check if there are more than one screen
+            //if not pop back the currentscreen
+            //if yes close the window
+            if (screens.size()==1) {
                 window.close();
             } else {
-                currentScreen->handleEvent(event);
+                screens.pop_back();
+                currentScreen=screens.back();
+                sMgr.play(0);
             }
         }
         
         // The screen indicates that it is done with what it does
         if(menuScreen->finished) {
+            sMgr.play(1);
             auto gameScreen = std::make_shared<GameScreen>(screenFrame, menuScreen->getPlayerCount(), menuScreen->trackPath);
             screens.push_back(gameScreen);
             currentScreen = screens.back();
@@ -104,7 +119,9 @@ int main(int, char const** argv) {
         window.display();
     }
     
-    menuBGM.stop();
+    //stop music
+    sMgr.stop();
     
+    //return the success state
     return EXIT_SUCCESS;
 }

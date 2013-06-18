@@ -11,6 +11,8 @@ RM := rm -rf
 -include src/view/subdir.mk
 -include src/ui/subdir.mk
 -include src/track/subdir.mk
+-include src/player/subdir.mk
+-include src/game/subdir.mk
 -include src/car/subdir.mk
 -include src/subdir.mk
 -include subdir.mk

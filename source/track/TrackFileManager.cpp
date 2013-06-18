@@ -1,9 +1,15 @@
-/*
- * TrackFileManager.cpp
- *
- *  Created on: 17.06.2013
- *      Author: david
- */
+//
+//  TrackFileManager.cpp
+//  Rac0r
+//
+//  Created and copyright by
+//  Benjamin Hintz
+//  Florian Kaluschke
+//  David Leska
+//  Lars Peterke
+//  Jan Schulte
+//  on Jun 2013. All rights reserved.
+//
 
 
 #include <dirent.h>

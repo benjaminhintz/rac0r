@@ -66,7 +66,8 @@ src/ui/MenuScreen.d: ../src/ui/MenuScreen.cpp ../src/ui/MenuScreen.h \
  /home/david/code/cpp/libs/SFML-2.0/include/SFML/Graphics/Text.hpp \
  ../src/ui/../view/View.h ../src/ui/../track/TrackFileManager.h \
  ../src/ui/../track/TrackFile.h ../src/ui/../view/PlayerChooserView.h \
- ../src/ui/../view/View.h \
+ ../src/ui/../view/View.h ../src/ui/../view/TrackChooserView.h \
+ ../src/ui/../view/../track/TrackFileManager.h \
  /home/david/repos/rac0r/eclipse_linux/ResourcePath.hpp
 
 ../src/ui/MenuScreen.h:
@@ -210,5 +211,9 @@ src/ui/MenuScreen.d: ../src/ui/MenuScreen.cpp ../src/ui/MenuScreen.h \
 ../src/ui/../view/PlayerChooserView.h:
 
 ../src/ui/../view/View.h:
+
+../src/ui/../view/TrackChooserView.h:
+
+../src/ui/../view/../track/TrackFileManager.h:
 
 /home/david/repos/rac0r/eclipse_linux/ResourcePath.hpp:
