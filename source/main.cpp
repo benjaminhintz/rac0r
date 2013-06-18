@@ -24,6 +24,7 @@
 
 #include "utils/vector2.h"
 #include "track/TrackFileManager.h"
+#include "SoundMgr.h"
 
 int main(int, char const** argv) {
     
@@ -61,15 +62,10 @@ int main(int, char const** argv) {
     sf::Clock timer;
     
     //background music
-    sf::Music menuBGM;
-    
-    if (!menuBGM.openFromFile(resourcePath() + "menu.ogg"))
-    {
-        // Error...
-    }
+    Rac0r::SoundMgr sMgr;
     
     //play music
-    menuBGM.play();
+    sMgr.play(0);
     
     // Start the game loop
     while (window.isOpen()) {
@@ -122,7 +118,7 @@ int main(int, char const** argv) {
     }
     
     //stop music
-    menuBGM.stop();
+    sMgr.stop(0);
     
     //return the success state
     return EXIT_SUCCESS;
