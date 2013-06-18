@@ -27,10 +27,8 @@ namespace Constants {
 
     constexpr static const size_t   COUNTDOWN_TIMER_INTERVAL                                    =   1000;
     constexpr static const size_t   COUNTDOWN_TIMER_STRINGS_NUM                                 =   4;
-    constexpr static const size_t   SOUNDS_NUM                                                  =   2;
 
     static const std::string        COUNTDOWN_TIMER_STRINGS[COUNTDOWN_TIMER_STRINGS_NUM]        =   { "3", "2", "1", "Start" };
-    static const std::string        SOUNDS[SOUNDS_NUM]                                          =   { "menu.ogg", "race.ogg" };
     
     constexpr static const size_t   GAME_MAX_LAPS                                               =   3;
     constexpr static const size_t   GAME_MAX_PLAYERS                                            =   5;

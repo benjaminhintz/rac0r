@@ -20,6 +20,8 @@ namespace Rac0r {
         void play(size_t track) { stop(); if(track < bgm.size()) bgm.at(track)->play(); }
         void stop() { for(sf::Music* obj : bgm) obj->stop(); }
     private:
+        static const size_t SOUNDS_NUM = 2;
+        const std::string SOUNDS[SOUNDS_NUM] = { "menu.ogg", "race.ogg" };
         std::vector<sf::Music*> bgm;
     };
 }

@@ -9,15 +9,14 @@
 #include <SFML/Audio.hpp>
 #include "ResourcePath.hpp"
 #include "SoundMgr.h"
-#include "Game.h"
 
 namespace Rac0r {
-    
+
     SoundMgr::SoundMgr(){
-        for(int i=0; i<Constants::SOUNDS_NUM; i++){
+        for(int i=0; i<SOUNDS_NUM; i++){
             sf::Music * song = new sf::Music;
             song->setLoop(true);
-            if (!song->openFromFile(resourcePath() + Constants::SOUNDS[i]))
+            if (!song->openFromFile(resourcePath() + SOUNDS[i]))
             {
                 // Error...
             }
