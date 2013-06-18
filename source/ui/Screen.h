@@ -2,8 +2,13 @@
 //  Screen.h
 //  Rac0r
 //
-//  Created by Jannes on Jun/13/13.
-//  Copyright (c) 2013 Jan Schulte. All rights reserved.
+//  Created and copyright by
+//  Benjamin Hintz
+//  Florian Kaluschke
+//  David Leska
+//  Lars Peterke
+//  Jan Schulte
+//  on Jun 2013. All rights reserved.
 //
 
 #ifndef __Rac0r__Screen__
