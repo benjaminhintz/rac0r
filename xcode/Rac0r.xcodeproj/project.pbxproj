@@ -90,6 +90,8 @@
 		3D67907A1760E0310061B88D /* ResourcePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3D6790791760E0310061B88D /* ResourcePath.mm */; };
 		3D67909917664E6F0061B88D /* Track.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D67909717664E6E0061B88D /* Track.cpp */; };
 		3D6790A11766892E0061B88D /* Car.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D67909F1766892E0061B88D /* Car.cpp */; };
+		3DA79A391770583F00317DE9 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DA79A371770583F00317DE9 /* Player.cpp */; };
+		3DA79A3D17705B9D00317DE9 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DA79A3B17705B9D00317DE9 /* Game.cpp */; };
 		DF780F41176E541500D4E41A /* View.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF780F3F176E541500D4E41A /* View.cpp */; };
 		DFEFE0B2176FDCCA001708C8 /* PlayerChooserView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DFEFE0B0176FDCCA001708C8 /* PlayerChooserView.cpp */; };
 		DFEFE0B7176FED83001708C8 /* arrowDown.png in Resources */ = {isa = PBXBuildFile; fileRef = DFEFE0B5176FED83001708C8 /* arrowDown.png */; };
@@ -194,6 +196,10 @@
 		3D67909817664E6F0061B88D /* Track.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Track.h; sourceTree = "<group>"; };
 		3D67909F1766892E0061B88D /* Car.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Car.cpp; path = car/Car.cpp; sourceTree = "<group>"; };
 		3D6790A01766892E0061B88D /* Car.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Car.h; path = car/Car.h; sourceTree = "<group>"; };
+		3DA79A371770583F00317DE9 /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Player.cpp; path = player/Player.cpp; sourceTree = "<group>"; };
+		3DA79A381770583F00317DE9 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = player/Player.h; sourceTree = "<group>"; };
+		3DA79A3B17705B9D00317DE9 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = game/Game.cpp; sourceTree = "<group>"; };
+		3DA79A3C17705B9D00317DE9 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = game/Game.h; sourceTree = "<group>"; };
 		DF780F3F176E541500D4E41A /* View.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = View.cpp; path = view/View.cpp; sourceTree = "<group>"; };
 		DF780F40176E541500D4E41A /* View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = View.h; path = view/View.h; sourceTree = "<group>"; };
 		DFEFE0B0176FDCCA001708C8 /* PlayerChooserView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PlayerChooserView.cpp; path = view/PlayerChooserView.cpp; sourceTree = "<group>"; };
@@ -298,6 +304,8 @@
 				3D679052175BE75F0061B88D /* utils */,
 				3D679048175A59D00061B88D /* track */,
 				3D67909E176688010061B88D /* car */,
+				3DA79A3A17705B6B00317DE9 /* game */,
+				3DA79A36177057FF00317DE9 /* player */,
 			);
 			name = classes;
 			path = ../../source;
@@ -417,6 +425,24 @@
 				3D6790A01766892E0061B88D /* Car.h */,
 			);
 			name = car;
+			sourceTree = "<group>";
+		};
+		3DA79A36177057FF00317DE9 /* player */ = {
+			isa = PBXGroup;
+			children = (
+				3DA79A371770583F00317DE9 /* Player.cpp */,
+				3DA79A381770583F00317DE9 /* Player.h */,
+			);
+			name = player;
+			sourceTree = "<group>";
+		};
+		3DA79A3A17705B6B00317DE9 /* game */ = {
+			isa = PBXGroup;
+			children = (
+				3DA79A3B17705B9D00317DE9 /* Game.cpp */,
+				3DA79A3C17705B9D00317DE9 /* Game.h */,
+			);
+			name = game;
 			sourceTree = "<group>";
 		};
 		DF780F3A176E220B00D4E41A /* view */ = {
@@ -595,6 +621,8 @@
 				DF780F41176E541500D4E41A /* View.cpp in Sources */,
 				174DF7E4176F8AB300FE4F40 /* TrackFileManager.cpp in Sources */,
 				DFEFE0B2176FDCCA001708C8 /* PlayerChooserView.cpp in Sources */,
+				3DA79A391770583F00317DE9 /* Player.cpp in Sources */,
+				3DA79A3D17705B9D00317DE9 /* Game.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

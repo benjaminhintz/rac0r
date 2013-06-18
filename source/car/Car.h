@@ -16,6 +16,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "../game/Game.h"
 #include "../track/Track.h"
 
 
@@ -23,6 +24,8 @@ namespace Rac0r {
 
 // forwards
 class Car;
+
+typedef std::shared_ptr<Car>    shared_car;
 
 
 class CarEventListener {
@@ -118,6 +121,5 @@ class Car : public sf::Drawable {
 };
 
 }
-
 
 #endif /* defined(__Rac0r__Car__) */

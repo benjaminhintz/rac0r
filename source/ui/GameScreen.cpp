@@ -10,9 +10,10 @@
 #include "ResourcePath.hpp"
 #include "../utils/vector2.h"
 
-const std::string GameScreen::COUNTDOWN_STRINGS[4] = { "Start", "1", "2", "3" };
 
-GameScreen::GameScreen(const Rect& frame, int playerCount, std::string trackPath) : Screen(frame), mGameRunning(false)
+GameScreen::GameScreen(const Rect& frame, int playerCount, std::string trackPath) :
+    Screen(frame),
+    mGameRunning(false)
 {
     createTracks(playerCount, trackPath);
     restart();
@@ -31,7 +32,7 @@ void GameScreen::createTracks(size_t _playerCount, const std::string & _trackFil
         mainTrack.setCenter(sf::Vector2f(frame.width / 2, frame.height / 2));
         mainTrack.scaleToFitBounds(sf::Vector2f(frame.width, frame.height), false, -0.2);  // first initial scale
         mainTrack.scaleToFitBounds(sf::Vector2f(frame.width, frame.height), true, 8.0f);  // scale with directions
-        tracks.push_back(mainTrack);
+        mTracks.push_back(mainTrack);
     
         float offset = 0.0f;
         for (size_t i = 0; i < _playerCount-1; i++) {
@@ -39,13 +40,13 @@ void GameScreen::createTracks(size_t _playerCount, const std::string & _trackFil
             offset += (scaleOffset * 20.0f * static_cast<float>(i+1)) * (i % 2 == 0 ? -1.0f : 1.0f);
             std::cout << "Offset: " << offset << std::endl;
             subTrack.scaleToFitBounds(sf::Vector2f(frame.width, frame.height), true, offset);
-            tracks.push_back(subTrack);
+            mTracks.push_back(subTrack);
         }
         
     } else {
         mainTrack.setCenter(sf::Vector2f(frame.width / 2, frame.height / 2));
         mainTrack.scaleToFitBounds(sf::Vector2f(frame.width, frame.height), false, -0.2);
-        tracks.push_back(mainTrack);
+        mTracks.push_back(mainTrack);
     
         float offset = 0.0f;
         for (size_t i = 0; i < _playerCount-1; i++) {
@@ -53,42 +54,26 @@ void GameScreen::createTracks(size_t _playerCount, const std::string & _trackFil
             offset += (scaleOffset * 20.0f * static_cast<float>(i+1)) * (i % 2 == 0 ? 1.0f : -1.0f);
             std::cout << "Offset: " << offset << std::endl;
             subTrack.scaleToFitBounds(sf::Vector2f(frame.width, frame.height), true, offset);
-            tracks.push_back(subTrack);
+            mTracks.push_back(subTrack);
         } 
     }
     
     // create track line renderer
     unsigned int color = 0;
-    sf::Color colors[5] = {
-		sf::Color(0,153,205,153),
-		sf::Color(102, 153, 0, 153),
-		sf::Color(153, 51, 204, 153),
-		sf::Color(255, 136, 0, 153),
-		sf::Color(204, 0, 0, 153)
-    };
-    
-    for (auto & track : tracks) {
+    for (auto & track : mTracks) {
         Rac0r::TrackDrawable trackDrawable(track);
         trackDrawable.setThickness(2.0f);
-        trackDrawable.setColor(colors[color]);
-        trackDrawables.push_back(trackDrawable);
-        
-        // create cars for the track
-    
-        // create players
-        Rac0r::Car * car = new Rac0r::Car(track, this); // TODO: Memleak my ass
-        car->setColor(colors[color++]);
-        cars.push_back(car);
-        mPlayers.push_back(Player(car));
+        trackDrawable.setColor(Rac0r::Constants::GAME_TRACK_COLOR[color++]);
+        mTrackDrawables.push_back(trackDrawable);
     }
     
     // create start line
     float trackInnerOffset = 20.0f * scaleOffset;
-    float height = trackInnerOffset * static_cast<float>(tracks.size()-1) + trackInnerOffset * 2.0f;
+    float height = trackInnerOffset * static_cast<float>(mTracks.size()-1) + trackInnerOffset * 2.0f;
     this->mStartLine = sf::RectangleShape(sf::Vector2f(GameScreen::START_LINE_WIDTH, height));
     this->mStartLine.setOrigin(GameScreen::START_LINE_WIDTH / 2.0f, 0.0f);
-    sf::Vector2f startPos = tracks[tracks.size()-1][0];
-    sf::Vector2f nextPos = tracks[tracks.size()-1][1];
+    sf::Vector2f startPos = mTracks[mTracks.size()-1][0];
+    sf::Vector2f nextPos = mTracks[mTracks.size()-1][1];
     sf::Vector2f startPosDir = Rac0r::normalize(nextPos - startPos);
     sf::Vector2f startPosDirOrtho = Rac0r::orthogonal(startPosDir) * (height - trackInnerOffset);
     
@@ -96,23 +81,33 @@ void GameScreen::createTracks(size_t _playerCount, const std::string & _trackFil
     this->mStartLine.setRotation(RAD_TO_DEG(Rac0r::heading(startPosDir)));
     this->mStartLine.setFillColor(sf::Color::White);
     
+    createPlayer();
+    
     // setup countdown text
     createCountdownTimer();
-    updateCountdownTimer(GameScreen::COUNTDOWN_STRINGS[3]);
+    updateCountdownTimer(Rac0r::Constants::COUNTDOWN_TIMER_STRINGS[0]);
+}
+
+void GameScreen::createPlayer() {
+    // create cars & players
+    unsigned int player = 0;
+    for (auto & track : mTracks) {
+        Rac0r::Car * car = new Rac0r::Car(track, this);
+        car->setColor(Rac0r::Constants::GAME_TRACK_COLOR[player]);
+        mPlayers.push_back(new Rac0r::Player(car, Rac0r::Constants::PLAYER_KEY[player++]));
+    }
 }
 
 void GameScreen::restart() {
     this->mGameRunning = false;
-    this->mStartCountdown = 3;
+    this->mStartCountdown = 0;
     
     sf::Clock timer;
     this->mCountdownTimer = timer.getElapsedTime();
     
-    /*
-    for (auto & player : this->mPlayers) {
-        player.reset();
+    for (auto player : this->mPlayers) {
+        player->reset();
     }
-    */
 }
 
 void GameScreen::start() {
@@ -127,7 +122,7 @@ void GameScreen::start() {
 void GameScreen::createCountdownTimer() {
     mCountdownTimerFont.loadFromFile(resourcePath() + getFontPath() +  "Tahoma.ttf");
 
-    this->mCountdownTimerText.setString(COUNTDOWN_STRINGS[3]);
+    this->mCountdownTimerText.setString(Rac0r::Constants::COUNTDOWN_TIMER_STRINGS[0]);
     this->mCountdownTimerText.setPosition(frame.width / 2, frame.height / 2);
     this->mCountdownTimerText.setFont(mCountdownTimerFont);
     this->mCountdownTimerText.setColor(sf::Color::White);
@@ -155,13 +150,13 @@ void GameScreen::layout(sf::Time elapsed) {
     // show countdown
     if (!this->mGameRunning) {
         sf::Int32 dt = current.asMilliseconds() - this->mCountdownTimer.asMilliseconds();
-        if (dt > START_INTERVAL) {
-            if (--this->mStartCountdown < 0) {
+        if (dt > Rac0r::Constants::COUNTDOWN_TIMER_INTERVAL) {
+            if (++this->mStartCountdown > Rac0r::Constants::COUNTDOWN_TIMER_STRINGS_NUM) {
                 start();
             } else {
                 this->mCountdownTimer = clock.getElapsedTime();
     
-                updateCountdownTimer(COUNTDOWN_STRINGS[this->mStartCountdown]);
+                updateCountdownTimer(Rac0r::Constants::COUNTDOWN_TIMER_STRINGS[this->mStartCountdown]);
             }
         }
         
@@ -169,57 +164,40 @@ void GameScreen::layout(sf::Time elapsed) {
     }
     
     // update player
-    for (auto & player : this->mPlayers) {
-        player.mLapTime = (current - this->mGameTimer).asMilliseconds();
+    for (auto player : this->mPlayers) {
+        player->update(elapsed);
+        
+        //player.mLapTime = (current - this->mGameTimer).asMilliseconds();
         //std::cout << "Lap Time:"  << player.mLapTime << std::endl;
-    }
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
-    	if(mPlayers.size() >= 1) mPlayers[0].accelerate();
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
-    	if(mPlayers.size() >= 2) mPlayers[1].accelerate();
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) {
-    	if(mPlayers.size() >= 3) mPlayers[2].accelerate();
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
-    	if(mPlayers.size() >= 4) mPlayers[3].accelerate();
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
-    	if(mPlayers.size() >= 5) mPlayers[4].accelerate();
     }
     
     // TODO: REMOVE
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-        cars[0]->resetToLastValidPosition();
-        cars[1]->resetToLastValidPosition();
-        cars[2]->resetToLastValidPosition();
-        cars[3]->resetToLastValidPosition();
-        cars[4]->resetToLastValidPosition();
+        for (auto player : this->mPlayers) {
+            player->resetToLastValidPosition();
+        }
     }
     
-    for (auto & car : cars) {
-        car->update(elapsed);
-    }
 }
 
 void GameScreen::draw(sf::RenderTarget &target, sf::RenderStates states) const {
+    
     // Render Tracks
-    for (auto & trackDrawable : trackDrawables) {
+    for (auto & trackDrawable : mTrackDrawables) {
         trackDrawable.draw(target, states);
     }
+    
     target.draw(this->mStartLine, states);
     
     if (!this->mGameRunning) {
         target.draw(this->mCountdownTimerText, states);
-    } else {
-        // Render cars
-        for (auto & car : cars) {
-            car->draw(target, states);
-        }
+        return;
     }
-
+    
+    // draw players
+    for (auto player : this->mPlayers) {
+        player->draw(target, states);
+    }
 }
 
 
@@ -230,6 +208,7 @@ void GameScreen::onCarDriftedOffTrack(Rac0r::Car & _car) {
 
 void GameScreen::onCarMovedThroughStart(Rac0r::Car & _car) {
 
+/*
     for (auto & player : this->mPlayers) {
         if (player.mCar == &_car) {
             player.mLapCount++;
@@ -237,7 +216,7 @@ void GameScreen::onCarMovedThroughStart(Rac0r::Car & _car) {
             player.mTotalTime = this->mGameTimer.asMilliseconds();
         }
     }
-    
+    */
     std::cout << "Car moved through start." << std::endl;
 }
 
