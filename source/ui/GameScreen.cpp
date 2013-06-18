@@ -222,6 +222,7 @@ void GameScreen::onCarMovedThroughStart(Rac0r::Car & _car) {
         if (player->getCar() == &_car) {
         	player->nextLap();
         	player->setTotalTime(this->mGameTimer.asMilliseconds());
+        	break;
         }
 
     }

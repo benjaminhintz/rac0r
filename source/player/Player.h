@@ -30,7 +30,7 @@ class Player {
 
         Car* getCar() {return mCar;};
 
-        void nextLap() { mLapCount++; };
+        void nextLap() { mLapCount++; mLapTime = 0; };
         size_t getCurrentLap() { return mLapCount; };
 
         void setTotalTime(size_t time) { mTotalTime = time;}
@@ -38,6 +38,8 @@ class Player {
 
         void setLapTime(size_t time) { mLapTime = time;}
         size_t getLapTime() { return mLapTime; }
+
+        sf::Keyboard::Key getKey() { return mKey; }
 
         void accelerate();
         void reset();
