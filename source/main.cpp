@@ -42,13 +42,14 @@ int main(int, char const** argv) {
     }
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
     
+
     // List of currently active screens
-    // TODO: in ScreenManager packen, der Animationen kann
     std::vector<std::shared_ptr<Screen>> screens;
     Rect screenFrame(0, 0, videoMode.width, videoMode.height);
-    screens.emplace_back(new MenuScreen(screenFrame));
-    //screens.emplace_back(new GameScreen(screenFrame));
-    // TODO: ScreenManager fragen
+    
+    // Add the menu as the first screen
+    std::shared_ptr<MenuScreen> menuScreen = std::make_shared<MenuScreen>(screenFrame);
+    screens.push_back(menuScreen);
     auto currentScreen = screens.back();
     
     // delta time handling
@@ -56,8 +57,7 @@ int main(int, char const** argv) {
     
     // Start the game loop
     while (window.isOpen()) {
-        
-        // compute delta time
+        // Compute delta time
         sf::Time elapsed = timer.restart();
 
         // Process events
@@ -74,17 +74,14 @@ int main(int, char const** argv) {
             }
         }
         
-        if(currentScreen->finished) {
-            currentScreen->finished = false;
-            Screen *game = new GameScreen(screenFrame,currentScreen->playerCount, currentScreen->trackPath);
-            screens.pop_back();
-            screens.emplace_back(game);
+        // The screen indicates that it is done with what it does
+        if(menuScreen->finished) {
+            auto gameScreen = std::make_shared<GameScreen>(screenFrame, menuScreen->getPlayerCount(), menuScreen->trackPath);
+            screens.push_back(gameScreen);
             currentScreen = screens.back();
-            std::cout << currentScreen->trackPath << std::endl;
-        }
-        
-        if(currentScreen->exit) {
-            window.close();
+            
+            // Avoid this being called again
+            menuScreen->finished = false;
         }
         
         // Update the screen's contents and tell it how much time passed since the last frame
@@ -92,10 +89,8 @@ int main(int, char const** argv) {
         
         // Clear screen
         window.clear();
-
         // Draw
         window.draw(*currentScreen);
-        
         // Update the window
         window.display();
     }

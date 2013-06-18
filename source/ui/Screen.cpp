@@ -8,8 +8,6 @@
 
 #include "Screen.h"
 
-#include <iostream>
-
 Screen::Screen(const Rect& frame) : View(frame) {}
 
 

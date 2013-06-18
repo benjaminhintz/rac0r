@@ -21,11 +21,8 @@ public:
     virtual void handleEvent(sf::Event event) = 0;
     virtual void layout(sf::Time elapsed) {}
     
-    bool exit = false;
+    // This value is read out from the main loop
     bool finished = false;
-    int playerCount = 1;
-    std::string trackPath;
-    
 };
 
 

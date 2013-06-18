@@ -13,77 +13,83 @@
 
 using namespace std;
 
-MenuScreen::MenuScreen(const Rect& frame) : Screen(frame) {
+MenuScreen::MenuScreen(const Rect& frame) :
+    Screen(frame),
+    playerChooser("Spieler", 1, 5)
+{
+    // Get a list of all tracks
     Rac0r::TrackFileManager fileManager;
     tracks = fileManager.getTrackList();
-    std::cout << tracks.size() << " tracks loaded" << endl;
-    init();
+    
+    // Load textures
+    if (!logoTexture.loadFromFile(resourcePath() + "logo.png")) {
+        cerr << "Error while loading image" << endl;
+    }
+    
+    // Logo
+    logo.setTexture(logoTexture);
+    addChild(logo);
+    
+    // Track image
+    track.setFillColor(sf::Color::White);
+    track.setSize(sf::Vector2f(200, 100));
+    addChild(track);
+    
+    // Player chooser
+    playerChooser.setSize(225, 48);
+    addChild(playerChooser);
+    
+    // Description text
+    description.setString("Druecke Enter, um das Spiel zu starten");
+    description.setCharacterSize(28);
+    description.setStyle(sf::Text::Bold);
+    description.setColor(sf::Color::White);
+    description.setFont(View::getDefaultFont());
+    addChild(description);
+    
+    // Do the initial layout
+    layoutChildviews();
 }
 
-void MenuScreen::init() {
-    static sf::Font font;
-    font.loadFromFile(resourcePath() +  "Tahoma.ttf");
+
+// This function should be called initially and everytime the size of the window changes
+void MenuScreen::layoutChildviews() {
+    sf::Vector2f size;
+    sf::Vector2f position;
     
-    description.setString("beschreibung + Tastaturbelegung");
-    description.setPosition(10,100);
-    description.setColor(sf::Color::White);
-    description.setFont(font);
+    // Logo
+    size = sf::Vector2f(logoTexture.getSize());
+    position.x = static_cast<int>(frame.width / 2 - size.x / 2);
+    position.y = 50;
+    logo.setPosition(position);
     
-    track.setPosition(frame.width/2 - 100, 100);
-    track.setFillColor(sf::Color::White);
-    track.setSize(sf::Vector2f(200,100));
+    // Track
+    size = track.getSize();
+    position.x = static_cast<int>(frame.width / 2 - size.x / 2);
+    position.y = 350;
+    track.setPosition(position);
     
-    start.setString("start");
-    start.setColor(sf::Color::White);
-    start.setPosition(10, 10);
-    start.setFont(font);
+    // Player chooser
+    size = playerChooser.getSize();
+    position.x = static_cast<int>(frame.width / 2 - size.x / 2);
+    position.y = 500;
+    playerChooser.setPosition(position);
     
-    player.setString("1 player");
-    player.setColor(sf::Color::White);
-    player.setPosition(10, 50);
-    player.setFont(font);
-    
-    if (!logoTexture.loadFromFile( resourcePath() + "logo.png")) {
-        cerr << "Error while loading image" << endl;
-        return;
-    }
-    logoSprite.setTexture(logoTexture);
-    logoSprite.setPosition(200, 200);
+    // Description text
+    sf::FloatRect bounds = description.getGlobalBounds();
+    position.x = static_cast<int>(frame.width / 2 - bounds.width / 2);
+    position.y = 660;
+    description.setPosition(position);
 }
 
 
 void MenuScreen::handleEvent(sf::Event event) {
-    bool down = (event.type == sf::Event::KeyPressed);
-    bool up = (event.type == sf::Event::KeyReleased);
-    if (down && event.key.code == sf::Keyboard::Down) {
-    }
-    else if (up && event.key.code == sf::Keyboard::Up)
-    {
-        if (Screen::playerCount < 5){
-            Screen::playerCount++;
-            string playerCountStr;
-            ostringstream convert;
-            convert << playerCount;
-            playerCountStr = convert.str();
-            player.setString(playerCountStr + " player");
-        }
-        cout << "ein Spieler mehr " << Screen::playerCount << endl;
-    }
-    else if (up && event.key.code == sf::Keyboard::Down)
-    {
-        if (Screen::playerCount > 1){
-            Screen::playerCount--;
-            string playerCountStr;            
-            ostringstream convert;
-            convert << playerCount;
-            playerCountStr = convert.str();
-            player.setString(playerCountStr + " player");
-            
-        }
-        cout << "ein Spieler weniger " << Screen::playerCount << endl;
-    }
-    else if (up && event.key.code == sf::Keyboard::Right)
-    {
+    bool pressed = (event.type == sf::Event::KeyPressed);
+//    bool released = (event.type == sf::Event::KeyReleased);
+    
+    playerChooser.handleEvent(event);
+    
+    if (pressed && event.key.code == sf::Keyboard::Right) {
         if (trackNumber < tracks.size() - 1){
             //TODO textur neu setzen
 //            sf::Texture texture;
@@ -92,28 +98,22 @@ void MenuScreen::handleEvent(sf::Event event) {
             trackNumber++;
             std::cout << tracks.at(trackNumber).getTrackFile() << std::endl;
         }
-        cout << "Ein Track weiter " << Screen::trackPath << endl;
+        cout << "Ein Track weiter " << trackPath << endl;
     }
-    else if (up && event.key.code == sf::Keyboard::Left)
-    {
+    if (pressed && event.key.code == sf::Keyboard::Left) {
         if (trackNumber > 0){
             trackNumber--;
             std::cout << tracks.at(trackNumber).getTrackFile() << std::endl;
         }
-        cout << "Ein Track zurück " << Screen::trackPath << endl;
+        cout << "Ein Track zurück " << trackPath << endl;
     }
-    if (up && event.key.code == sf::Keyboard::Return) {
-        Screen::trackPath = tracks.at(trackNumber).getTrackFile();
-        Screen::finished = true;
+    if (pressed && event.key.code == sf::Keyboard::Return) {
+        trackPath = tracks.at(trackNumber).getTrackFile();
+        finished = true;
     }
 }
 
-void MenuScreen::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    target.draw(description);
-    target.draw(track, states);
-    target.draw(player, states);
-    target.draw(start, states);
-    target.draw(logoSprite, states);
+int MenuScreen::getPlayerCount() {
+    return playerChooser.getValue();
 }
-
 

@@ -16,9 +16,13 @@
 
 // Typedefs
 class View;
-typedef std::shared_ptr<View> view_ptr;
+//typedef std::shared_ptr<View> view_ptr;
 typedef sf::Rect<float> Rect;
+
+// Possible view states
 enum class ViewState { normal, highlighted, activated };
+
+
 
 class View : public sf::Transformable, public sf::Drawable {
 public:
@@ -27,17 +31,29 @@ public:
     
     void setState(ViewState newState);
     void setSize(float x, float y);
-    void addChild(view_ptr child);
+    sf::Vector2f getSize();
     
 protected:
+    // This childView stuff is only for easier drawing. You still need to retain
+    // that object at all times and you have to manage its memory
+    void addChild(sf::Drawable& child);
+    // Views can have different style sets for easier switching between states
     virtual void applyStyle() {};
-    virtual void layout() {};
+    // Calculate all subviews' positions
+    virtual void layoutChildviews() {};
+    // Handle input events
+    virtual void handleEvent(sf::Event event) {};
+    // Draw all subviews
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
-    ViewState state;
-    sf::Vector2f size;
+    // Some resource helper functions that all views can use
+    static const sf::Font& getDefaultFont();
+
+protected:
+    // Represents the top left corner and the size of the view
     Rect frame;
-    std::vector<view_ptr> childViews;
+    ViewState state;
+    std::vector<sf::Drawable*> childViews;
 };
 
 #endif /* defined(__Rac0r__View__) */

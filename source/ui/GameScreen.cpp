@@ -113,7 +113,7 @@ void GameScreen::createTracks(size_t _playerCount, const std::string & _trackFil
     this->mCountdownTimerText.setColor(sf::Color::White);
     this->mCountdownTimerText.setStyle(sf::Text::Bold);
     
-    unsigned int textSize = static_cast<unsigned int>(0.4 * size.y);
+    unsigned int textSize = static_cast<unsigned int>(0.4 * frame.width);
     this->mCountdownTimerText.setCharacterSize(textSize);
 
     sf::FloatRect bounds = this->mCountdownTimerText.getLocalBounds();
@@ -162,13 +162,13 @@ void GameScreen::layout(sf::Time elapsed) {
     
                 this->mCountdownTimerText.setString(COUNTDOWN_STRINGS[this->mStartCountdown]);
                 
-                unsigned int textSize = static_cast<unsigned int>(0.4 * size.y);
+                unsigned int textSize = static_cast<unsigned int>(0.4 * frame.width);
                 this->mCountdownTimerText.setCharacterSize(textSize);
                 
                 sf::FloatRect bounds = this->mCountdownTimerText.getLocalBounds();
                 sf::Vector2f position;
-                position.x = static_cast<int>((size.x / 2) - (bounds.width / 2));
-                position.y = static_cast<int>((size.y / 2) - 1.2 * (textSize / 2.0f));
+                position.x = static_cast<int>((frame.width / 2) - (bounds.width / 2));
+                position.y = static_cast<int>((frame.width / 2) - 1.2 * (textSize / 2.0f));
                 this->mCountdownTimerText.setPosition(position);
             }
         }

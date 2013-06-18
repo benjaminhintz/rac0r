@@ -9,10 +9,10 @@
 #include "View.h"
 
 #include <iostream>
+#include "ResourcePath.hpp"
 
 View::View(const Rect& frame) :
     frame(frame),
-    size(sf::Vector2f(frame.width, frame.height)),
     state(ViewState::normal)
 {}
 
@@ -22,18 +22,41 @@ void View::setState(ViewState newState) {
 }
 
 void View::setSize(float x, float y) {
-    // TODO: also set the origin
-    size = sf::Vector2f(x, y);
-    frame = Rect(sf::Vector2f(0, 0), size);
-    layout();
+    // TODO: What about the origin?
+    frame = Rect(sf::Vector2f(0, 0), sf::Vector2f(x, y));
+    layoutChildviews();
 }
 
-void View::addChild(view_ptr childView) {
-    childViews.push_back(childView);
+sf::Vector2f View::getSize() {
+    return sf::Vector2f(frame.width, frame.height);
+}
+
+void View::addChild(sf::Drawable& child) {
+    childViews.push_back(&child);
 }
 
 void View::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    for (view_ptr view : childViews) {
+    // Apply transform from sf::Transformable
+    states.transform *= getTransform();
+    
+    // Draw all child views
+    for (sf::Drawable* view : childViews) {
         target.draw(*view, states);
     }
+}
+
+// Helper function that loads a default font
+const sf::Font& View::getDefaultFont() {
+    static sf::Font defaultFont;
+    static bool isLoaded = false;
+    
+    if (!isLoaded) {
+        if (!defaultFont.loadFromFile(resourcePath() + "Tahoma.ttf")) {
+            std::cerr << "Couldn't load Tahoma.ttf" << std::endl;
+            // TODO: crash
+        }
+        isLoaded = true;
+    }
+    
+    return defaultFont;
 }
