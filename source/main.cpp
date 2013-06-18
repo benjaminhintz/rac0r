@@ -60,6 +60,7 @@ int main(int, char const** argv) {
     // delta time handling
     sf::Clock timer;
     
+    //background music
     sf::Music menuBGM;
     
     if (!menuBGM.openFromFile(resourcePath() + "menu.ogg"))
@@ -67,6 +68,7 @@ int main(int, char const** argv) {
         // Error...
     }
     
+    //play music
     menuBGM.play();
     
     // Start the game loop
@@ -80,11 +82,21 @@ int main(int, char const** argv) {
             if (event.type == sf::Event::Closed) {
                 // Close window : exit
                 window.close();
-            } else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-                // Escape pressed : exit
+            } else {
+                //pass the event to the current screen
+                currentScreen->handleEvent(event);
+            }
+        }
+        
+        if(currentScreen->quit) {
+            //check if there are more than one screen
+            //if not pop back the currentscreen
+            //if yes close the window
+            if (screens.size()==1) {
                 window.close();
             } else {
-                currentScreen->handleEvent(event);
+                screens.pop_back();
+                currentScreen=screens.back();
             }
         }
         
@@ -109,7 +121,9 @@ int main(int, char const** argv) {
         window.display();
     }
     
+    //stop music
     menuBGM.stop();
     
+    //return the success state
     return EXIT_SUCCESS;
 }

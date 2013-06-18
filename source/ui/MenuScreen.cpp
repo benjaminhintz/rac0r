@@ -99,6 +99,9 @@ void MenuScreen::handleEvent(sf::Event event) {
         trackPath = trackChooser.getTrackPath();
         finished = true;
     
+    } else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+        // Escape pressed : exit
+        quit = true;
     }
 
 }

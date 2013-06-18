@@ -231,6 +231,9 @@ void GameScreen::onCarStartedFromStart(Rac0r::Car & _car) {
     
 
 void GameScreen::handleEvent(sf::Event event) {
-	// TODO: implement
+	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+        // Escape pressed : exit
+        quit = true;
+    }
 }
 

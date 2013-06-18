@@ -28,6 +28,7 @@ public:
     
     // This value is read out from the main loop
     bool finished = false;
+    bool quit = false;
 };
 
 

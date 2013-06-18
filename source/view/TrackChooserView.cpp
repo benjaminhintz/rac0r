@@ -26,7 +26,7 @@ View(frame){
     arrowUpTexture.loadFromFile(resourcePath() + "arrowUp.png");
     std::cout << tracks.at(trackNumber).getTrackFile() << std::endl;
     
-    // Initialize arrows
+    // Initialize arrows and the track image
     arrowUp.setTexture(arrowUpTexture);
     arrowDown.setTexture(arrowDownTexture);
     addChild(arrowUp);
@@ -39,13 +39,13 @@ View(frame){
 }
 
 void TrackChooserView::handleEvent(sf::Event event) {
+    //event handling
     bool pressed = (event.type == sf::Event::KeyPressed);
     bool released = (event.type == sf::Event::KeyReleased);
 
     if (pressed && event.key.code == sf::Keyboard::Right) {
+        //choose a track (next)
         if (trackNumber < tracks.size() - 1){
-            //TODO textur neu setzen
-            // Reset track texture
             trackNumber++;
             std::cout << tracks.at(trackNumber).getTrackFile() << std::endl;
             layoutChildviews();
@@ -53,28 +53,19 @@ void TrackChooserView::handleEvent(sf::Event event) {
                         
         }
     }else if (released && event.key.code == sf::Keyboard::Right){
-        
-        //arrowUp.move(-6,0);
         layoutChildviews();
     }
     if (pressed && event.key.code == sf::Keyboard::Left) {
+        //choose a track (previous)
         if (trackNumber > 0){
             trackNumber--;
             std::cout << tracks.at(trackNumber).getTrackFile() << std::endl;
-            
-            
             layoutChildviews();
             arrowDown.move(-6, 0);
-            
         }
-    }else if (released && event.key.code == sf::Keyboard::Left) {
-        
-        
-        
+    } else if (released && event.key.code == sf::Keyboard::Left) {
         layoutChildviews();
-        
     }
-
 }
 
 // This is called whenever the size is set
@@ -111,8 +102,6 @@ void TrackChooserView::layoutChildviews() {
         std::cout<< "fehler beim laden des image"<< std::endl;
     }
     track.setTexture(trackTexture);
-    
-    
 }
 
 std::string TrackChooserView::getTrackPath() {

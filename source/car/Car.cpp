@@ -228,6 +228,7 @@ void Car::updateGhosts() {
     }
     
     // do we need to remove some ghosts?
+    //call the ghostbusters
     std::list<Ghost>::iterator it = this->mCarGhostDrawables.begin();
     while (it != this->mCarGhostDrawables.end()) {
         if ((time.asMilliseconds() - (*it).age) >= Car::MAX_GHOSTS_AGE) {

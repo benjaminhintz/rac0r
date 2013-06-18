@@ -67,7 +67,6 @@ const sf::Font& View::getDefaultFont() {
 }
 
 const std::string & View::getFontPath() {
-
     #ifdef __linux
 	static std::string fontDir = "fonts/";
 	#elif __APPLE__
