@@ -91,14 +91,17 @@ void MenuScreen::handleEvent(sf::Event event) {
         if (trackNumber < tracks.size() - 1){
             //TODO textur neu setzen
             // Reset track texture
+            trackNumber++;
+            std::cout << tracks.at(trackNumber).getTrackFile() << std::endl;
+
             trackTexture = sf::Texture();
             std::string filename = tracks.at(trackNumber).getImageFile();
+            std::cout << filename << std::endl;
             if (!trackTexture.loadFromFile(filename)){
                 std::cout<< "fehler beim laden des image"<< std::endl;
             }
             track.setTexture(trackTexture);
-            trackNumber++;
-            std::cout << tracks.at(trackNumber).getTrackFile() << std::endl;
+            
         }
         cout << "Ein Track weiter " << trackPath << endl;
     }
@@ -106,7 +109,14 @@ void MenuScreen::handleEvent(sf::Event event) {
         if (trackNumber > 0){
             trackNumber--;
             std::cout << tracks.at(trackNumber).getTrackFile() << std::endl;
-        }
+            trackTexture = sf::Texture();
+            std::string filename = tracks.at(trackNumber).getImageFile();
+            std::cout << filename << std::endl;
+            if (!trackTexture.loadFromFile(filename)){
+                std::cout<< "fehler beim laden des image"<< std::endl;
+            }
+            track.setTexture(trackTexture);
+            }
         cout << "Ein Track zurück " << trackPath << endl;
     }
     if (pressed && event.key.code == sf::Keyboard::Return) {
