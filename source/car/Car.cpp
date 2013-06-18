@@ -23,6 +23,8 @@ Car::Car(const Track & _track, CarEventListener * _eventListener) :
     mLastDirection(1.0f, 0.0f),
     mVelocity(0.0f),
     mForce(0.0f),
+    mCurrentPassedDistance (0.0),
+    mLastPassedDistance (0.0),
     mDriftedOffTrack(false),
     mCarStartedFromStart(false),
     mSegmentStart(Track::START_INDEX),
@@ -30,13 +32,17 @@ Car::Car(const Track & _track, CarEventListener * _eventListener) :
     mCarDrawable(sf::Vector2f(Car::CAR_WIDTH, Car::CAR_HEIGHT))
 {
     this->mCarDrawable.setOrigin(Car::CAR_WIDTH / 2.0f, Car::CAR_HEIGHT / 2.0f);
+    this->resetToStart();
 }
 
 void Car::update(const sf::Time & _time) {
     
     // keep location as last valid
     if (!this->mDriftedOffTrack) {
+        this->mCurrentPassedDistance += length(this->mCurrentLocation - this->mLastLocation);
         this->mLastLocation = this->mCurrentLocation;
+        
+       // std::cout << "Passed Distance: " << this->mCurrentPassedDistance << std::endl;
     }
     
     // compute cars offset to the track segment and adjust it
@@ -45,12 +51,16 @@ void Car::update(const sf::Time & _time) {
    
     // apply drag friction
     if (this->mVelocity > 0.0f) {
-        this->mForce -= abs(Car::FRICTION_FORCE * (this->mVelocity) * (this->mDriftedOffTrack ? 4.0f : 1.0f));
+       // this->mForce -= abs(Car::FRICTION_FORCE * (this->mVelocity) * (this->mDriftedOffTrack ? Car::DRAG_FRICTION_OFF_TRACK : Car::DRAG_FRICTION_ON_TRACK));
+        this->mForce -= abs(Car::FRICTION_FORCE * (this->mVelocity));
+        this->mForce -= abs(this->mIsAccelerating ? 0.0f : Car::BREAK_FRICTION * this->mVelocity);
+        this->mForce -= abs(!this->mDriftedOffTrack ? 0.0f : Car::DRAG_FRICTION_OFF_TRACK * this->mVelocity);
+        
+        this->mIsAccelerating = false;
     }
     
     // compute acceleration A = F / M
     float acceleration = this->mForce / Car::DEFAULT_MASS;
-    //std::cout << "Acceleration: " << acceleration << std::endl;
     
     // compute velocity
     this->mVelocity += acceleration * _time.asSeconds();
@@ -61,10 +71,7 @@ void Car::update(const sf::Time & _time) {
     this->mCurrentLocation += this->mCurrentDirection * (this->mVelocity * _time.asSeconds());
     this->mCurrentLocation += positionAdjust;
     
-    // keep car on the track
     this->keepOnTrack();
-    
-    // update ghosts
     this->updateGhosts();
     
     // compute rotation
@@ -79,7 +86,7 @@ void Car::update(const sf::Time & _time) {
 }
 
 void Car::draw(sf::RenderTarget& _target, sf::RenderStates _states) const {
-    // draw ghosts
+    
     for (auto & ghost : this->mCarGhostDrawables) {
         _target.draw(ghost.ghost, _states);
     }
@@ -87,7 +94,6 @@ void Car::draw(sf::RenderTarget& _target, sf::RenderStates _states) const {
     _target.draw(this->mCarDrawable, _states);
     
     // Debug Stuff
-    
     _target.draw(this->mLocationPoint, _states);
     _target.draw(this->mNextLocationPoint, _states);
     _target.draw(this->mDirectionShape, _states);
@@ -96,28 +102,35 @@ void Car::draw(sf::RenderTarget& _target, sf::RenderStates _states) const {
 void Car::accelerate() {
     if (!this->mDriftedOffTrack) {
         this->mForce = Car::ACCELERATION_FORCE;
+        this->mIsAccelerating = true;
     }
 }
 
 void Car::resetToStart() {
     this->mSegmentStart = Track::START_INDEX;
-    this->mSegmentEnd = Track::START_INDEX;
+    this->mSegmentEnd = Track::START_INDEX+1;
+    this->mLastValidSegmentStart = this->mSegmentStart;
+    this->mLastValidSegmentEnd = this->mSegmentEnd;
     this->mCurrentLocation = this->mTrack[this->mSegmentStart];
     this->mCurrentDirection = normalize(this->mTrack[this->mSegmentEnd] - this->mTrack[this->mSegmentStart]);
     this->mLastDirection = this->mCurrentDirection;
     this->mVelocity = 0.0f;
     this->mForce = 0.0f;
+    this->mCurrentPassedDistance = 0.0f;
+    this->mLastPassedDistance = 0.0f;
     this->mDriftedOffTrack = false;
     this->mCarStartedFromStart = false;
+    this->mIsAccelerating = false;
 }
 
 void Car::resetToLastValidPosition() {
-    this->mCurrentDirection = normalize(this->mTrack[this->mSegmentEnd] - this->mTrack[this->mSegmentStart]);
+    this->mCurrentDirection = normalize(this->mTrack[this->mLastValidSegmentEnd] - this->mTrack[this->mLastValidSegmentStart]);
     this->mLastDirection = this->mCurrentDirection;
     this->mCurrentLocation = this->mLastLocation;
     this->mVelocity = 0.0f;
     this->mForce = 0.0f;
     this->mDriftedOffTrack = false;
+    this->mIsAccelerating = false;
 }
 
 void Car::keepOnTrack() {
@@ -141,15 +154,31 @@ void Car::keepOnTrack() {
         this->mNextLocationPoint.setOrigin(1, 1);
         this->mNextLocationPoint.setFillColor(sf::Color::Blue);
         
-        // Important stuff ;)
-        if (startIndex == 0 && endIndex == 1 && this->mSegmentStart == this->mTrack.size()-1 && this->mEventListener != NULL) {
+        // check if we ran through start
+        int segmentOffset = (this->mTrack.size()-1) - startIndex;
+        if (segmentOffset <= 0 && this->mEventListener != NULL) {
             this->mEventListener->onCarMovedThroughStart(*this);
         }
         
+        // update segment
+        this->mLastValidSegmentStart = this->mSegmentStart;
+        this->mLastValidSegmentEnd = this->mSegmentEnd;
         this->mLastDirection = this->mCurrentDirection;
         this->mCurrentDirection = normalize(this->mTrack[endIndex] - this->mTrack[this->mSegmentStart]);
         this->mSegmentStart = this->mSegmentEnd;
         this->mSegmentEnd = endIndex;
+    
+        // check if we drift of the track
+        float angleDir = heading2(this->mLastDirection, this->mCurrentDirection);
+        if (!(angleDir != angleDir)) { // NOTE: NaN -> (angleDir != angleDir)
+            float angularSpeed = angleDir * this->mVelocity;
+            //std::cout << "Current Angle Speed:" << angularSpeed << std::endl;
+            if (!this->mDriftedOffTrack && angularSpeed >= Car::MAX_ANGULAR_VELOCITY && this->mEventListener != NULL) {
+                this->mDriftedOffTrack = true;
+                this->mEventListener->onCarDriftedOffTrack(*this);
+                return;
+            }
+        }
         
         //std::cout << "Current Segment (Start: " << this->mSegmentStart << ", End: " << this->mSegmentEnd << std::endl;
     }
@@ -160,23 +189,9 @@ void Car::keepOnTrack() {
         this->mEventListener->onCarStartedFromStart(*this);
     }
     
-    // check if we drift of the track
-    float dirAngle = angle(this->mCurrentLocation, this->mLastDirection);
-    float angularSpeed = dirAngle  * this->mVelocity;
-    std::cout << "Angule:" << dirAngle << std::endl;
-    std::cout << "Angular Speed:" << angularSpeed << std::endl;
-    
-    sf::Vector2f moveDir = normalize(this->mCurrentLocation * this->mCurrentDirection);
-    sf::Vector2f trackDir = normalize(this->mLastDirection);
-   /* ORGINAL
-    float angularSpeed = length(moveDir - trackDir) * this->mVelocity;
-    if (!this->mDriftedOffTrack && angularSpeed >= Car::MAX_ANGULAR_VELOCITY && this->mEventListener != NULL) {
-        //this->mDriftedOffTrack = true;
-        this->mEventListener->onCarDriftedOffTrack(*this);
-    }
-    */
     
     // Debug Stuff
+    /*
     //float len = length(this->mDirection * 100.0f);
     this->mDirectionShape = sf::RectangleShape(sf::Vector2f(angularSpeed, 2));
     this->mDirectionShape.setPosition(this->mCurrentLocation);
@@ -189,7 +204,7 @@ void Car::keepOnTrack() {
     } else {
         this->mDirectionShape.setFillColor(sf::Color::Green);
     }
-
+*/
 }
     
 void Car::updateGhosts() {
@@ -199,7 +214,6 @@ void Car::updateGhosts() {
     
     sf::Vector2f lastLocation = this->mLastLocation;
     if (this->mCarGhostDrawables.size() > 0) {
-        //std::list<Ghost>::iterator it = this->mCarGhostDrawables.back()
         lastLocation = this->mCarGhostDrawables.back().ghost.getPosition();
     }
     

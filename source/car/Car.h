@@ -42,9 +42,12 @@ class Car : public sf::Drawable {
     public:
         // physics constants
         constexpr static const float            MAX_VELOCITY            =   1000.0f;
-        constexpr static const float            MAX_ANGULAR_VELOCITY    =   320.0f;
-        constexpr static const float            ACCELERATION_FORCE      =   400.0f;
-        constexpr static const float            FRICTION_FORCE          =   0.04;
+        constexpr static const float            MAX_ANGULAR_VELOCITY    =   120.0f;
+        constexpr static const float            ACCELERATION_FORCE      =   600.0f;
+        constexpr static const float            FRICTION_FORCE          =   0.04f;
+        constexpr static const float            DRAG_FRICTION_OFF_TRACK =   0.6f;
+        constexpr static const float            BREAK_FRICTION          =   0.09f;
+    
         constexpr static const float            DEFAULT_MASS            =   1.0f;
    
         // car shape constants
@@ -79,6 +82,8 @@ class Car : public sf::Drawable {
         void setEventListener(CarEventListener * _value) { this->mEventListener = _value; }
         CarEventListener * getEventListener() const { return this->mEventListener; }
     
+        float getPassedDistance() const { return this->mCurrentPassedDistance; }
+    
     private:
         void keepOnTrack();
         void updateGhosts();
@@ -99,6 +104,8 @@ class Car : public sf::Drawable {
         const Track&                        mTrack;
         size_t                              mSegmentStart;
         size_t                              mSegmentEnd;
+        size_t                              mLastValidSegmentStart;
+        size_t                              mLastValidSegmentEnd;
     
         // physics handling
         sf::Vector2f                        mCurrentLocation;
@@ -107,8 +114,12 @@ class Car : public sf::Drawable {
         sf::Vector2f                        mLastDirection;
         float                               mVelocity;
         float                               mForce;
+        float                               mCurrentPassedDistance;
+        float                               mLastPassedDistance;
+        float                               mCurrentSpeed;
         bool                                mDriftedOffTrack;
         bool                                mCarStartedFromStart;
+        bool                                mIsAccelerating;
     
         // visual handling
         sf::RectangleShape                  mCarDrawable;
