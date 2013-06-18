@@ -12,8 +12,9 @@
 //
 
 #include "TrackChooserView.h"
-#include "ResourcePath.hpp"
 
+#include <iostream>
+#include "ResourcePath.hpp"
 
 TrackChooserView::TrackChooserView(const Rect& frame) : View(frame) {
     // Get a list of all tracks
@@ -49,9 +50,9 @@ void TrackChooserView::setTrack(int newTrackNumber) {
         
         // Update the track preview
         trackTexture = sf::Texture();
-        std::string filename = tracks.at(trackNumber).getImageFile();
-        if (!trackTexture.loadFromFile(filename)){
-            std::cout << "Error while loading the track's preview image" << std::endl;
+        std::string filename = tracks[trackNumber].getImageFile();
+        if (!trackTexture.loadFromFile(filename)) {
+            std::cerr << "Error while loading the track's preview image" << std::endl;
         }
         track.setTexture(trackTexture);
     }

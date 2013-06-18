@@ -14,17 +14,16 @@
 #ifndef __Rac0r__TrackChooserView__
 #define __Rac0r__TrackChooserView__
 
-#include <iostream>
-#include "View.h"
 #include <string>
+#include "View.h"
 #include "../track/TrackFileManager.h"
 
-class TrackChooserView:public View{
+class TrackChooserView : public View {
 public:
     TrackChooserView(const Rect& frame = Rect(0,0,0,0));
     virtual ~TrackChooserView() = default;
 
-    // This value is read in the main loop
+    // This value is read from the main loop
     std::string getTrackPath();
     void setTrack(int newTrack);
     virtual void handleEvent(sf::Event event);
