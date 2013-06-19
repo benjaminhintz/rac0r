@@ -84,6 +84,12 @@ Vector.prototype.translateV = function(vec) {
 	this.y += vec.y;
 }
 
+Vector.prototype.scale = function(factor) {
+	len = this.length();
+	vec = this.unit();
+	vec2 = vec.mul(len * factor);
+	return vec2;
+};
 
 
 Vector.prototype.rotate = function(deg) {

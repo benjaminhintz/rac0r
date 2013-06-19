@@ -1,7 +1,3 @@
-// var $ = function(id) {
-// 	return document.getElementById(id);
-// };
-
 Number.prototype.mod = function(n) {
 	return ((this%n)+n)%n;
 };
@@ -31,10 +27,20 @@ var Editor = function(canvas) {
 	this.canvas.setAttribute('width', 800);
 	this.canvas.setAttribute('height', 480);
 	this.context = canvas.getContext("2d");
+
+	this.drawBounds = false;
+	this.maxDrawScreenBounds = {
+		left: 50,
+		top: 10,
+		right: 750,
+		bottom: 430
+	};
 	
 	this.start = null;
 	this.placeStart = false;
 	this.placeStartDrag = {x: 0, y: 0, toX: 0, toY: 0};
+
+	this.originalTrack = null;
 
 
 	this.trackCount = 5;
@@ -164,42 +170,6 @@ Editor.prototype.init = function() {
 		}
 	});
 
-	// $('save').addEventListener('click', function() {
-	// 	text = "";
-	// 	if(self.trackComplete) {
-	// 		text = self.save();
-	// 		var box = $('savebox');
-	// 		box.className = "visible";
-	// 		box.innerHTML = text;
-	// 	} else {
-	// 		if(confirm("Strecke nicht vollständig. Trotzdem speichern?")) {
-	// 			text = self.save();
-	// 			var box = $('savebox');
-	// 			box.className = "visible";
-	// 			box.innerHTML = text;
-	// 		} else {
-	// 			window.location.hash = "#";
-	// 		}
-	// 	}
-	// });
-
-
-	// $('load').addEventListener('click', function() {
-	// 	var box = $('loadbox');
-	// 	box.className = "visible";
-	// });
-
-	// document.body.addEventListener('click', function() {
-
-	// 	if(window.location.hash == "#load" && $('loadbox').className == "visible") {
-	// 		window.location.hash = "#";
-	// 		if($('loadtext').value.length > 0) {
-	// 			$('loadbox').className = "";
-	// 			self.load($('loadtext').value);
-	// 		}
-	// 	}
-	// });
-
 	$('reset').addEvent('click', function() {
 		setTimeout(function() {
 			if(window.location.hash == '#reset') {
@@ -219,10 +189,14 @@ Editor.prototype.init = function() {
 Editor.prototype.save = function() {
 	var text = "";
 	var t = this.start;
+	if(this.trackComplete) {
+		t = this.originalTrack;
+	}
+	var ts = t;
 	do {
 		text += t.toString() + "\n";
 		t = t.next();
-	} while(t != null && t != this.start);
+	} while(t != null && t != ts);
 	track = text + (this.trackComplete ? "c" : "nc");
 
 	img = this.canvas.toDataURL();
@@ -350,6 +324,10 @@ Editor.prototype.loadTrack = function(trackText) {
 
 	this.start = trackArray[0];
 	this.repaint();
+
+	if(this.trackComplete) {
+		this.scaleToFitScreen();
+	}
 	
 };
 
@@ -373,7 +351,9 @@ Editor.prototype.appendTrack = function() {
 		last.mNext = this.start;
 		this.start.mPrevious = last;
 		this.trackComplete = true;
-	}
+
+		this.scaleToFitScreen();
+	} 
 
 };
 
@@ -412,6 +392,7 @@ Editor.prototype.removeLastTrack = function() {
 	var last = this.start.getLast(this.start);
 	
 	if(this.start.mPrevious != null) {
+		this.unscale();
 		this.start.mPrevious.mNext = null;
 		this.start.mPrevious = null;
 		this.trackComplete = false;
@@ -466,12 +447,153 @@ Editor.prototype.paint = function() {
 			} while(t !== null && t !== this.start);
 		}
 	}
+
+	if(this.drawBounds) {
+		var bounds = this.getTrackBounds(true);
+
+		this.context.strokeStyle = "rgba(95,126,237,1)";
+		this.context.lineWidth = 3;
+		this.context.beginPath();
+		this.context.moveTo(bounds.left, bounds.top);
+		this.context.lineTo(bounds.right, bounds.top);
+		this.context.stroke();
+
+		this.context.beginPath();
+		this.context.moveTo(bounds.right, bounds.top);
+		this.context.lineTo(bounds.right, bounds.bottom);
+		this.context.stroke();
+
+		this.context.beginPath();
+		this.context.moveTo(bounds.right, bounds.bottom);
+		this.context.lineTo(bounds.left, bounds.bottom);
+		this.context.stroke();
+
+
+		this.context.beginPath();
+		this.context.moveTo(bounds.left, bounds.bottom);
+		this.context.lineTo(bounds.left, bounds.top);
+		this.context.stroke();
+	}
+};
+
+Editor.prototype.scaleToFitScreen = function() {
+	var bounds = this.getTrackBounds(false);
+
+	var newTrack = this.cloneTrack();	
+	this.originalTrack = this.start;
+	this.start = newTrack;
+
+
+	var ratio = 800/430;
+	var maxWidth = 800-100;
+	var maxHeight = maxWidth/ratio;
+
+	var width = bounds.right - bounds.left;
+	var height = bounds.bottom - bounds.top;
+
+	if(width/height > ratio) {
+		factor = parseFloat(maxWidth/width);
+	} else {
+		factor = parseFloat(maxHeight/height);
+	}
+
+	// console.log("w: " + width  + " h: " + height);
+	// var aspect = Math.max(width, height);
+	// var factor = parseFloat(1.0);
+	// if(aspect == width) {
+	// 	factor = parseFloat(maxWidth/width);
+	// } else {
+	// 	factor = parseFloat(maxHeight/height);
+	// }
+
+	// skalieren
+	var center = new Vector(width/2, height/2);
+	center.x = -bounds.left;
+	center.y = -bounds.top;
+	
+	var t = this.start;
+	do {
+		
+		t.translate(center.x, center.y);
+		t.scale(factor);
+
+		t = t.next();
+	} while(t !== null && t !== this.start);
+
+
+	// new bounds
+	bounds = this.getTrackBounds();
+	width = bounds.right - bounds.left;
+	height = bounds.top - bounds.bottom;
+	center = new Vector(width/2,height/2);
+	var t = this.start;
+	do {
+		
+		t.translate(400 - center.x, 240+center.y);
+		t = t.next();
+	} while(t !== null && t !== this.start);
+
+	this.repaint();
+
+	
+};
+
+Editor.prototype.cloneTrack = function() {
+	var t = this.start;
+	var nS = t.clone();
+	var nT = nS;
+	var i = 0;
+	do {
+		nT.id = i++;
+		lT = t;
+		t = t.next();
+		nT.mNext = t.clone();
+		onT = nT;
+		nT = nT.next();
+		nT.mPrevious = onT;
+	} while(t !== null && t !== this.start);
+
+	// ende der strecke berichtigen
+	nS.mPrevious = nS.getLast(nS).mPrevious;
+	nS.mPrevious.mNext = nS;
+
+	return nS;
+};
+
+Editor.prototype.unscale = function() {
+	this.start = this.originalTrack;
+	this.repaint();
+};
+
+Editor.prototype.getTrackBounds = function(origninal) {
+
+	var bounds = {
+		left: 100000,
+		top: 100000,
+		right: 0,
+		bottom: 0
+	};
+
+	var t = this.start;
+
+	if(t != null) {
+		do {
+			bounds.left = Math.min(bounds.left, t.getVector().x);
+			bounds.top = Math.min(bounds.top, t.getVector().y);
+
+			bounds.right = Math.max(bounds.right, t.getVector().x);
+			bounds.bottom = Math.max(bounds.bottom, t.getVector().y);
+			t = t.next();
+		} while(t !== null && t !== this.start);
+	}
+
+	return bounds;
 };
 
 Editor.prototype.drawGrid = function(){
 	if(!this.trackComplete) {
 		this.context.lineWidth = .5;
-		this.context.strokeStyle = "rgba(255,255,255,.05)";
+		this.context.strokeStyle = "rgba(255,255,255,.15)";
 		
 		for(var i = 0; i < this.canvas.width; i = i+10) {
 			this.context.beginPath();
@@ -506,7 +628,7 @@ Editor.prototype.repaint = function() {
 };
 
 Editor.prototype.clearCanvas = function() {
-	this.context.fillStyle = "rgba(16,16,16,1)";
+	this.context.fillStyle = "rgba(0,0,0,1)";
 	this.context.clearRect(0 ,0 ,this.canvas.width ,this.canvas.height);
 	this.context.fillRect(0 ,0 ,this.canvas.width ,this.canvas.height);
 };

@@ -11,6 +11,7 @@ var Track = function(x, y, directionVector) {
 	this.curveDirectionVector = null;
 	this.curvePoint = null;
 
+	this.factor = 1;
 	this.trackLength = 20;
 };
 
@@ -55,12 +56,14 @@ Track.prototype.draw = function(ctx) {
 
 		var ortho = this.directionVector.orthogonal();
 		var ortho_u = ortho.unit();
+		
+
 		var ortho_n = ortho_u.mul((this.directionVector.length()*1.5) * (this.mCurveAngle < 0 ? 1 : -1));
 		var ortho_n2 = ortho_u.mul((this.directionVector.length()/2) * (this.mCurveAngle < 0 ? 1 : -1));
 
 		// ortho_n is the curve center
-		var innerRadius = this.directionVector.length() ;
-		var outerRadius = innerRadius*2;
+		var innerRadius = this.directionVector.length() + (editor.trackComplete ? (this.directionVector.length()/2 - this.trackLength/2) : 0);
+		var outerRadius = innerRadius + this.trackLength;
 
 		// center;
 		var c = v_orig.add(ortho_n);
@@ -85,7 +88,7 @@ Track.prototype.draw = function(ctx) {
 		if(!editor.trackComplete) {
 			tracks = 2;
 		}
-		ctx.lineWidth=2;
+		ctx.lineWidth=2*this.factor;
 
 		// DO THE LOOP
 		for(var i = 0; i < tracks; i++) {
@@ -151,7 +154,7 @@ Track.prototype.draw = function(ctx) {
 		// otho for the bounds
 		var ortho = this.directionVector.orthogonal();
 		var ortho_u = ortho.unit();
-		var ortho_n = ortho_u.mul(this.directionVector.length()/2);
+		var ortho_n = ortho_u.mul(this.trackLength/2);
 
 		// bounds
 		var c0 = v_orig.sub(ortho_n);
@@ -160,7 +163,7 @@ Track.prototype.draw = function(ctx) {
 		var c3 = c2.sub(this.directionVector);
 		var bounds = [c0,c1,c2,c3];
 
-		ctx.lineWidth=2;
+		ctx.lineWidth=2*this.factor;
 
 		// draw bounds
 		if(!editor.trackComplete) {
@@ -184,7 +187,7 @@ Track.prototype.draw = function(ctx) {
 			for(var i = 0; i < editor.trackCount; i++) {
 				var part = 1;
 				if(editor.trackCount > 1) {
-					 part = editor.trackLength / (editor.trackCount-1) * i;
+					 part = this.trackLength / (editor.trackCount-1) * i;
 				}
 
 				ctx.strokeStyle = editor.getStrokeStyle(i);
@@ -224,4 +227,41 @@ Track.prototype.toString = function() {
 	last = this.mPrevious;
 
 	return type  + " " + this.x + " " + this.y + " " + this.directionVector.x + " " + this.directionVector.y;
+};
+
+Track.prototype.clone = function() {
+	var cloned = new Track(this.x, this.y, this.directionVector.clone());
+	cloned.mNext = null;
+	cloned.mPrevious = null;
+
+	cloned.mIsCurve = this.mIsCurve;
+	cloned.mCurveAngle = this.mCurveAngle;
+
+	if(this.curveDirectionVector != null) cloned.curveDirectionVector = this.curveDirectionVector.clone();
+	if(this.curvePoint != null) cloned.curvePoint = this.curvePoint.clone();
+
+	cloned.trackLength = this.trackLength;
+	return cloned;
+};
+
+Track.prototype.setPosition = function(vector) {
+	this.x = vector.x;
+	this.y = vector.y;
+}
+
+Track.prototype.translate = function(x,y) {
+	vec = this.getVector();
+	vec.translate(x,y);
+	this.setPosition(vec);
+};
+
+Track.prototype.scale = function(factor) {
+	this.factor = 1;
+	vec = this.getVector();
+	scaled = vec.scale(factor);
+	this.setPosition(scaled);
+
+	//this.trackLength *= factor;
+	dirVec = this.directionVector.scale(factor);
+	this.directionVector = dirVec;
 };
