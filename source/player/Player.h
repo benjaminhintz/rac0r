@@ -28,18 +28,23 @@ class Player {
         void draw(sf::RenderTarget & _target, sf::RenderStates _states) const;
         void update(sf::Time _elapsed);
 
-        Car* getCar() {return mCar;};
+        Car * getCar() { return mCar; };
 
-        void nextLap() { mLapCount++; mLapTime = 0; };
-        size_t getCurrentLap() { return mLapCount; };
+        void nextLap();
+        size_t getCurrentLap() const { return mLapCount; };
 
-        void setTotalTime(size_t time) { mTotalTime = time;}
-        size_t getTotalTime() { return mTotalTime; }
+        void setTotalTime(size_t _time) { mTotalTime = _time;}
+        size_t getTotalTime() const { return mTotalTime; }
 
-        void setLapTime(size_t time) { mLapTime = time;}
-        size_t getLapTime() { return mLapTime; }
+        void setLapTime(size_t _time) { mLapTime = _time;}
+        size_t getLapTime() const { return mLapTime; }
+    
+        void setDriftedOffTrackTime(size_t _time) { mDriftedOffTrackTime = _time;}
+        size_t getDriftedOffTrackTime() const { return mDriftedOffTrackTime; }
 
-        sf::Keyboard::Key getKey() { return mKey; }
+        bool isFinish() const { return this->mIsFinish; }
+    
+        sf::Keyboard::Key getKey() const { return mKey; }
 
         void accelerate();
         void reset();
@@ -50,7 +55,12 @@ class Player {
         size_t                  mLapCount;
         size_t                  mLapTime;
         size_t                  mTotalTime;
+        size_t                  mDriftedOffTrackTime;
+        bool                    mIsFinish;
+    
         sf::Keyboard::Key       mKey;
+    
+        static sf::Clock        mClock;
 };
 
 

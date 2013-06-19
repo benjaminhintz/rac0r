@@ -15,6 +15,8 @@
 #include "ResourcePath.hpp"
 #include "../utils/vector2.h"
 
+sf::Clock GameScreen::mClock = sf::Clock();
+
 GameScreen::GameScreen(const Rect& frame, int playerCount, std::string trackPath) :
     Screen(frame),
     mGameRunning(false)
@@ -27,7 +29,7 @@ void GameScreen::createTracks(size_t _playerCount, const std::string & _trackFil
 
     // Load & Setup Main Track
     Rac0r::TrackLoader trackLoader;
-    std::cout<< _trackFile<<std::endl;
+    std::cout << _trackFile << std::endl;
     Rac0r::Track mainTrack = trackLoader.loadFromFile(_trackFile);
     
     float scaleOffset = 0.2;
@@ -42,7 +44,7 @@ void GameScreen::createTracks(size_t _playerCount, const std::string & _trackFil
         for (size_t i = 0; i < _playerCount-1; i++) {
             Rac0r::Track subTrack = mainTrack;
             offset += (scaleOffset * 20.0f * static_cast<float>(i+1)) * (i % 2 == 0 ? -1.0f : 1.0f);
-            std::cout << "Offset: " << offset << std::endl;
+            //std::cout << "Offset: " << offset << std::endl;
             subTrack.scaleToFitBounds(sf::Vector2f(frame.width, frame.height), true, offset);
             mTracks.push_back(subTrack);
         }
@@ -56,7 +58,7 @@ void GameScreen::createTracks(size_t _playerCount, const std::string & _trackFil
         for (size_t i = 0; i < _playerCount-1; i++) {
             Rac0r::Track subTrack = mainTrack;
             offset += (scaleOffset * 20.0f * static_cast<float>(i+1)) * (i % 2 == 0 ? 1.0f : -1.0f);
-            std::cout << "Offset: " << offset << std::endl;
+            //std::cout << "Offset: " << offset << std::endl;
             subTrack.scaleToFitBounds(sf::Vector2f(frame.width, frame.height), true, offset);
             mTracks.push_back(subTrack);
         } 
@@ -89,12 +91,11 @@ void GameScreen::createTracks(size_t _playerCount, const std::string & _trackFil
     
     // setup countdown text
     createCountdownTimer();
-    updateCountdownTimer(Rac0r::Constants::COUNTDOWN_TIMER_STRINGS[0]);
+    updateCountdownTimer(Rac0r::Constants::COUNTDOWN_TIMER_STRINGS[0], 1.0f);
 }
 
 void GameScreen::createPlayer() {
-    // create cars & players
-    unsigned int player = 0;
+    size_t player = 0;
     for (auto & track : mTracks) {
         Rac0r::Car * car = new Rac0r::Car(track, this);
         car->setColor(Rac0r::Constants::GAME_TRACK_COLOR[player]);
@@ -105,9 +106,7 @@ void GameScreen::createPlayer() {
 void GameScreen::restart() {
     this->mGameRunning = false;
     this->mStartCountdown = 0;
-    
-    sf::Clock timer;
-    this->mCountdownTimer = timer.getElapsedTime();
+    this->mCountdownTimer = mClock.getElapsedTime();
     
     for (auto player : this->mPlayers) {
         player->reset();
@@ -117,9 +116,13 @@ void GameScreen::restart() {
 void GameScreen::start() {
     this->mGameRunning = true;
     this->mStartCountdown = 0;
+}
+
+void GameScreen::showFinishScreen() {
+
+    // TODO: Hier den Finish Screen anzeigen...yay
+    std::cout << "YOUR MOM HAS BEING FINISHED BY ALL PLAYERS!" << std::endl;
     
-    sf::Clock mGameClock;
-    this->mGameTimer = mGameClock.getElapsedTime();
 }
 
 void GameScreen::createCountdownTimer() {
@@ -132,10 +135,10 @@ void GameScreen::createCountdownTimer() {
     this->mCountdownTimerText.setStyle(sf::Text::Bold);
 }
 
-void GameScreen::updateCountdownTimer(const std::string & _text) {
+void GameScreen::updateCountdownTimer(const std::string & _text, float _scale) {
     this->mCountdownTimerText.setString(_text);
     
-    unsigned int textSize = static_cast<unsigned int>(GameScreen::COUNTDOWN_FONT_SIZE * frame.width);
+    unsigned int textSize = static_cast<unsigned int>(static_cast<float>(GameScreen::COUNTDOWN_FONT_SIZE) * static_cast<float>(frame.width) * _scale);
     this->mCountdownTimerText.setCharacterSize(textSize);
 
     sf::FloatRect bounds = this->mCountdownTimerText.getLocalBounds();
@@ -146,23 +149,20 @@ void GameScreen::updateCountdownTimer(const std::string & _text) {
 }
 
 void GameScreen::layout(sf::Time elapsed) {
-    static sf::Clock clock;
-    
-    sf::Time current = clock.getElapsedTime();
-
-    
-    this->mGameTimer = mGameClock.getElapsedTime();
-
     // show countdown
     if (!this->mGameRunning) {
+        sf::Time current = mClock.getElapsedTime();
+    
         sf::Int32 dt = current.asMilliseconds() - this->mCountdownTimer.asMilliseconds();
         if (dt > Rac0r::Constants::COUNTDOWN_TIMER_INTERVAL) {
-            if (++this->mStartCountdown >= Rac0r::Constants::COUNTDOWN_TIMER_STRINGS_NUM) {
+            if (++this->mStartCountdown > Rac0r::Constants::COUNTDOWN_TIMER_STRINGS_NUM-1) {
                 start();
             } else {
-                this->mCountdownTimer = clock.getElapsedTime();
-                updateCountdownTimer(Rac0r::Constants::COUNTDOWN_TIMER_STRINGS[this->mStartCountdown]);
+                this->mCountdownTimer = mClock.getElapsedTime();
             }
+        } else {
+            float scale = 1.0f  - static_cast<float>(dt) / static_cast<float>(Rac0r::Constants::COUNTDOWN_TIMER_INTERVAL);
+            updateCountdownTimer(Rac0r::Constants::COUNTDOWN_TIMER_STRINGS[this->mStartCountdown], scale);
         }
         
         return;
@@ -171,20 +171,7 @@ void GameScreen::layout(sf::Time elapsed) {
     // update player
     for (auto player : this->mPlayers) {
         player->update(elapsed);
-
-        // lap time setzen
-        player->setLapTime(mGameTimer.asMilliseconds() - player->getTotalTime());
-        std::cout << "Lap Time: " << player->getLapTime() << std::endl;
     }
-    
-    // TODO: REMOVE
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-        for (auto player : this->mPlayers) {
-            player->resetToLastValidPosition();
-        }
-    }
-    
-
 }
 
 void GameScreen::draw(sf::RenderTarget &target, sf::RenderStates states) const {
@@ -209,29 +196,27 @@ void GameScreen::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 
 
 void GameScreen::onCarDriftedOffTrack(Rac0r::Car & _car) {
-    std::cout << "Car drifted off track." << std::endl;
-    //_car.resetToLastValidPosition();
+    // NODE: Player handles this by himself...
 }
 
 void GameScreen::onCarMovedThroughStart(Rac0r::Car & _car) {
-
-    this->mGameTimer = mGameClock.getElapsedTime();
-
+    size_t finishedPlayers = 0;
     for (auto & player : this->mPlayers) {
-
         if (player->getCar() == &_car) {
         	player->nextLap();
-        	player->setTotalTime(this->mGameTimer.asMilliseconds());
-        	break;
         }
-
+        
+        if (player->isFinish()) {
+            ++finishedPlayers;
+        }
     }
-
-    std::cout << "Car moved through start." << std::endl;
+    
+    if (finishedPlayers >= this->mPlayers.size()) {
+        this->showFinishScreen();
+    }
 }
 
 void GameScreen::onCarStartedFromStart(Rac0r::Car & _car) {
-    std::cout << "Car started from start." << std::endl;
 }
     
 

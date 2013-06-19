@@ -106,6 +106,11 @@ T heading(const sf::Vector2<T> & _a) {
 }
 
 template <typename T>
+T heading2(const sf::Vector2<T> & _a, const sf::Vector2<T> & _b) {
+    return acos(scalar(_a, _b));
+}
+
+template <typename T>
 sf::Vector2<T> project(const sf::Vector2<T> & _p, const sf::Vector2<T> & _a, const sf::Vector2<T> & _b) {
 
     sf::Vector2f ap = _p - _a;

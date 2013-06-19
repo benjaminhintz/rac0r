@@ -11,7 +11,7 @@
 #ifndef Rac0r_Header_h
 #define Rac0r_Header_h
 
-#include "game/Game.h"
+#include "game/GameConstants.h"
 
 namespace Rac0r {
     
