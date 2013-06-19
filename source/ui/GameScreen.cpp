@@ -172,7 +172,7 @@ void GameScreen::showFinishScreen() {
                           static_cast<unsigned int>(bounds.height / 2));
     
     // Show the time and how to return to the menu
-    mFinishDetailText.setString(L"Zeit: " + std::to_wstring(mPlayers[winnerId]->getTotalTime()) + L". Drücke Esc, um zurück zum Hauptmenü zu gelangen");
+    mFinishDetailText.setString(L"Zeit: " + std::to_wstring(mPlayers[winnerId]->getTotalTime() / 1000) + L" Sekunden. Drücke Esc, um zurück zum Hauptmenü zu gelangen");
     mFinishDetailText.setFont(View::getSecondaryFont());
     mFinishDetailText.setColor(sf::Color::White);
     mFinishDetailText.setStyle(sf::Text::Bold);
