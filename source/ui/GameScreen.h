@@ -67,7 +67,6 @@ private:
     
     // ui elements
     sf::Text                            mCountdownTimerText;
-    sf::Font                            mCountdownTimerFont;
     
     // game logic
     std::vector<Rac0r::Track>           mTracks;

@@ -97,14 +97,10 @@ void GameScreen::createTracks(size_t _playerCount, const std::string & _trackFil
     
     // hud
     for (size_t i = 0; i < mPlayers.size(); ++i) {
-        float yPos = 10 + 28 * i;
-        
         // Instantiate the text label
         mPlayerLabels.emplace_back(new sf::Text);
-        // Obtain a reference to it
         mPlayerLabels[i]->setString("Spieler " + std::to_string(i + 1));
         mPlayerLabels[i]->setFont(View::getDefaultFont());
-        mPlayerLabels[i]->setPosition(frame.width - 140, yPos);
         mPlayerLabels[i]->setCharacterSize(20);
         mPlayerLabels[i]->setStyle(sf::Text::Bold);
         mPlayerLabels[i]->setColor(Rac0r::Constants::GAME_TRACK_COLOR[i]);
@@ -116,10 +112,8 @@ void GameScreen::createTracks(size_t _playerCount, const std::string & _trackFil
         std::string filename = resourcePath() + "keys_" + std::to_string(i + 1) + ".png";
         if(!mPlayerKeyTextures[i]->loadFromFile(filename)) {
             std::cout << "Error while loading image" << std::endl;
-        } else {
-            mPlayerKeySprites[i]->setTexture(*mPlayerKeyTextures[i]);
-            mPlayerKeySprites[i]->setPosition(frame.width - 40, yPos + 2);
         }
+        mPlayerKeySprites[i]->setTexture(*mPlayerKeyTextures[i]);
     }
 }
 
@@ -155,11 +149,9 @@ void GameScreen::showFinishScreen() {
 }
 
 void GameScreen::createCountdownTimer() {
-    mCountdownTimerFont.loadFromFile(resourcePath() + getFontPath() +  "Tahoma.ttf");
-
     this->mCountdownTimerText.setString(Rac0r::Constants::COUNTDOWN_TIMER_STRINGS[0]);
     this->mCountdownTimerText.setPosition(frame.width / 2, frame.height / 2);
-    this->mCountdownTimerText.setFont(mCountdownTimerFont);
+    this->mCountdownTimerText.setFont(View::getDefaultFont());
     this->mCountdownTimerText.setColor(sf::Color::White);
     this->mCountdownTimerText.setStyle(sf::Text::Bold);
 }
@@ -178,6 +170,22 @@ void GameScreen::updateCountdownTimer(const std::string & _text, float _scale) {
 }
 
 void GameScreen::layout(sf::Time elapsed) {
+    // sort players by distance. this might not be the most efficient approach as the multimap is cleared and refilled for every frame. but let's not optimize prematurely
+    playerRanking.clear();
+    size_t i = 0;
+    for (Rac0r::Player* player : mPlayers) {
+        playerRanking.emplace(player->getCar()->getPassedDistance(), i++);
+    }
+    // update hud player positions
+    i = 0;
+    for (const auto& rankedPlayer : playerRanking) {
+        size_t playerId = rankedPlayer.second;
+        
+        float yPos = 15 + 28 * i++;
+        mPlayerLabels[playerId]->setPosition(frame.width - 146, yPos);
+        mPlayerKeySprites[playerId]->setPosition(frame.width - 40, yPos + 1);
+    }
+    
     // show countdown
     if (!this->mGameRunning) {
         sf::Time current = mClock.getElapsedTime();
@@ -200,25 +208,6 @@ void GameScreen::layout(sf::Time elapsed) {
     // update player
     for (auto player : mPlayers) {
         player->update(elapsed);
-    }
-    
-    // sort players by distance. this might not be the most efficient approach as the multimap is cleared and refilled for every frame. but let's not optimize prematurely
-    playerRanking.clear();
-    size_t i = 0;
-    for (Rac0r::Player* player : mPlayers) {
-        playerRanking.emplace(player->getCar()->getPassedDistance(), i++);
-    }
-    
-    // update hud player positions
-    i = 0;
-    for (const auto& rankedPlayer : playerRanking) {
-        size_t playerId = rankedPlayer.second;
-     
-        float yPos = 10 + 28 * i;
-        mPlayerLabels[playerId]->setPosition(frame.width - 140, yPos);
-        mPlayerKeySprites[playerId]->setPosition(frame.width - 40, yPos + 2);
-        
-        ++i;
     }
 }
 
