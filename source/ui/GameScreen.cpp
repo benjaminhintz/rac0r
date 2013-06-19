@@ -175,7 +175,7 @@ void GameScreen::updateCountdownTimer(const std::string & _text, float _scale) {
 }
 
 void GameScreen::layout(sf::Time elapsed) {
-    // sort players by distance. this might not be the most efficient approach as the multimap is cleared and refilled for every frame. but let's not optimize prematurely
+    // sort players by distance. this might not be the most efficient approach as the multimap is cleared and refilled for every frame. but let's not optimize prematurely. (profiling showed that about 1% of the time per frame is spent here)
     playerRanking.clear();
     size_t i = 0;
     for (Rac0r::Player* player : mPlayers) {
