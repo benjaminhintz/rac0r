@@ -177,7 +177,6 @@ void GameScreen::showFinishScreen() {
     mFinishDetailText.setString(buffer);
     mFinishDetailText.setFont(View::getSecondaryFont());
     mFinishDetailText.setColor(sf::Color::White);
-    mFinishDetailText.setStyle(sf::Text::Bold);
     mFinishDetailText.setCharacterSize(22);
     position.y += 75;
     mFinishDetailText.setPosition(position);
