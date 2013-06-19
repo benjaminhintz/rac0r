@@ -42,7 +42,7 @@ MenuScreen::MenuScreen(const Rect& frame) :
     addChild(playerChooser);
 
     // Description text
-    description.setString("Druecke Enter, um das Spiel zu starten");
+    description.setString(L"Drücke Enter, um das Spiel zu starten");
     description.setCharacterSize(28);
     description.setStyle(sf::Text::Bold);
     description.setColor(sf::Color::White);

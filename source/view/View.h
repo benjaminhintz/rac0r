@@ -47,6 +47,7 @@ protected:
 
     // Some resource helper functions that all views can use
     static const sf::Font& getDefaultFont();
+    static const sf::Font& getSecondaryFont();
 
     // Get Font Path related to system we running on
     static const std::string & getFontPath();

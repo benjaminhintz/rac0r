@@ -44,17 +44,27 @@ void View::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 // Helper function that loads a default font
 const sf::Font& View::getDefaultFont() {
-    static sf::Font defaultFont;
+    static sf::Font font;
     static bool isLoaded = false;
-    
     if (!isLoaded) {
-        if (!defaultFont.loadFromFile(resourcePath() + getFontPath() + "Tahoma.ttf")) {
-            std::cerr << "Couldn't load Tahoma.ttf" << std::endl;
+        if (!font.loadFromFile(resourcePath() + getFontPath() + "Tahoma.ttf")) {
+            std::cerr << "Couldn't load the default font" << std::endl;
         }
         isLoaded = true;
     }
-    
-    return defaultFont;
+    return font;
+}
+
+const sf::Font& View::getSecondaryFont() {
+    static sf::Font font;
+    static bool isLoaded = false;
+    if (!isLoaded) {
+        if (!font.loadFromFile(resourcePath() + getFontPath() + "Russo_One.ttf")) {
+            std::cerr << "Couldn't load the default font" << std::endl;
+        }
+        isLoaded = true;
+    }
+    return font;
 }
 
 const std::string & View::getFontPath() {

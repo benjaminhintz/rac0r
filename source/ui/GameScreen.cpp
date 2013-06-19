@@ -151,7 +151,7 @@ void GameScreen::showFinishScreen() {
 void GameScreen::createCountdownTimer() {
     this->mCountdownTimerText.setString(Rac0r::Constants::COUNTDOWN_TIMER_STRINGS[0]);
     this->mCountdownTimerText.setPosition(frame.width / 2, frame.height / 2);
-    this->mCountdownTimerText.setFont(View::getDefaultFont());
+    this->mCountdownTimerText.setFont(View::getSecondaryFont());
     this->mCountdownTimerText.setColor(sf::Color::White);
     this->mCountdownTimerText.setStyle(sf::Text::Bold);
 }
