@@ -33,7 +33,7 @@ namespace Constants {
     constexpr static const size_t   GAME_MAX_LAPS                                               =   3;
     constexpr static const size_t   GAME_MAX_PLAYERS                                            =   5;
 
-    constexpr static const bool		PLAY_SOUND													=	false;
+    constexpr static const bool		PLAY_SOUND													=	true;
 
     static const sf::Color          GAME_TRACK_COLOR[GAME_MAX_PLAYERS]                          =   { sf::Color(0,153,205,153),
                                                                                                         sf::Color(102, 153, 0, 153),
