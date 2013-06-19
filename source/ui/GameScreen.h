@@ -82,6 +82,8 @@ private:
     std::vector<std::unique_ptr<sf::Texture>> mPlayerKeyTextures;
     std::vector<std::unique_ptr<sf::Sprite>>  mPlayerKeySprites;
     std::vector<std::unique_ptr<sf::Text>>    mPlayerLabels;
+    // sort players by distance (in descending order)
+    std::multimap<float, size_t, std::greater<float>> playerRanking;
 };
 
 #endif /* defined(__Rac0r__GameScreen__) */

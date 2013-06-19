@@ -198,15 +198,27 @@ void GameScreen::layout(sf::Time elapsed) {
     }
     
     // update player
-    for (auto player : this->mPlayers) {
+    for (auto player : mPlayers) {
         player->update(elapsed);
     }
     
-    // update hud
-    for (size_t i = 0; i < mPlayers.size(); ++i) {
+    // sort players by distance. this might not be the most efficient approach as the multimap is cleared and refilled for every frame. but let's not optimize prematurely
+    playerRanking.clear();
+    size_t i = 0;
+    for (Rac0r::Player* player : mPlayers) {
+        playerRanking.emplace(player->getCar()->getPassedDistance(), i++);
+    }
+    
+    // update hud player positions
+    i = 0;
+    for (const auto& rankedPlayer : playerRanking) {
+        size_t playerId = rankedPlayer.second;
+     
         float yPos = 10 + 28 * i;
-        mPlayerLabels[i]->setPosition(frame.width - 140, yPos);
-        mPlayerKeySprites[i]->setPosition(frame.width - 40, yPos + 2);
+        mPlayerLabels[playerId]->setPosition(frame.width - 140, yPos);
+        mPlayerKeySprites[playerId]->setPosition(frame.width - 40, yPos + 2);
+        
+        ++i;
     }
 }
 
