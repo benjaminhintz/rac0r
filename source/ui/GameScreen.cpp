@@ -20,7 +20,8 @@ sf::Clock GameScreen::mClock = sf::Clock();
 
 GameScreen::GameScreen(const Rect& frame, int playerCount, std::string trackPath) :
     Screen(frame),
-    mGameRunning(false)
+    mGameRunning(false),
+    mGameFinished(false)
 {
     createTracks(playerCount, trackPath);
     restart();
@@ -77,16 +78,16 @@ void GameScreen::createTracks(size_t _playerCount, const std::string & _trackFil
     // create start line
     float trackInnerOffset = 20.0f * scaleOffset;
     float height = trackInnerOffset * static_cast<float>(mTracks.size()-1) + trackInnerOffset * 2.0f;
-    this->mStartLine = sf::RectangleShape(sf::Vector2f(GameScreen::START_LINE_WIDTH, height));
-    this->mStartLine.setOrigin(GameScreen::START_LINE_WIDTH / 2.0f, 0.0f);
+    mStartLine = sf::RectangleShape(sf::Vector2f(GameScreen::START_LINE_WIDTH, height));
+    mStartLine.setOrigin(GameScreen::START_LINE_WIDTH / 2.0f, 0.0f);
     sf::Vector2f startPos = mTracks[mTracks.size()-1][0];
     sf::Vector2f nextPos = mTracks[mTracks.size()-1][1];
     sf::Vector2f startPosDir = Rac0r::normalize(nextPos - startPos);
     sf::Vector2f startPosDirOrtho = Rac0r::orthogonal(startPosDir) * (height - trackInnerOffset);
     
-    this->mStartLine.setPosition(startPos + startPosDirOrtho);
-    this->mStartLine.setRotation(RAD_TO_DEG(Rac0r::heading(startPosDir)));
-    this->mStartLine.setFillColor(sf::Color::White);
+    mStartLine.setPosition(startPos + startPosDirOrtho);
+    mStartLine.setRotation(RAD_TO_DEG(Rac0r::heading(startPosDir)));
+    mStartLine.setFillColor(sf::Color::White);
     
     createPlayer();
     
@@ -127,40 +128,74 @@ void GameScreen::createPlayer() {
 }
 
 void GameScreen::restart() {
-    this->mGameRunning = false;
-    this->mStartCountdown = 0;
-    this->mCountdownTimer = mClock.getElapsedTime();
+    mGameRunning = false;
+    mStartCountdown = 0;
+    mCountdownTimer = mClock.getElapsedTime();
     
-    for (auto player : this->mPlayers) {
+    for (auto player : mPlayers) {
         player->reset();
     }
 }
 
 void GameScreen::start() {
-    this->mGameRunning = true;
-    this->mStartCountdown = 0;
+    mGameRunning = true;
+    mStartCountdown = 0;
 }
 
 void GameScreen::showFinishScreen() {
-
-    // TODO: Hier den Finish Screen anzeigen...yay
-    std::cout << "YOUR MOM HAS BEING FINISHED BY ALL PLAYERS!" << std::endl;
+    mGameFinished = true;
     
+    // Find the player with the lowest total time and remember the index
+    size_t winnerId = 0;
+    for (int i = 1; i < mPlayers.size(); ++i) {
+        if (mPlayers[i]->getTotalTime() < mPlayers[winnerId]->getTotalTime()) {
+            winnerId = i;
+        }
+    }
+    
+    // Show which player won the game
+    mFinishText.setString(Rac0r::Constants::GAME_PLAYER_NAME[winnerId] + L" hat gewonnen!");
+    mFinishText.setFont(View::getSecondaryFont());
+    mFinishText.setColor(sf::Color::White);
+    mFinishText.setStyle(sf::Text::Bold);
+    mFinishText.setCharacterSize(48);
+    
+    sf::Vector2f position;
+    // After dividing by 2 we could have a .5, so we cast to int
+    position.x = static_cast<unsigned int>(frame.width / 2);
+    position.y = static_cast<unsigned int>(frame.height / 2);
+    mFinishText.setPosition(position);
+    
+    // Set the origin to be the center of the text
+    sf::FloatRect bounds = mFinishText.getLocalBounds();
+    mFinishText.setOrigin(static_cast<unsigned int>(bounds.width / 2),
+                          static_cast<unsigned int>(bounds.height / 2));
+    
+    // Show the time and how to return to the menu
+    mFinishDetailText.setString(L"Zeit: " + std::to_wstring(mPlayers[winnerId]->getTotalTime()) + L". Drücke Esc, um zurück zum Hauptmenü zu gelangen");
+    mFinishDetailText.setFont(View::getSecondaryFont());
+    mFinishDetailText.setColor(sf::Color::White);
+    mFinishDetailText.setStyle(sf::Text::Bold);
+    mFinishDetailText.setCharacterSize(22);
+    position.y += 75;
+    mFinishDetailText.setPosition(position);
+    bounds = mFinishDetailText.getLocalBounds();
+    mFinishDetailText.setOrigin(static_cast<unsigned int>(bounds.width / 2),
+                                static_cast<unsigned int>(bounds.height / 2));
 }
 
 void GameScreen::createCountdownTimer() {
-    this->mCountdownTimerText.setString(Rac0r::Constants::COUNTDOWN_TIMER_STRINGS[0]);
-    this->mCountdownTimerText.setPosition(frame.width / 2, frame.height / 2);
-    this->mCountdownTimerText.setFont(View::getSecondaryFont());
-    this->mCountdownTimerText.setColor(sf::Color::White);
-    this->mCountdownTimerText.setStyle(sf::Text::Bold);
+    mCountdownTimerText.setString(Rac0r::Constants::COUNTDOWN_TIMER_STRINGS[0]);
+    mCountdownTimerText.setFont(View::getSecondaryFont());
+    mCountdownTimerText.setColor(sf::Color::White);
+    mCountdownTimerText.setStyle(sf::Text::Bold);
 }
 
 void GameScreen::updateCountdownTimer(const std::string & _text, float _scale) {
-    this->mCountdownTimerText.setString(_text);
+    mCountdownTimerText.setString(_text);
     
     unsigned int textSize = static_cast<unsigned int>(GameScreen::COUNTDOWN_FONT_SIZE * frame.width);
-    this->mCountdownTimerText.setCharacterSize(textSize);
+    mCountdownTimerText.setCharacterSize(textSize);
 
     // Set position
     sf::Vector2f position;
@@ -169,7 +204,7 @@ void GameScreen::updateCountdownTimer(const std::string & _text, float _scale) {
     mCountdownTimerText.setPosition(position);
     
     // Scale the text
-    sf::FloatRect bounds = this->mCountdownTimerText.getLocalBounds();
+    sf::FloatRect bounds = mCountdownTimerText.getLocalBounds();
     mCountdownTimerText.setOrigin(bounds.width / 2, bounds.height / 2);
     mCountdownTimerText.setScale(_scale, _scale);
 }
@@ -193,19 +228,19 @@ void GameScreen::layout(sf::Time elapsed) {
     }
     
     // show countdown
-    if (!this->mGameRunning) {
+    if (!mGameRunning) {
         sf::Time current = mClock.getElapsedTime();
     
-        sf::Int32 dt = current.asMilliseconds() - this->mCountdownTimer.asMilliseconds();
+        sf::Int32 dt = current.asMilliseconds() - mCountdownTimer.asMilliseconds();
         if (dt > Rac0r::Constants::COUNTDOWN_TIMER_INTERVAL) {
-            if (++this->mStartCountdown > Rac0r::Constants::COUNTDOWN_TIMER_STRINGS_NUM-1) {
+            if (++mStartCountdown > Rac0r::Constants::COUNTDOWN_TIMER_STRINGS_NUM-1) {
                 start();
             } else {
-                this->mCountdownTimer = mClock.getElapsedTime();
+                mCountdownTimer = mClock.getElapsedTime();
             }
         } else {
             float scale = 1.0f  - static_cast<float>(dt) / static_cast<float>(Rac0r::Constants::COUNTDOWN_TIMER_INTERVAL);
-            updateCountdownTimer(Rac0r::Constants::COUNTDOWN_TIMER_STRINGS[this->mStartCountdown], scale);
+            updateCountdownTimer(Rac0r::Constants::COUNTDOWN_TIMER_STRINGS[mStartCountdown], scale);
         }
         
         return;
@@ -243,6 +278,12 @@ void GameScreen::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     for (auto player : mPlayers) {
         player->draw(target, states);
     }
+    
+    // Draw the win screen
+    if (mGameFinished) {
+        target.draw(mFinishText, states);
+        target.draw(mFinishDetailText, states);
+    }
 }
 
 
@@ -252,7 +293,7 @@ void GameScreen::onCarDriftedOffTrack(Rac0r::Car & _car) {
 
 void GameScreen::onCarMovedThroughStart(Rac0r::Car & _car) {
     size_t finishedPlayers = 0;
-    for (auto & player : this->mPlayers) {
+    for (auto & player : mPlayers) {
         if (player->getCar() == &_car) {
         	player->nextLap();
         }
@@ -260,14 +301,13 @@ void GameScreen::onCarMovedThroughStart(Rac0r::Car & _car) {
             ++finishedPlayers;
         }
     }
-    if (finishedPlayers >= this->mPlayers.size()) {
-        this->showFinishScreen();
+    if (finishedPlayers >= mPlayers.size()) {
+        showFinishScreen();
     }
 }
 
 void GameScreen::onCarStartedFromStart(Rac0r::Car & _car) {
 }
-    
 
 void GameScreen::handleEvent(sf::Event event) {
 	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {

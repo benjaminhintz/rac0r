@@ -67,6 +67,8 @@ private:
     
     // ui elements
     sf::Text                            mCountdownTimerText;
+    sf::Text                            mFinishText;
+    sf::Text                            mFinishDetailText;
     
     // game logic
     std::vector<Rac0r::Track>           mTracks;
@@ -74,6 +76,7 @@ private:
     sf::Time                            mCountdownTimer;
     int                                 mStartCountdown;
     bool                                mGameRunning;
+    bool                                mGameFinished;
     
     static sf::Clock                    mClock;
     
@@ -81,7 +84,7 @@ private:
     std::vector<std::unique_ptr<sf::Texture>> mPlayerKeyTextures;
     std::vector<std::unique_ptr<sf::Sprite>>  mPlayerKeySprites;
     std::vector<std::unique_ptr<sf::Text>>    mPlayerLabels;
-    // sort players by distance (in descending order)
+    // sorts players by distance driven (in descending order)
     std::multimap<float, size_t, std::greater<float>> playerRanking;
 };
 
