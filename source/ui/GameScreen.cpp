@@ -159,14 +159,19 @@ void GameScreen::createCountdownTimer() {
 void GameScreen::updateCountdownTimer(const std::string & _text, float _scale) {
     this->mCountdownTimerText.setString(_text);
     
-    unsigned int textSize = static_cast<unsigned int>(static_cast<float>(GameScreen::COUNTDOWN_FONT_SIZE) * static_cast<float>(frame.width) * _scale);
+    unsigned int textSize = static_cast<unsigned int>(GameScreen::COUNTDOWN_FONT_SIZE * frame.width);
     this->mCountdownTimerText.setCharacterSize(textSize);
 
-    sf::FloatRect bounds = this->mCountdownTimerText.getLocalBounds();
+    // Set position
     sf::Vector2f position;
-    position.x = static_cast<int>((frame.width / 2) - 1.1 * (bounds.width / 2));
-    position.y = static_cast<int>((frame.height / 2) - 1.6 * (textSize / 2.0f));
-    this->mCountdownTimerText.setPosition(position);
+    position.x = static_cast<int>(frame.width / 2);
+    position.y = static_cast<int>(frame.height / 2);
+    mCountdownTimerText.setPosition(position);
+    
+    // Scale the text
+    sf::FloatRect bounds = this->mCountdownTimerText.getLocalBounds();
+    mCountdownTimerText.setOrigin(bounds.width / 2, bounds.height / 2);
+    mCountdownTimerText.setScale(_scale, _scale);
 }
 
 void GameScreen::layout(sf::Time elapsed) {
@@ -183,7 +188,7 @@ void GameScreen::layout(sf::Time elapsed) {
         
         float yPos = 15 + 28 * i++;
         mPlayerLabels[playerId]->setPosition(frame.width - 146, yPos);
-        mPlayerKeySprites[playerId]->setPosition(frame.width - 40, yPos + 1);
+        mPlayerKeySprites[playerId]->setPosition(frame.width - 40, yPos + 2);
     }
     
     // show countdown
