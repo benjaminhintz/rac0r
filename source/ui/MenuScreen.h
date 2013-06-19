@@ -5,6 +5,7 @@
 //  Created and copyright by
 //  Benjamin Hintz
 //  Florian Kaluschke
+//  Jannes Meyer
 //  David Leska
 //  Lars Peterke
 //  Jan Schulte
