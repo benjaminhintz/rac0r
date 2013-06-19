@@ -92,6 +92,34 @@ void GameScreen::createTracks(size_t _playerCount, const std::string & _trackFil
     // setup countdown text
     createCountdownTimer();
     updateCountdownTimer(Rac0r::Constants::COUNTDOWN_TIMER_STRINGS[0], 1.0f);
+    
+    
+    // hud
+    for (size_t i = 0; i < mPlayers.size(); ++i) {
+        float yPos = 10 + 28 * i;
+        
+        // Instantiate the text label
+        mPlayerLabels.emplace_back(new sf::Text);
+        // Obtain a reference to it
+        mPlayerLabels[i]->setString("Spieler " + std::to_string(i + 1));
+        mPlayerLabels[i]->setFont(View::getDefaultFont());
+        mPlayerLabels[i]->setPosition(frame.width - 140, yPos);
+        mPlayerLabels[i]->setCharacterSize(20);
+        mPlayerLabels[i]->setStyle(sf::Text::Bold);
+        mPlayerLabels[i]->setColor(Rac0r::Constants::GAME_TRACK_COLOR[i]);
+        
+        // Instantiate the texture and the sprite
+        mPlayerKeyTextures.emplace_back(new sf::Texture);
+        mPlayerKeySprites.emplace_back(new sf::Sprite);
+        
+        std::string filename = resourcePath() + "keys_" + std::to_string(i + 1) + ".png";
+        if(!mPlayerKeyTextures[i]->loadFromFile(filename)) {
+            std::cout << "Error while loading image" << std::endl;
+        } else {
+            mPlayerKeySprites[i]->setTexture(*mPlayerKeyTextures[i]);
+            mPlayerKeySprites[i]->setPosition(frame.width - 40, yPos + 2);
+        }
+    }
 }
 
 void GameScreen::createPlayer() {
@@ -172,24 +200,39 @@ void GameScreen::layout(sf::Time elapsed) {
     for (auto player : this->mPlayers) {
         player->update(elapsed);
     }
+    
+    // update hud
+    for (size_t i = 0; i < mPlayers.size(); ++i) {
+        float yPos = 10 + 28 * i;
+        mPlayerLabels[i]->setPosition(frame.width - 140, yPos);
+        mPlayerKeySprites[i]->setPosition(frame.width - 40, yPos + 2);
+    }
 }
 
 void GameScreen::draw(sf::RenderTarget &target, sf::RenderStates states) const {
-    
     // Render Tracks
     for (auto & trackDrawable : mTrackDrawables) {
         trackDrawable.draw(target, states);
     }
     
-    target.draw(this->mStartLine, states);
+    target.draw(mStartLine, states);
     
-    if (!this->mGameRunning) {
-        target.draw(this->mCountdownTimerText, states);
+    // Draw the HUD
+    for (auto& playerLabel : mPlayerLabels) {
+        target.draw(*playerLabel, states);
+    }
+    for (auto& keySprite : mPlayerKeySprites) {
+        target.draw(*keySprite, states);
+    }
+    
+    // Draw the countdown
+    if (!mGameRunning) {
+        target.draw(mCountdownTimerText, states);
         return;
     }
     
     // draw players
-    for (auto player : this->mPlayers) {
+    for (auto player : mPlayers) {
         player->draw(target, states);
     }
 }

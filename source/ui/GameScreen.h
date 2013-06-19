@@ -77,6 +77,10 @@ private:
     
     static sf::Clock                    mClock;
     
+    // hud (by jannes)
+    std::vector<std::unique_ptr<sf::Texture>> mPlayerKeyTextures;
+    std::vector<std::unique_ptr<sf::Sprite>>  mPlayerKeySprites;
+    std::vector<std::unique_ptr<sf::Text>>    mPlayerLabels;
 };
 
 #endif /* defined(__Rac0r__GameScreen__) */
