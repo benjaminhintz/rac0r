@@ -214,7 +214,7 @@ void GameScreen::layout(sf::Time elapsed) {
     playerRanking.clear();
     size_t i = 0;
     for (Rac0r::Player* player : mPlayers) {
-        playerRanking.emplace(player->getCar()->getPassedDistance(), i++);
+        playerRanking.insert(std::pair<float,size_t>(player->getCar()->getPassedDistance(), i++));
     }
     // update hud player positions
     i = 0;
