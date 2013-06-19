@@ -91,6 +91,8 @@ class Car : public sf::Drawable {
         CarEventListener * getEventListener() const { return this->mEventListener; }
     
         float getPassedDistance() const { return this->mCurrentPassedDistance; }
+        // This is only used from the outside after the game has finished
+        void setPassedDistance(float distance) { this->mCurrentPassedDistance = distance; }
     
         bool isOnTrack() const { return !this->mDriftedOffTrack; }
     

@@ -293,16 +293,28 @@ void GameScreen::onCarDriftedOffTrack(Rac0r::Car & _car) {
 }
 
 void GameScreen::onCarMovedThroughStart(Rac0r::Car & _car) {
-    size_t finishedPlayers = 0;
-    for (auto & player : mPlayers) {
+    std::vector<Rac0r::Player*> finishedPlayers;
+    for (auto player : mPlayers) {
         if (player->getCar() == &_car) {
         	player->nextLap();
         }
         if (player->isFinish()) {
-            ++finishedPlayers;
+            finishedPlayers.push_back(player);
         }
     }
-    if (finishedPlayers >= mPlayers.size()) {
+    // First player finished
+    if (finishedPlayers.size() == 1) {
+        std::cout << "First player finishes " << 2 * finishedPlayers[0]->getTotalTime() << std::endl;
+        
+        // This is a pretty dirty, but pragmatic, solution to avoid
+        // inconsistencies in the ranking of players after all players have finished
+        // and all have more or less the same totalDistance after passing the finish line
+        Rac0r::Car* car = finishedPlayers[0]->getCar();
+        car->setPassedDistance(car->getPassedDistance() * 2);
+    }
+    
+    // All players finished
+    if (finishedPlayers.size() == mPlayers.size()) {
         showFinishScreen();
     }
 }
