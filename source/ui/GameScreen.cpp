@@ -99,11 +99,11 @@ void GameScreen::createTracks(size_t _playerCount, const std::string & _trackFil
     for (size_t i = 0; i < mPlayers.size(); ++i) {
         // Instantiate the text label
         mPlayerLabels.emplace_back(new sf::Text);
-        mPlayerLabels[i]->setString("Spieler " + std::to_string(i + 1));
         mPlayerLabels[i]->setFont(View::getDefaultFont());
         mPlayerLabels[i]->setCharacterSize(20);
         mPlayerLabels[i]->setStyle(sf::Text::Bold);
         mPlayerLabels[i]->setColor(Rac0r::Constants::GAME_TRACK_COLOR[i]);
+        // Text and position of the label are set in layout()
         
         // Instantiate the texture and the sprite
         mPlayerKeyTextures.emplace_back(new sf::Texture);
@@ -187,7 +187,8 @@ void GameScreen::layout(sf::Time elapsed) {
         size_t playerId = rankedPlayer.second;
         
         float yPos = 15 + 28 * i++;
-        mPlayerLabels[playerId]->setPosition(frame.width - 146, yPos);
+        mPlayerLabels[playerId]->setString(std::to_wstring(i) + L". Spieler " + Rac0r::Constants::GAME_PLAYER_NAME[playerId]);
+        mPlayerLabels[playerId]->setPosition(frame.width - 220, yPos);
         mPlayerKeySprites[playerId]->setPosition(frame.width - 40, yPos + 2);
     }
     
@@ -255,12 +256,10 @@ void GameScreen::onCarMovedThroughStart(Rac0r::Car & _car) {
         if (player->getCar() == &_car) {
         	player->nextLap();
         }
-        
         if (player->isFinish()) {
             ++finishedPlayers;
         }
     }
-    
     if (finishedPlayers >= this->mPlayers.size()) {
         this->showFinishScreen();
     }

@@ -43,6 +43,14 @@ namespace Constants {
                                                                                                         sf::Color(204, 0, 0, 153)
                                                                                                     };
 
+    static const std::wstring       GAME_PLAYER_NAME[GAME_MAX_PLAYERS]                          =   {
+                                                                                                        L"Blau",
+                                                                                                        L"Grün",
+                                                                                                        L"Lila",
+                                                                                                        L"Orange",
+                                                                                                        L"Rot"
+                                                                                                    };
+    
     static const sf::Keyboard::Key  PLAYER_KEY[GAME_MAX_PLAYERS]                                =   { sf::Keyboard::Q,
                                                                                                         sf::Keyboard::X,
                                                                                                         sf::Keyboard::T,
